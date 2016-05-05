@@ -1,0 +1,39 @@
+﻿
+--Please strickly follow the project coding standards to make sure all scripts are consitent and easy to maintain.
+
+Note: (Copied from Thanh Le)
+	- Camel Case: A word with the first letter lowercase, and the first letter of each subsequent word-part capitalized.
+					Ex: customerName
+	- Pascal Case: A word with the first letter capitalized, and the first letter of each subsequent word-part capitalized.
+					Ex: CustomerName
+
+-----Naming Conventions-----------------------------------------------------------------------------------------------------------------------
+																							Example
+Project File		Pascal Case		Always match Assembly Name & Root Namespace				SeleniumAdvance
+Source File			Pascal Case		Always match Class name and file name					MyClass.cs => public class MyClass {}
+Class				Pascal Case		Use a noun or noun phrase for class name				MyClass.cs
+Method				Pascal Case		Try to use a Verb or Verb-Object pair.					public void Execute() {…}
+									All method must be documented.
+Property			Pascal Case		Property name should represent the entity it returns	
+Field (private)		Camel Case		Prefix with a single underscore (_) character			private string _lastName;
+InlineVariable		Camel Case		Avoid using single characters like “x” or “y” 
+									except in FOR loops. Avoid enumerating variable names 
+									like text1, text2, text3,...
+Parameter			Camel Case																public void CreateCustomer(string firstName, string emailAdress)
+Enum				Pascal Case																public enum Gender{ Male,Female }
+Constant			Pascal Case																AdminUsername
+
+-----Web Element Abbreviations----------------------------------------------------------------------------------------------------------------
+
+Button			btn				Menu Item		mi				Radiobutton group		rg
+Label			lbl				Menu			mn				Radio list				rl
+Textbox			txt				Messagebox		msg				Scrollbar				slb
+Link			lnk				Main Window		mw				Tab						tab
+Checkbox		chb				Push Button		pb				Table					tbl
+Combobox		cmb				Progressbar		pgb				Text Field				tf
+Dialogbox		dlg				Page list		pl				Togglebutton			tg
+Frame			frm				Panel			pnl				Toolbar					tlb
+Image			img				Popup list		pul				Tree view				trw
+List box		lb				Radiobutton		rb				Tool tip				tt
+																Dropdown list			ddl
+------------------------------------------------------------------------------------------------------------------------------------------------
