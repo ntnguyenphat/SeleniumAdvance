@@ -9,7 +9,7 @@ namespace SeleniumAdvance
         [TestMethod]
         public void TestMethod1()
         {
-            // Commit by Nguyen
+            // Commit by phat
         }
     }
 }
