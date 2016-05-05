@@ -9,6 +9,7 @@ namespace SeleniumAdvance
         [TestMethod]
         public void TestMethod1()
         {
+            // Commit by phat
             // Commit by Long Do
         }
     }
