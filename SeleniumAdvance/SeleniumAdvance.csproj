@@ -51,18 +51,23 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
     <Compile Include="Common\Constant.cs" />
     <Compile Include="PageObjects\GeneralPage.cs" />
+    <Compile Include="PageObjects\HomePage.cs" />
+    <Compile Include="PageObjects\LoginPage.cs" />
+    <Compile Include="PageObjects\PageBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestCases\DA_LOGIN_TC001.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataObjects\" />
-    <Folder Include="TestCases\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DLLs\WebDriver.dll" />
