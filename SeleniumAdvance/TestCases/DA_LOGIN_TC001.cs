@@ -22,13 +22,6 @@ namespace SeleniumAdvance.TestCases
             LoginPage loginPage = new LoginPage();
             loginPage.Login(Constant.Username, Constant.Password);
             Assert.AreEqual(true, LnkAccount.Displayed);
-
-            //3. Enter valid Email and Password
-            //4. Click on "Login" button
-            //VP: User is logged into Railway. Welcome user message is displayed.
-            //string actualMsg = loginPage.Login(Constant.Email, Constant.Password).GetWelcomeMessage();
-            //string expectedMsg = "Welcome seltrain2015@gmail.com";
-            //Assert.AreEqual(expectedMsg, actualMsg);
         }
     }
 }
