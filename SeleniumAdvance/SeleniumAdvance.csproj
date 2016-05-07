@@ -65,6 +65,8 @@
     <Folder Include="TestCases\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DLLs\WebDriver.dll" />
+    <Content Include="DLLs\WebDriver.Support.dll" />
     <Content Include="Document\CodingConvention.txt" />
   </ItemGroup>
   <ItemGroup>
