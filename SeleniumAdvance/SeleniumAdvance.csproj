@@ -66,6 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestCases\DA_LOGIN_TC001.cs" />
     <Compile Include="TestCases\DA_LOGIN_TC002.cs" />
+    <Compile Include="TestCases\DA_LOGIN_TC003.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataObjects\" />
