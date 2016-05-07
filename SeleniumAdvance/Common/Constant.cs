@@ -10,7 +10,7 @@ namespace SeleniumAdvance.Common
     public class Constant
     {
         public static IWebDriver WebDriver;
-        public const string HomePageURL = "http://54.169.134.103/";
+        public const string HomePageURL = "http://54.169.134.103/TADashboard/login.jsp";
         public const string Username = "administrator";
         public const string Password = "";
     }
