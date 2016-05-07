@@ -14,7 +14,7 @@ namespace SeleniumAdvance.PageObjects
         #region Locators
         static readonly By _txtUsername = By.XPath("//input[@id='username']");
         static readonly By _txtPassword = By.XPath("//input[@id='password']");
-        static readonly By _btnLogin = By.XPath("//input[@value='login']");
+        static readonly By _btnLogin = By.XPath("//div[@class='btn-login']");
         #endregion
 
         #region Elements
