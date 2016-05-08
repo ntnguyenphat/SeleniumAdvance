@@ -13,5 +13,7 @@ namespace SeleniumAdvance.Common
         public const string HomePageURL = "http://54.169.134.103/TADashboard/login.jsp";
         public const string Username = "administrator";
         public const string Password = "";
+        public const string DefaultRepo = "SampleRepository";
+        public const string AdditionalRepo = "TestRepository";
     }
 }

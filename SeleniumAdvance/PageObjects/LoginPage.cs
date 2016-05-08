@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SeleniumAdvance.Ultilities;
 
 namespace SeleniumAdvance.PageObjects
 {
@@ -16,6 +17,7 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _txtUsername = By.XPath("//input[@id='username']");
         static readonly By _txtPassword = By.XPath("//input[@id='password']");
         static readonly By _btnLogin = By.XPath("//div[@class='btn-login']");
+        static readonly By _cmbRepo = By.XPath("//select[@id='repository']");
 
         #endregion
 
@@ -35,6 +37,11 @@ namespace SeleniumAdvance.PageObjects
             get { return Constant.WebDriver.FindElement(_btnLogin); }
         }
 
+        public IWebElement CmbRepo
+        {
+            get { return Constant.WebDriver.FindElement(_cmbRepo); }
+        }
+
         #endregion
 
         #region Methods
@@ -44,6 +51,11 @@ namespace SeleniumAdvance.PageObjects
             TxtPassword.SendKeys(password);
             BtnLogin.Click();
             return new HomePage();
+        }
+
+        public void SelectRepository(string repositoryName)
+        {
+            CmbRepo.SelectItem(repositoryName);
         }
 
         #endregion

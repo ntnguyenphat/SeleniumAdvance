@@ -67,7 +67,9 @@
     <Compile Include="TestCases\LoginTestCases\DA_LOGIN_TC001.cs" />
     <Compile Include="TestCases\LoginTestCases\DA_LOGIN_TC002.cs" />
     <Compile Include="TestCases\LoginTestCases\DA_LOGIN_TC003.cs" />
+    <Compile Include="TestCases\LoginTestCases\DA_LOGIN_TC004.cs" />
     <Compile Include="TestCases\TestBase.cs" />
+    <Compile Include="Ultilities\IWebElementExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataObjects\" />
