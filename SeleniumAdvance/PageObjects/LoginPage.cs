@@ -45,12 +45,12 @@ namespace SeleniumAdvance.PageObjects
         #endregion
 
         #region Methods
-        public HomePage Login(string username, string password)
+        public GeneralPage Login(string username, string password)
         {
             TxtUsername.SendKeys(username);
             TxtPassword.SendKeys(password);
             BtnLogin.Click();
-            return new HomePage();
+            return new GeneralPage();
         }
 
         public void SelectRepository(string repositoryName)

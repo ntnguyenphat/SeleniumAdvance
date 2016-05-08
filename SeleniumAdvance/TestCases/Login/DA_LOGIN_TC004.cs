@@ -22,17 +22,17 @@ namespace SeleniumAdvance.TestCases.LoginTestCases
             //2. Enter valid username and password of default repository
             //3. Click on "Login" button
             LoginPage loginPage = new LoginPage();
-            homePage = loginPage.Login(Constant.Username, Constant.Password);
+            GeneralPage generalPage = loginPage.Login(Constant.Username, Constant.Password);
 
             //4. Click on "Logout" button
             //5. Select a different repository       
             //6. Enter valid username and password of this repository
-            loginPage = homePage.Logout();
+            loginPage = generalPage.Logout();
             loginPage.SelectRepository(Constant.AdditionalRepo);
-            homePage = loginPage.Login(Constant.Username, Constant.Password);
+            generalPage = loginPage.Login(Constant.Username, Constant.Password);
 
             //VP: Verify that Dashboard Mainpage appears
-            Assert.AreEqual(true, homePage.LnkAccount.Displayed, "Homepage is not displayed!");
+            Assert.AreEqual(true, generalPage.LnkAccount.Displayed, "Homepage is not displayed!");
         }
     }
 }

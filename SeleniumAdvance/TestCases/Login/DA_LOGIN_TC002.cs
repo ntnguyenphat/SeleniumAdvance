@@ -24,7 +24,7 @@ namespace SeleniumAdvance.TestCases
             LoginPage loginPage = new LoginPage();
             loginPage.Login("aaa", "aaa");
 
-            WebDriverWait wait = new WebDriverWait(Constant.WebDriver, TimeSpan.FromSeconds(120));
+            WebDriverWait wait = new WebDriverWait(Constant.WebDriver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.AlertIsPresent());
 
             IAlert alert = Constant.WebDriver.SwitchTo().Alert();

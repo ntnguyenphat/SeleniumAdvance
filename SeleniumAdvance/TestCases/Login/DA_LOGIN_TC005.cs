@@ -8,7 +8,7 @@ using OpenQA.Selenium.Support.UI;
 namespace SeleniumAdvance.TestCases.Login
 {
     [TestClass]
-    public class DA_LOGIN_TC005
+    public class DA_LOGIN_TC005:TestBase
     {
         [TestMethod]
         public void TC05()
@@ -22,13 +22,15 @@ namespace SeleniumAdvance.TestCases.Login
             //2. Login with valid account for the first repository
             //3. Choose another repository in Repository list
             LoginPage loginPage = new LoginPage();
-            homePage = loginPage.Login(Constant.Username, Constant.Password);
-
+            GeneralPage generalPage = loginPage.Login(Constant.Username, Constant.Password);
+            generalPage.SelectMenuItem("Repository", Constant.AdditionalRepo);
             //Todo: Using method SelectMenuItem to select another repository
-
+            Constant.WebDriver.SwitchTo().DefaultContent();
             //VP: There is no Login Repository dialog
             //VP: The Repository menu displays name of switched repository
-            Assert.AreEqual(true, homePage.LnkAccount.Displayed, "Homepage is not displayed!");
+            Assert.AreEqual(true, generalPage.LnkAccount.Displayed, "Homepage is not displayed!");
+            string actualRepositoryName = generalPage.GetRepositoryName();
+            Assert.AreEqual(Constant.AdditionalRepo, actualRepositoryName, "\nActual: " + actualRepositoryName + "\nExpected: " + Constant.AdditionalRepo);
         }
     }
 }

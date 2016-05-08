@@ -22,10 +22,10 @@ namespace SeleniumAdvance.TestCases
             //2. Enter valid username and password
             //3. Click on "Login" button
             LoginPage loginPage = new LoginPage();
-            homePage = loginPage.Login(Constant.Username, Constant.Password);
+            GeneralPage generalPage = loginPage.Login(Constant.Username, Constant.Password);
 
             //VP: Verify that Dashboard Mainpage appears
-            Assert.AreEqual(true, homePage.LnkAccount.Displayed, "Homepage is not displayed!");
+            Assert.AreEqual(true, generalPage.LnkAccount.Displayed, "Homepage is not displayed!");
         }
     }
 }
