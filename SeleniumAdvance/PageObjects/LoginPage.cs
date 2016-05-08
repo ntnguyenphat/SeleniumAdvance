@@ -12,9 +12,11 @@ namespace SeleniumAdvance.PageObjects
     public class LoginPage:GeneralPage
     {
         #region Locators
+
         static readonly By _txtUsername = By.XPath("//input[@id='username']");
         static readonly By _txtPassword = By.XPath("//input[@id='password']");
         static readonly By _btnLogin = By.XPath("//div[@class='btn-login']");
+
         #endregion
 
         #region Elements
@@ -43,6 +45,7 @@ namespace SeleniumAdvance.PageObjects
             BtnLogin.Click();
             return new HomePage();
         }
+
         #endregion
     }
 }

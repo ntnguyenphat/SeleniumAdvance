@@ -10,17 +10,18 @@ namespace SeleniumAdvance.PageObjects
 {
     public class GeneralPage
     {
-        #region Locators;
-       public string _lnkAccount = "//a[@href='#Welcome' and .='{0}']";
+        #region Locators
+
+        public string _lnkAccount = "//a[@href='#Welcome' and .='{0}']";
 
         #endregion
 
         #region Elements
         public IWebElement LnkAccount
         {
-           
             get { return Constant.WebDriver.FindElement(By.XPath(string.Format(_lnkAccount, Constant.Username))); }
         }
+
         #endregion
 
     }
