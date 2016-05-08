@@ -39,7 +39,11 @@ namespace SeleniumAdvance.PageObjects
             return new LoginPage();
         }
 
-        #endregion
+        public void SelectMenuItem(string mainMenu, string subMenu)
+        {
+            //Todo: Create an method to select main menu > sub menu in Dashboard (Need to customize arguments)
+        }
 
+        #endregion
     }
 }
