@@ -64,18 +64,18 @@
     <Compile Include="PageObjects\HomePage.cs" />
     <Compile Include="PageObjects\LoginPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestCases\LoginTestCases\DA_LOGIN_TC001.cs" />
-    <Compile Include="TestCases\LoginTestCases\DA_LOGIN_TC002.cs" />
-    <Compile Include="TestCases\LoginTestCases\DA_LOGIN_TC003.cs" />
-    <Compile Include="TestCases\LoginTestCases\DA_LOGIN_TC004.cs" />
+    <Compile Include="TestCases\Login\DA_LOGIN_TC001.cs" />
+    <Compile Include="TestCases\Login\DA_LOGIN_TC002.cs" />
+    <Compile Include="TestCases\Login\DA_LOGIN_TC003.cs" />
+    <Compile Include="TestCases\Login\DA_LOGIN_TC004.cs" />
     <Compile Include="TestCases\TestBase.cs" />
     <Compile Include="Ultilities\IWebElementExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataObjects\" />
-    <Folder Include="TestCases\DataProfilesTestCases\" />
-    <Folder Include="TestCases\MPTestCases\" />
-    <Folder Include="TestCases\PanelTestCases\" />
+    <Folder Include="TestCases\DataProfiles\" />
+    <Folder Include="TestCases\ManagePage\" />
+    <Folder Include="TestCases\Panel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DLLs\WebDriver.dll" />
