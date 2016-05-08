@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
-using SeleniumAdvance.Common;
-using OpenQA.Selenium.Firefox;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
+using SeleniumAdvance.Common;
 
-
-namespace SeleniumAdvance.PageObjects
+namespace SeleniumAdvance.TestCases
 {
-    public class PageBase:GeneralPage
+    [TestClass]
+    public class TestBase
     {
         [TestInitialize]
         public void TestInitializeMethod()
@@ -19,11 +15,12 @@ namespace SeleniumAdvance.PageObjects
             Console.WriteLine("Test Initialize");
 
             //Start Firefox browser and maximize window
-            //Constant.WebDriver = new FirefoxDriver();
-            Constant.WebDriver = new FirefoxDriver(new FirefoxBinary(), new FirefoxProfile(), TimeSpan.FromSeconds(180));
+            Constant.WebDriver = new FirefoxDriver();
+            //Constant.WebDriver = new FirefoxDriver(new FirefoxBinary(), new FirefoxProfile(), TimeSpan.FromSeconds(180));
             Constant.WebDriver.Manage().Window.Maximize();
             Constant.WebDriver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(30));
         }
+
         [TestCleanup]
         public void TestCleanupMethod()
         {
