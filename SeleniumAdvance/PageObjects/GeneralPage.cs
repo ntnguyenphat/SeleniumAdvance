@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SeleniumAdvance.Ultilities;
+using OpenQA.Selenium.Support.UI;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading;
 
 namespace SeleniumAdvance.PageObjects
 {
@@ -43,6 +46,29 @@ namespace SeleniumAdvance.PageObjects
         #endregion
 
         #region Methods
+
+        public bool IsDashboardMainpageDisplayed()
+        {
+            bool foundDashboardMainpage = LnkAccount.Displayed;
+            return foundDashboardMainpage;
+        }
+
+        public bool isDialogDisplayed()
+        {
+            bool foundDialog = false;
+            WebDriverWait wait = new WebDriverWait(Constant.WebDriver, TimeSpan.FromSeconds(5));
+            if (foundDialog)
+            {
+                wait.Until(ExpectedConditions.AlertIsPresent());
+                foundDialog = true;
+            }
+            else
+            {
+                foundDialog = false;
+            }
+            return foundDialog;
+        }
+
         public LoginPage Logout()
         {
             LnkAccount.MouseTo(Constant.WebDriver);
@@ -50,19 +76,36 @@ namespace SeleniumAdvance.PageObjects
             return new LoginPage();
         }
 
+        public string GetDialogText()
+        {
+            WebDriverWait wait = new WebDriverWait(Constant.WebDriver, TimeSpan.FromSeconds(5));
+            wait.Until(ExpectedConditions.AlertIsPresent());
+            IAlert alert = Constant.WebDriver.SwitchTo().Alert();
+            return alert.Text;
+        }
+
         public void SelectMenuItem(string mainMenu, string subMenu)
         {
-            //Todo: Create an method to select main menu > sub menu in Dashboard (Need to customize arguments)
             IWebElement LnkMainMenu = Constant.WebDriver.FindElement(By.XPath(string.Format(_lnkMainMenu, mainMenu)));
             IWebElement LnkSubMenu = Constant.WebDriver.FindElement(By.XPath(string.Format(_lnkSubMenu, mainMenu, subMenu)));
             LnkMainMenu.MouseTo(Constant.WebDriver);
             LnkSubMenu.Click();
         }
 
+        public GeneralPage ChooseRepository(string repositoryName)
+        {
+            SelectMenuItem("Repository", repositoryName);
+            Thread.Sleep(1000);
+            return new GeneralPage();
+        }
+
         public string GetRepositoryName()
         {
             return LblRepositoryName.Text;
         }
+
         #endregion
+
+        
     }
 }

@@ -19,6 +19,7 @@ namespace SeleniumAdvance.TestCases
             //Constant.WebDriver = new FirefoxDriver(new FirefoxBinary(), new FirefoxProfile(), TimeSpan.FromSeconds(180));
             Constant.WebDriver.Manage().Window.Maximize();
             Constant.WebDriver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(30));
+            
         }
 
         [TestCleanup]
