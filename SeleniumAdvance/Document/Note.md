@@ -1,6 +1,7 @@
 ## To Do
 
 - Chinh lai IWebDriver de chay Grid.
+- Remove HomePage and replace by LoginPage.
 
 ## May 9th, 2016
 
