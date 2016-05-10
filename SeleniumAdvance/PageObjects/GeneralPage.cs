@@ -53,20 +53,20 @@ namespace SeleniumAdvance.PageObjects
             return foundDashboardMainpage;
         }
 
-        public bool isDialogDisplayed()
+        public bool IsAlertDisplayed()
         {
-            bool foundDialog = false;
+            bool foundAlert = false;
             WebDriverWait wait = new WebDriverWait(Constant.WebDriver, TimeSpan.FromSeconds(5));
-            if (foundDialog)
+            if (foundAlert)
             {
                 wait.Until(ExpectedConditions.AlertIsPresent());
-                foundDialog = true;
+                foundAlert = true;
             }
             else
             {
-                foundDialog = false;
+                foundAlert = false;
             }
-            return foundDialog;
+            return foundAlert;
         }
 
         public LoginPage Logout()
@@ -76,7 +76,7 @@ namespace SeleniumAdvance.PageObjects
             return new LoginPage();
         }
 
-        public string GetDialogText()
+        public string GetAlertMessage()
         {
             WebDriverWait wait = new WebDriverWait(Constant.WebDriver, TimeSpan.FromSeconds(5));
             wait.Until(ExpectedConditions.AlertIsPresent());

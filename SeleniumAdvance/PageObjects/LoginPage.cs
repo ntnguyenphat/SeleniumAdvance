@@ -10,7 +10,7 @@ using SeleniumAdvance.Ultilities;
 
 namespace SeleniumAdvance.PageObjects
 {
-    public class LoginPage:GeneralPage
+    public class LoginPage : GeneralPage
     {
         #region Locators
 
@@ -56,6 +56,12 @@ namespace SeleniumAdvance.PageObjects
         public void SelectRepository(string repositoryName)
         {
             CmbRepo.SelectItem(repositoryName);
+        }
+
+        public LoginPage Open()
+        {
+            Constant.WebDriver.Navigate().GoToUrl(Constant.HomePageURL);
+            return this;
         }
 
         #endregion
