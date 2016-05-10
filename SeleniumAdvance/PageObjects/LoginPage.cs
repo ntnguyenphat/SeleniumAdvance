@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SeleniumAdvance.Ultilities;
+using OpenQA.Selenium.Support.UI;
 
 namespace SeleniumAdvance.PageObjects
 {
@@ -62,6 +63,13 @@ namespace SeleniumAdvance.PageObjects
         {
             Constant.WebDriver.Navigate().GoToUrl(Constant.HomePageURL);
             return this;
+        }
+        public string GetAlertMessage()
+        {
+            WebDriverWait wait = new WebDriverWait(Constant.WebDriver, TimeSpan.FromSeconds(5));
+            wait.Until(ExpectedConditions.AlertIsPresent());
+            IAlert alert = Constant.WebDriver.SwitchTo().Alert();
+            return alert.Text;
         }
 
         #endregion

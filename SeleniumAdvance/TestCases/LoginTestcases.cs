@@ -18,9 +18,9 @@ namespace SeleniumAdvance.TestCases
             //Navigate to Dashboard login page. Enter valid username and password. Click on "Login" button
 
             LoginPage loginPage = new LoginPage();
-            loginPage.Open().Login(Constant.Username, Constant.Password);
+            GeneralPage generalPage = loginPage.Open().Login(Constant.Username, Constant.Password);
 
-            bool observedResult = loginPage.IsDashboardMainpageDisplayed();
+            bool observedResult = generalPage.IsDashboardMainpageDisplayed();
 
             //VP: Verify that Dashboard Mainpage appears
             Assert.AreEqual(true, observedResult, "Dashboard Mainpage is not displayed!");
@@ -69,16 +69,16 @@ namespace SeleniumAdvance.TestCases
             //1. Navigate to Dashboard login page. Enter valid username and password of default repository. Click on "Login" button
 
             LoginPage loginPage = new LoginPage();
-            loginPage.Open().Login(Constant.Username, Constant.Password);
+            GeneralPage generalPage = loginPage.Open().Login(Constant.Username, Constant.Password);
 
             //2. Click on "Logout" button. Select a different repository
             //3. Enter valid username and password of this repository
 
-            loginPage.Logout();
+            loginPage = generalPage.Logout();
             loginPage.SelectRepository(Constant.AdditionalRepo);
-            loginPage.Login(Constant.Username, Constant.Password);
+            generalPage = loginPage.Login(Constant.Username, Constant.Password);
 
-            bool observedResult = loginPage.IsDashboardMainpageDisplayed();
+            bool observedResult = generalPage.IsDashboardMainpageDisplayed();
 
             //VP: Verify that Dashboard Mainpage appears
             Assert.AreEqual(true, observedResult, "Dashboard Mainpage is not displayed!");
@@ -93,38 +93,126 @@ namespace SeleniumAdvance.TestCases
             //2. Choose another repository in Repository list
 
             LoginPage loginPage = new LoginPage();
-            loginPage.Open().Login(Constant.Username, Constant.Password);
-            loginPage.ChooseRepository(Constant.AdditionalRepo);
+            GeneralPage generalPage = loginPage.Open().Login(Constant.Username, Constant.Password);
+            generalPage.ChooseRepository(Constant.AdditionalRepo);
 
-            string actualRepositoryName = loginPage.GetRepositoryName();
+            string actualRepositoryName = generalPage.GetRepositoryName();
+            bool actualAlertDisplayed = generalPage.IsAlertDisplayed();
 
             //VP: There is no Login Repository dialog
             //VP: The Repository menu displays name of switched repository
 
-            Assert.AreEqual(false, loginPage.IsAlertDisplayed(), "Login Repository dialog displayed!");
+            Assert.AreEqual(false, actualAlertDisplayed, "Login Repository dialog displayed!");
             Assert.AreEqual(Constant.AdditionalRepo, actualRepositoryName, "\nActual: " + actualRepositoryName + "\nExpected: " + Constant.AdditionalRepo);
         }
 
         [TestMethod]
-
         public void TC006()
         {
             Console.WriteLine("DA_LOGIN_TC006 - Verify that \"Password\" input is case sensitive");
 
-            //1. Navigate to Dashboard login page. Login with valid account for the first repository
-            //2. Choose another repository in Repository list
+            //1. Navigate to Dashboard login page. Login with the account has uppercase password
 
             LoginPage loginPage = new LoginPage();
-            loginPage.Open().Login(Constant.Username, Constant.Password);
-            loginPage.ChooseRepository(Constant.AdditionalRepo);
+            GeneralPage generalPage = loginPage.Open().Login("test", "admin");
 
-            string actualRepositoryName = loginPage.GetRepositoryName();
+            bool actualMainPageDisplayed = generalPage.IsDashboardMainpageDisplayed();
 
-            //VP: There is no Login Repository dialog
+            //VP: Main page is displayed
+
+            Assert.AreEqual(true, actualMainPageDisplayed, "MainPage is not displayed!");
+
+            //2. Logout TA Dashboard. Login with the above account but enter lowercase password
+
+            loginPage = generalPage.Logout();
+            loginPage.Login("test", "ADMIN");
+
+            string actualMessage = loginPage.GetAlertMessage();
+            string expectedMessage = "Username or password is invalid";
+
             //VP: The Repository menu displays name of switched repository
 
-            Assert.AreEqual(false, loginPage.IsAlertDisplayed(), "Login Repository dialog displayed!");
-            Assert.AreEqual(Constant.AdditionalRepo, actualRepositoryName, "\nActual: " + actualRepositoryName + "\nExpected: " + Constant.AdditionalRepo);
+            Assert.AreEqual(expectedMessage, actualMessage, "\nActual: " + actualMessage + "\nExpected: " + expectedMessage);
+        }
+
+        [TestMethod]
+        public void TC007()
+        {
+            Console.WriteLine("DA_LOGIN_TC007 - Verify that \"Username\" is not case sensitive");
+
+            //1. Navigate to Dashboard login page. Login with the account has uppercase username
+
+            LoginPage loginPage = new LoginPage();
+            GeneralPage generalPage = loginPage.Open().Login("TEST", "admin");
+
+            bool actualMainPageDisplayed = generalPage.IsDashboardMainpageDisplayed();
+
+            //VP: Main page is displayed
+
+            Assert.AreEqual(true, actualMainPageDisplayed, "MainPage is not displayed!");
+
+            //2. Logout TA Dashboard. Login with the above account but enter lowercase username
+
+            loginPage = generalPage.Logout();
+            loginPage.Login("test", "admin");
+
+            actualMainPageDisplayed = generalPage.IsDashboardMainpageDisplayed();
+
+            //VP: The Repository menu displays name of switched repository
+
+            Assert.AreEqual(true, actualMainPageDisplayed, "MainPage is not displayed!");
+        }
+
+        [TestMethod]
+        public void TC008()
+        {
+            Console.WriteLine("DA_LOGIN_TC008 - Verify that password with special characters is working correctly");
+
+            //1. Navigate to Dashboard login page. Login with account that has special characters password
+
+            LoginPage loginPage = new LoginPage();
+            GeneralPage generalPage = loginPage.Open().Login("test1", @"!@#$%^&*()");
+
+            bool actualMainPageDisplayed = generalPage.IsDashboardMainpageDisplayed();
+
+            //VP: Main page is displayed
+
+            Assert.AreEqual(true, actualMainPageDisplayed, "MainPage is not displayed!");
+        }
+
+        [TestMethod]
+        public void TC009()
+        {
+            Console.WriteLine("DA_LOGIN_TC009 - Verify that username with special characters is working correctly");
+
+            //1. Navigate to Dashboard login page. Login with account that has special characters username 
+
+            LoginPage loginPage = new LoginPage();
+            GeneralPage generalPage = loginPage.Open().Login(@"`~!@$^&()',.", "specialCharsUser");
+
+            bool actualMainPageDisplayed = generalPage.IsDashboardMainpageDisplayed();
+
+            //VP: Main page is displayed
+
+            Assert.AreEqual(true, actualMainPageDisplayed, "MainPage is not displayed!");
+        }
+
+        [TestMethod]
+        public void TC010()
+        {
+            Console.WriteLine("DA_LOGIN_TC010 - Verify that the page works correctly for the case when no input entered to Password and Username field");
+
+            //1. Navigate to Dashboard login page. Click Login button without entering data into Username and Password field 
+
+            LoginPage loginPage = new LoginPage();
+            loginPage.Open().BtnLogin.Click();
+
+            string actualMessage = loginPage.GetAlertMessage();
+            string expectedMessage = "Please enter username";
+
+            //VP: There is a message "Please enter username"
+
+            Assert.AreEqual(expectedMessage, actualMessage, "\nActual: " + actualMessage + "\nExpected: " + expectedMessage);
         }
     }
 }

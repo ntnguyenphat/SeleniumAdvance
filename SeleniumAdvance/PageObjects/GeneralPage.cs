@@ -16,17 +16,20 @@ namespace SeleniumAdvance.PageObjects
     {
         #region Locators
 
-        static string _lnkAccount = "//a[@href='#Welcome' and .='{0}']";
-        static string _lnkMainMenu = "//li[@class='sep']/parent::*/../a[contains(.,'{0}')]";
-        static string _lnkSubMenu =  "//li[@class='sep']/parent::*/../a[contains(.,'{0}')]/following::a[contains(.,'{1}')]";
+        static readonly By _lnkAccount = By.XPath("//a[@href='#Welcome']");
         static readonly By _lnkLogout = By.XPath("//a[@href='logout.do']");
         static readonly By _lblRepositoryName = By.XPath("//a[@href='#Repository']/span");
+        static readonly By _tabSetting = By.XPath("//li[@class='mn-setting']");
+        static string _lnkMainMenu = "//li[@class='sep']/parent::*/../a[contains(.,'{0}')]";
+        static string _lnkSubMenu = "//li[@class='sep']/parent::*/../a[contains(.,'{0}')]/following::a[contains(.,'{1}')]";
+        static string _lnkSettingItem = "//li[@class='mn-setting']//a[ .='{0}']";
+
         #endregion
 
         #region Elements
         public IWebElement LnkAccount
         {
-            get { return Constant.WebDriver.FindElement(By.XPath(string.Format(_lnkAccount, Constant.Username))); }
+            get { return Constant.WebDriver.FindElement(_lnkAccount); }
         }
 
         public IWebElement LnkLogout
@@ -34,15 +37,16 @@ namespace SeleniumAdvance.PageObjects
             get { return Constant.WebDriver.FindElement(_lnkLogout); }
         }
 
-        public IWebElement LnkMainMenu
-        {
-            get { return Constant.WebDriver.FindElement(By.XPath(string.Format(_lnkAccount, Constant.Username))); }
-        }
-
         public IWebElement LblRepositoryName
         {
             get { return Constant.WebDriver.FindElement(_lblRepositoryName); }
         }
+
+        public IWebElement TabSetting
+        {
+            get { return Constant.WebDriver.FindElement(_tabSetting); }
+        }
+
         #endregion
 
         #region Methods
@@ -76,14 +80,6 @@ namespace SeleniumAdvance.PageObjects
             return new LoginPage();
         }
 
-        public string GetAlertMessage()
-        {
-            WebDriverWait wait = new WebDriverWait(Constant.WebDriver, TimeSpan.FromSeconds(5));
-            wait.Until(ExpectedConditions.AlertIsPresent());
-            IAlert alert = Constant.WebDriver.SwitchTo().Alert();
-            return alert.Text;
-        }
-
         public void SelectMenuItem(string mainMenu, string subMenu)
         {
             IWebElement LnkMainMenu = Constant.WebDriver.FindElement(By.XPath(string.Format(_lnkMainMenu, mainMenu)));
@@ -103,6 +99,18 @@ namespace SeleniumAdvance.PageObjects
         {
             return LblRepositoryName.Text;
         }
+
+        public void SelectGeneralSetting(string item)
+        {
+            TabSetting.MouseTo(Constant.WebDriver);
+            IWebElement settingItem = Constant.WebDriver.FindElement(By.XPath(string.Format(_lnkSettingItem, item)));
+            settingItem.Click();
+        }
+        
+        public bool IsDashboardLockedByDialog()
+        {
+            return TabSetting.Enabled;
+        }   
 
         #endregion
 

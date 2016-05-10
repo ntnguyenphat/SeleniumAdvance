@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using SeleniumAdvance.Common;
@@ -16,10 +17,8 @@ namespace SeleniumAdvance.TestCases
 
             //Start Firefox browser and maximize window
             Constant.WebDriver = new FirefoxDriver();
-            //Constant.WebDriver = new FirefoxDriver(new FirefoxBinary(), new FirefoxProfile(), TimeSpan.FromSeconds(180));
             Constant.WebDriver.Manage().Window.Maximize();
             Constant.WebDriver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(30));
-            
         }
 
         [TestCleanup]
