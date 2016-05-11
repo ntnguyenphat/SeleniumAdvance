@@ -5,6 +5,11 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeleniumAdvance", "SeleniumAdvance.csproj", "{655AABBD-0F2B-4735-83C3-73113419DD7F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F2943ABF-3068-4A50-935C-581FB4CA6D72}"
+	ProjectSection(SolutionItems) = preProject
+		SeleniumAdvance.testsettings = SeleniumAdvance.testsettings
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
