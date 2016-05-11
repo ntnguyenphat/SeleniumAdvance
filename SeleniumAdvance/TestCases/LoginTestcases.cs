@@ -15,9 +15,10 @@ namespace SeleniumAdvance.TestCases
         {
             Console.WriteLine("DA_LOGIN_TC001 - Verify that user can login specific repository successfully via Dashboard login page with correct credentials.");
 
+            
             //Navigate to Dashboard login page. Enter valid username and password. Click on "Login" button
 
-            LoginPage loginPage = new LoginPage();
+            LoginPage loginPage = new LoginPage(driver);
             GeneralPage generalPage = loginPage.Open().Login(Constant.Username, Constant.Password);
 
             bool observedResult = generalPage.IsDashboardMainpageDisplayed();

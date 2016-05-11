@@ -14,6 +14,8 @@ namespace SeleniumAdvance.PageObjects
 {
     public class GeneralPage
     {
+        private IWebDriver _driver;
+
         #region Locators
 
         static readonly By _lnkAccount = By.XPath("//a[@href='#Welcome']");
@@ -29,27 +31,32 @@ namespace SeleniumAdvance.PageObjects
         #region Elements
         public IWebElement LnkAccount
         {
-            get { return Constant.WebDriver.FindElement(_lnkAccount); }
+            get { return _driver.FindElement(_lnkAccount); }
         }
 
         public IWebElement LnkLogout
         {
-            get { return Constant.WebDriver.FindElement(_lnkLogout); }
+            get { return _driver.FindElement(_lnkLogout); }
         }
 
         public IWebElement LblRepositoryName
         {
-            get { return Constant.WebDriver.FindElement(_lblRepositoryName); }
+            get { return _driver.FindElement(_lblRepositoryName); }
         }
 
         public IWebElement TabSetting
         {
-            get { return Constant.WebDriver.FindElement(_tabSetting); }
+            get { return _driver.FindElement(_tabSetting); }
         }
 
         #endregion
 
         #region Methods
+
+        public GeneralPage(IWebDriver driver)
+        {
+            this._driver = driver;
+        }
 
         public bool IsDashboardMainpageDisplayed()
         {
@@ -60,7 +67,7 @@ namespace SeleniumAdvance.PageObjects
         public bool IsAlertDisplayed()
         {
             bool foundAlert = false;
-            WebDriverWait wait = new WebDriverWait(Constant.WebDriver, TimeSpan.FromSeconds(5));
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
             try
             {
                 wait.Until(ExpectedConditions.AlertIsPresent());
@@ -75,16 +82,16 @@ namespace SeleniumAdvance.PageObjects
 
         public LoginPage Logout()
         {
-            LnkAccount.MouseTo(Constant.WebDriver);
+            LnkAccount.MouseTo(_driver);
             LnkLogout.Click();
             return new LoginPage();
         }
 
         public void SelectMenuItem(string mainMenu, string subMenu)
         {
-            IWebElement LnkMainMenu = Constant.WebDriver.FindElement(By.XPath(string.Format(_lnkMainMenu, mainMenu)));
-            IWebElement LnkSubMenu = Constant.WebDriver.FindElement(By.XPath(string.Format(_lnkSubMenu, mainMenu, subMenu)));
-            LnkMainMenu.MouseTo(Constant.WebDriver);
+            IWebElement LnkMainMenu = _driver.FindElement(By.XPath(string.Format(_lnkMainMenu, mainMenu)));
+            IWebElement LnkSubMenu = _driver.FindElement(By.XPath(string.Format(_lnkSubMenu, mainMenu, subMenu)));
+            LnkMainMenu.MouseTo(_driver);
             LnkSubMenu.Click();
         }
 
@@ -92,7 +99,7 @@ namespace SeleniumAdvance.PageObjects
         {
             SelectMenuItem("Repository", repositoryName);
 
-            WebDriverWait wait = new WebDriverWait(Constant.WebDriver, TimeSpan.FromSeconds(5));
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkMainMenu, repositoryName))));
 
             //Thread.Sleep(1000);
@@ -106,8 +113,8 @@ namespace SeleniumAdvance.PageObjects
 
         public void SelectGeneralSetting(string item)
         {
-            TabSetting.MouseTo(Constant.WebDriver);
-            IWebElement settingItem = Constant.WebDriver.FindElement(By.XPath(string.Format(_lnkSettingItem, item)));
+            TabSetting.MouseTo(_driver);
+            IWebElement settingItem = _driver.FindElement(By.XPath(string.Format(_lnkSettingItem, item)));
             settingItem.Click();
         }
         

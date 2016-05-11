@@ -11,8 +11,10 @@ using OpenQA.Selenium.Support.UI;
 
 namespace SeleniumAdvance.PageObjects
 {
-    class ManagePagePage : GeneralPage
+    public class ManagePagePage : GeneralPage
     {
+        private IWebDriver _driver;
+
         #region Locators
 
         static readonly By _txtNewPagePageName = By.XPath("//div[@id='div_popup']//input[@class='page_txt_name']");
@@ -43,9 +45,14 @@ namespace SeleniumAdvance.PageObjects
 
         #region Methods
 
+       public ManagePagePage(IWebDriver driver)
+        {
+            this._driver = driver;
+        }
+
         public void AddPage(string pageName)
         {
-            GeneralPage generalPage = new GeneralPage();
+            GeneralPage generalPage = new GeneralPage(_driver);
             generalPage.SelectGeneralSetting("Add Page");
 
             TxtNewPagePageName.SendKeys(pageName);

@@ -10,16 +10,19 @@ namespace SeleniumAdvance.TestCases
     [TestClass]
     public class TestBase
     {
+        public IWebDriver driver;
+
         [TestInitialize]
         public void TestInitializeMethod()
         {
             Console.WriteLine("Test Initialize");
 
             //Start Firefox browser and maximize window
-            Constant.WebDriver = new FirefoxDriver();
-            Constant.WebDriver.Manage().Window.Maximize();
-            Constant.WebDriver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(30));
+            driver = new FirefoxDriver();
+            driver.Manage().Window.Maximize();
+            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(30));
         }
+
 
         [TestCleanup]
         public void TestCleanupMethod()
@@ -27,7 +30,7 @@ namespace SeleniumAdvance.TestCases
             Console.WriteLine("Test Cleanup");
 
             //Close browser
-            Constant.WebDriver.Quit();
+            driver.Quit();
         }
     }
 }

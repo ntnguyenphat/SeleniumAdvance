@@ -13,6 +13,8 @@ namespace SeleniumAdvance.PageObjects
 {
     public class LoginPage : GeneralPage
     {
+        private IWebDriver _driver;
+
         #region Locators
 
         static readonly By _txtUsername = By.XPath("//input[@id='username']");
@@ -25,27 +27,33 @@ namespace SeleniumAdvance.PageObjects
         #region Elements
         public IWebElement TxtUsername
         {
-            get { return Constant.WebDriver.FindElement(_txtUsername); }
+            get { return _driver.FindElement(_txtUsername); }
         }
 
         public IWebElement TxtPassword
         {
-            get { return Constant.WebDriver.FindElement(_txtPassword); }
+            get { return _driver.FindElement(_txtPassword); }
         }
 
         public IWebElement BtnLogin
         {
-            get { return Constant.WebDriver.FindElement(_btnLogin); }
+            get { return _driver.FindElement(_btnLogin); }
         }
 
         public IWebElement CmbRepo
         {
-            get { return Constant.WebDriver.FindElement(_cmbRepo); }
+            get { return _driver.FindElement(_cmbRepo); }
         }
 
         #endregion
 
         #region Methods
+
+        public LoginPage(IWebDriver driver)
+        {
+            this._driver = driver;
+        }
+
         public GeneralPage Login(string username, string password)
         {
             TxtUsername.SendKeys(username);
@@ -61,14 +69,14 @@ namespace SeleniumAdvance.PageObjects
 
         public LoginPage Open()
         {
-            Constant.WebDriver.Navigate().GoToUrl(Constant.HomePageURL);
+            _driver.Navigate().GoToUrl(Constant.HomePageURL);
             return this;
         }
         public string GetAlertMessage()
         {
-            WebDriverWait wait = new WebDriverWait(Constant.WebDriver, TimeSpan.FromSeconds(5));
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
             wait.Until(ExpectedConditions.AlertIsPresent());
-            IAlert alert = Constant.WebDriver.SwitchTo().Alert();
+            IAlert alert = _driver.SwitchTo().Alert();
             return alert.Text;
         }
 
