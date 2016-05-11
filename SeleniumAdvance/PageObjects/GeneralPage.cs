@@ -61,12 +61,12 @@ namespace SeleniumAdvance.PageObjects
         {
             bool foundAlert = false;
             WebDriverWait wait = new WebDriverWait(Constant.WebDriver, TimeSpan.FromSeconds(5));
-            if (foundAlert)
+            try
             {
                 wait.Until(ExpectedConditions.AlertIsPresent());
                 foundAlert = true;
             }
-            else
+            catch
             {
                 foundAlert = false;
             }
@@ -91,7 +91,11 @@ namespace SeleniumAdvance.PageObjects
         public GeneralPage ChooseRepository(string repositoryName)
         {
             SelectMenuItem("Repository", repositoryName);
-            Thread.Sleep(1000);
+
+            WebDriverWait wait = new WebDriverWait(Constant.WebDriver, TimeSpan.FromSeconds(5));
+            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkMainMenu, repositoryName))));
+
+            //Thread.Sleep(1000);
             return new GeneralPage();
         }
 
