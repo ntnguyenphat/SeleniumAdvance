@@ -14,7 +14,7 @@ namespace SeleniumAdvance.PageObjects
 {
     public class GeneralPage
     {
-        private IWebDriver _driver;
+        protected IWebDriver _driver;
 
         #region Locators
 
@@ -84,7 +84,7 @@ namespace SeleniumAdvance.PageObjects
         {
             LnkAccount.MouseTo(_driver);
             LnkLogout.Click();
-            return new LoginPage();
+            return new LoginPage(_driver);
         }
 
         public void SelectMenuItem(string mainMenu, string subMenu)
@@ -103,7 +103,7 @@ namespace SeleniumAdvance.PageObjects
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkMainMenu, repositoryName))));
 
             //Thread.Sleep(1000);
-            return new GeneralPage();
+            return new GeneralPage(_driver);
         }
 
         public string GetRepositoryName()

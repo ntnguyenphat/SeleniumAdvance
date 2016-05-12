@@ -18,7 +18,7 @@ namespace SeleniumAdvance.TestCases
             //1. Navigate to Dashboard login page. Login with valid account
             //2. Go to Global Setting -> Add page. Try to go to Global Setting -> Add page again
 
-            LoginPage loginPage = new LoginPage();
+            LoginPage loginPage = new LoginPage(driver);
             GeneralPage generalPage = loginPage.Open().Login(Constant.Username, Constant.Password);
 
             generalPage.SelectGeneralSetting("Add Page");
@@ -40,16 +40,16 @@ namespace SeleniumAdvance.TestCases
             //1. Navigate to Dashboard login page. Login with valid account
             //2. Go to Global Setting -> Add page. Enter Page Name field
 
-            LoginPage loginPage = new LoginPage();
+            LoginPage loginPage = new LoginPage(driver);
             GeneralPage generalPage = loginPage.Open().Login(Constant.Username, Constant.Password);
 
-            ManagePagePage managePage = new ManagePagePage();
+            ManagePagePage managePage = new ManagePagePage(driver);
 
             managePage.AddPage(pageName);
 
             //VP: New page is displayed besides "Overview" page
 
-            Verify.CheckPageNextToPage("Overview", pageName);
+            managePage.CheckPageNextToPage("Overview", pageName);
         }
 
         [TestMethod]
@@ -63,17 +63,17 @@ namespace SeleniumAdvance.TestCases
             //1. Navigate to Dashboard login page. Login with valid account
             //2. Go to Global Setting -> Add page. Enter Page Name field
 
-            LoginPage loginPage = new LoginPage();
+            LoginPage loginPage = new LoginPage(driver);
             GeneralPage generalPage = loginPage.Open().Login(Constant.Username, Constant.Password);
 
-            ManagePagePage managePage = new ManagePagePage();
+            ManagePagePage managePage = new ManagePagePage(driver);
 
             managePage.AddPage(pageName1);
             managePage.AddPage(pageName2,pageName1);
 
             //VP: Page 1 is positioned besides the Page 2
 
-            Verify.CheckPageNextToPage(pageName1, pageName2);
+            managePage.CheckPageNextToPage(pageName1, pageName2);
         }
     }
 }

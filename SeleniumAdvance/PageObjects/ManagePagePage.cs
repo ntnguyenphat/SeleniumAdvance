@@ -8,12 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using SeleniumAdvance.Ultilities;
 using OpenQA.Selenium.Support.UI;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SeleniumAdvance.PageObjects
 {
     public class ManagePagePage : GeneralPage
     {
-        private IWebDriver _driver;
+        private IWebDriver _driverManagePagePage;
 
         #region Locators
 
@@ -28,38 +29,38 @@ namespace SeleniumAdvance.PageObjects
 
         public IWebElement TxtNewPagePageName
         {
-            get { return Constant.WebDriver.FindElement(_txtNewPagePageName); }
+            get { return _driverManagePagePage.FindElement(_txtNewPagePageName); }
         }
 
         public IWebElement BtnNewPageOK
         {
-            get { return Constant.WebDriver.FindElement(_btnNewPageOK); }
+            get { return _driverManagePagePage.FindElement(_btnNewPageOK); }
         }
 
         public IWebElement CmbNewPageDisplayAfter
         {
-            get { return Constant.WebDriver.FindElement(_cmbNewPageDisplayAfter); }
+            get { return _driverManagePagePage.FindElement(_cmbNewPageDisplayAfter); }
         }
 
         #endregion
 
         #region Methods
 
-       public ManagePagePage(IWebDriver driver)
+        public ManagePagePage(IWebDriver driver) : base(driver)
         {
-            this._driver = driver;
+            this._driverManagePagePage = driver;
         }
 
         public void AddPage(string pageName)
         {
-            GeneralPage generalPage = new GeneralPage(_driver);
+            GeneralPage generalPage = new GeneralPage(_driverManagePagePage);
             generalPage.SelectGeneralSetting("Add Page");
 
             TxtNewPagePageName.SendKeys(pageName);
             BtnNewPageOK.Click();
 
-            WebDriverWait wait = new WebDriverWait(Constant.WebDriver, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage,pageName))));
+            WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage, pageName))));
         }
 
         public void AddPage(string pageName, string displayAfter)
@@ -70,8 +71,15 @@ namespace SeleniumAdvance.PageObjects
             CmbNewPageDisplayAfter.SelectItem(displayAfter);
             BtnNewPageOK.Click();
 
-            WebDriverWait wait = new WebDriverWait(Constant.WebDriver, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage, pageName))));
+        }
+
+        public void CheckPageNextToPage(string currentPage, string nextPage)
+        { 
+            By next = By.XPath("//a[.='" + currentPage + "']/following::a[1]");
+            string nextValue = _driverManagePagePage.FindElement(next).Text;
+            Assert.AreEqual(nextPage, nextValue, "\nExpected: " + nextPage + "\nActual: " + nextValue);
         }
         #endregion
     }

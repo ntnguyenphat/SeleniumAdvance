@@ -35,7 +35,7 @@ namespace SeleniumAdvance.TestCases
 
             //Navigate to Dashboard login page. Enter invalid username and password. Click on "Login" button
 
-            LoginPage loginPage = new LoginPage();
+            LoginPage loginPage = new LoginPage(driver);
             loginPage.Open().Login("aaa", "aaa");
 
             string expectedMessage = loginPage.GetAlertMessage();
@@ -52,7 +52,7 @@ namespace SeleniumAdvance.TestCases
 
             //1. Navigate to Dashboard login page. Enter valid username and inpassword. Click on "Login" button
 
-            LoginPage loginPage = new LoginPage();
+            LoginPage loginPage = new LoginPage(driver);
             loginPage.Open().Login(Constant.Username, "aaa");
 
             string expectedMessage = loginPage.GetAlertMessage();
@@ -69,7 +69,7 @@ namespace SeleniumAdvance.TestCases
 
             //1. Navigate to Dashboard login page. Enter valid username and password of default repository. Click on "Login" button
 
-            LoginPage loginPage = new LoginPage();
+            LoginPage loginPage = new LoginPage(driver);
             GeneralPage generalPage = loginPage.Open().Login(Constant.Username, Constant.Password);
 
             //2. Click on "Logout" button. Select a different repository
@@ -93,7 +93,7 @@ namespace SeleniumAdvance.TestCases
             //1. Navigate to Dashboard login page. Login with valid account for the first repository
             //2. Choose another repository in Repository list
 
-            LoginPage loginPage = new LoginPage();
+            LoginPage loginPage = new LoginPage(driver);
             GeneralPage generalPage = loginPage.Open().Login(Constant.Username, Constant.Password);
             generalPage.ChooseRepository(Constant.AdditionalRepo);
 
@@ -114,7 +114,7 @@ namespace SeleniumAdvance.TestCases
 
             //1. Navigate to Dashboard login page. Login with the account has uppercase password
 
-            LoginPage loginPage = new LoginPage();
+            LoginPage loginPage = new LoginPage(driver);
             GeneralPage generalPage = loginPage.Open().Login("test", "admin");
 
             bool actualMainPageDisplayed = generalPage.IsDashboardMainpageDisplayed();
@@ -143,7 +143,7 @@ namespace SeleniumAdvance.TestCases
 
             //1. Navigate to Dashboard login page. Login with the account has uppercase username
 
-            LoginPage loginPage = new LoginPage();
+            LoginPage loginPage = new LoginPage(driver);
             GeneralPage generalPage = loginPage.Open().Login("TEST", "admin");
 
             bool actualMainPageDisplayed = generalPage.IsDashboardMainpageDisplayed();
@@ -171,7 +171,7 @@ namespace SeleniumAdvance.TestCases
 
             //1. Navigate to Dashboard login page. Login with account that has special characters password
 
-            LoginPage loginPage = new LoginPage();
+            LoginPage loginPage = new LoginPage(driver);
             GeneralPage generalPage = loginPage.Open().Login("test1", @"!@#$%^&*()");
 
             bool actualMainPageDisplayed = generalPage.IsDashboardMainpageDisplayed();
@@ -188,7 +188,7 @@ namespace SeleniumAdvance.TestCases
 
             //1. Navigate to Dashboard login page. Login with account that has special characters username 
 
-            LoginPage loginPage = new LoginPage();
+            LoginPage loginPage = new LoginPage(driver);
             GeneralPage generalPage = loginPage.Open().Login(@"`~!@$^&()',.", "specialCharsUser");
 
             bool actualMainPageDisplayed = generalPage.IsDashboardMainpageDisplayed();
@@ -205,7 +205,7 @@ namespace SeleniumAdvance.TestCases
 
             //1. Navigate to Dashboard login page. Click Login button without entering data into Username and Password field 
 
-            LoginPage loginPage = new LoginPage();
+            LoginPage loginPage = new LoginPage(driver);
             loginPage.Open().BtnLogin.Click();
 
             string actualMessage = loginPage.GetAlertMessage();
