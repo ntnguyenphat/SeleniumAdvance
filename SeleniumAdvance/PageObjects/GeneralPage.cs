@@ -119,10 +119,22 @@ namespace SeleniumAdvance.PageObjects
         public bool IsDashboardLockedByDialog()
         {
             return TabSetting.Enabled;
-        }   
+        }
+
+        public bool isElementExist(By locatorKey)
+        {
+            try
+            {
+                _driver.FindElement(locatorKey);
+                return true;
+            }
+            catch (NoSuchElementException e)
+            {
+                return false;
+            }
+        }
 
         #endregion
 
-        
     }
 }

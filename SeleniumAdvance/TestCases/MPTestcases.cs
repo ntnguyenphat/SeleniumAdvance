@@ -4,6 +4,7 @@ using SeleniumAdvance.PageObjects;
 using SeleniumAdvance.Common;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using SeleniumAdvance.Ultilities;
 
 namespace SeleniumAdvance.TestCases
 {
@@ -82,6 +83,7 @@ namespace SeleniumAdvance.TestCases
             Console.WriteLine("DA_MP_TC014 - Verify that \"Public\" pages can be visible and accessed by all users of working repository");
 
             string pageName1 = string.Concat("Page1", CommonMethods.GetUniqueString());
+
             //1.Navigate to Dashboard login page
             //2.Log in specific repository with valid account
 
@@ -94,13 +96,13 @@ namespace SeleniumAdvance.TestCases
             //6.Click OK button
 
             ManagePagePage managePage = new ManagePagePage(driver);
-            managePage.AddPage(pageName: pageName1, publicCheckBox: "Check" );
+            managePage.AddPage(pageName: pageName1, publicCheckBox: true);
 
             //7.Click on Log out link
             //8.Log in with another valid account
 
             loginPage = generalPage.Logout();
-            loginPage.Login("test", "admin");
+            loginPage.Login(Constant.OtherUsername, Constant.OtherPassword);
 
             //VP: Check newly added page is visibled
 
@@ -108,5 +110,88 @@ namespace SeleniumAdvance.TestCases
 
         }
 
+        [TestMethod]
+        public void TC015()
+        {
+            Console.WriteLine("DA_MP_TC015 - Verify that non \"Public\" pages can only be accessed and visible to their creators with condition that all parent pages above it are \"Public\"");
+
+            string parentPageName = string.Concat("Parent", CommonMethods.GetUniqueString());
+            string childPageName = string.Concat("Child", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page. Log in specific repository with valid account
+            //2. Go to Global Setting -> Add page. Enter Page Name field. Check Public checkbox. Click OK button
+
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password);
+
+            ManagePagePage managePage = new ManagePagePage(driver);
+            managePage.AddPage(pageName: parentPageName, publicCheckBox: true);
+
+            //3. Go to Global Setting -> Add page. Enter Page Name field. Click on  Select Parent dropdown list
+            //4. Select specific page. Click OK button. Click on Log out link. Log in with another valid account
+
+            managePage.AddPage(pageName: childPageName, parentPage: parentPageName);
+            managePage.Logout();
+
+            loginPage.Login(Constant.OtherUsername, Constant.OtherPassword);
+
+            //VP: Children is invisibled
+
+            managePage.CheckPageNotExist(parentPageName, childPageName);
+        }
+
+        [TestMethod]
+        public void TC016()
+        {
+            Console.WriteLine("DA_MP_TC016 - Verify that user is able to edit the \"Public\" setting of any page successfully");
+
+            string pageName1 = string.Concat("Page1", CommonMethods.GetUniqueString());
+            string pageName2 = string.Concat("Page2", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page. Log in specific repository with valid account
+            //2. Go to Global Setting -> Add page. Enter Page Name. Click OK button
+
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password);
+
+            ManagePagePage managePage = new ManagePagePage(driver);
+            managePage.AddPage(pageName: pageName1);
+
+            //3. Go to Global Setting -> Add page.  Enter Page Name. Check Public checkbox. Click OK button
+            //4. Click on "Test" page. Click on "Edit" link.
+
+            managePage.AddPage(pageName: pageName2, publicCheckBox: true);
+            managePage.SelectPage(pageName1);
+            managePage.SelectGeneralSetting("Edit");
+
+            //VP: "Edit Page" pop up window is displayed
+
+            managePage.CheckPopupHeader("Edit Page");
+
+
+            //5. Check Public checkbox. Click OK button
+            //6. Click on "Another Test" page. Click on "Edit" link.
+
+            managePage.EditPageInfomation(publicCheckBox: true);
+            managePage.SelectPage(pageName2);
+            managePage.SelectGeneralSetting("Edit");
+
+            //VP: "Edit Page" pop up window is displayed
+
+            managePage.CheckPopupHeader("Edit Page");
+
+            //7. Uncheck Public checkbox. Click OK button
+            //8. Click Log out link. Log in with another valid account
+
+            managePage.EditPageInfomation(publicCheckBox: false);
+            managePage.Logout();
+
+            loginPage.Login(Constant.OtherUsername, Constant.OtherPassword);
+
+            //VP: Check "Test" Page is visible and can be accessed. Check "Another Test" page is invisible
+
+            managePage.CheckPageVisible(pageName1);
+            managePage.CheckPageNotExist(parentPage: pageName2);
+        }
     }
 }

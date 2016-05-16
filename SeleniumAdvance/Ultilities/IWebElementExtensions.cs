@@ -24,5 +24,22 @@ namespace SeleniumAdvance.Ultilities
             SelectElement selector = new SelectElement(element);
             selector.SelectByText(item);
         }
+
+        public static void Check(this IWebElement element)
+        {
+            bool isChecked = element.Selected;
+            if(isChecked == false)
+            {
+                element.Click();
+            }
+        }
+        public static void UnCheck(this IWebElement element)
+        {
+            bool isChecked = element.Selected;
+            if (isChecked == true)
+            {
+                element.Click();
+            }
+        }
     }
 }

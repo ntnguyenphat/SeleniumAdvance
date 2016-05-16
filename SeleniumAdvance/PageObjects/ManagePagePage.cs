@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using SeleniumAdvance.Ultilities;
 using OpenQA.Selenium.Support.UI;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading;
 
 namespace SeleniumAdvance.PageObjects
 {
@@ -24,6 +25,7 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _cmbParentPage = By.XPath("//div[@id='div_popup']//select[@id='parent']");
         static readonly By _cbmNumberOfColumns = By.XPath("//div[@id='div_popup']//select[@id='columnnumber']");
         static readonly By _chbPublic = By.XPath("//input[@id='ispublic']");
+        static readonly By _dlgPopupHeader = By.XPath("//div[@id='div_popup']//td[@class='ptc']/h2");
         static string _lnkNewPage = "//a[.='{0}']";
 
         #endregion
@@ -57,6 +59,11 @@ namespace SeleniumAdvance.PageObjects
 
         public IWebElement ChbPublic
         {
+            get { return _driverManagePagePage.FindElement(_dlgPopupHeader); }
+        }
+
+        public IWebElement DlgPopupHeader
+        {
             get { return _driverManagePagePage.FindElement(_chbPublic); }
         }
 
@@ -64,7 +71,8 @@ namespace SeleniumAdvance.PageObjects
 
         #region Methods
 
-        public ManagePagePage(IWebDriver driver) : base(driver)
+        public ManagePagePage(IWebDriver driver)
+            : base(driver)
         {
             this._driverManagePagePage = driver;
         }
@@ -93,19 +101,19 @@ namespace SeleniumAdvance.PageObjects
         //    wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage, pageName))));
         //}
 
-        public void AddPage(string pageName, string parentPage = null, string numberOfColumn = null, string displayAfer = null, string publicCheckBox = null)
+        public void AddPage(string pageName, string parentPage = null, int numberOfColumn = 0, string displayAfer = null, bool publicCheckBox = false)
         {
             this.SelectGeneralSetting("Add Page");
             TxtNewPagePageName.SendKeys(pageName);
-            
+
             if (parentPage != null)
             {
                 CmbParentPage.SelectItem(parentPage);
             }
 
-            if (numberOfColumn != null)
+            if (numberOfColumn != 0)
             {
-                CmbNewPageDisplayAfter.SelectItem(numberOfColumn);
+                CmbNewPageDisplayAfter.SelectItem(numberOfColumn.ToString());
             }
 
             if (displayAfer != null)
@@ -113,31 +121,96 @@ namespace SeleniumAdvance.PageObjects
                 CmbNewPageDisplayAfter.SelectItem(displayAfer);
             }
 
-            if (publicCheckBox != null)
+            if (publicCheckBox != false)
             {
-                if (publicCheckBox == "Check")
-                {
-                    bool isPublicCheckboxIsChecked = ChbPublic.Selected;
-                    if (isPublicCheckboxIsChecked == false)
-                    {
-                        ChbPublic.Click();
-                    }
-                }
-
+                ChbPublic.Check();
             }
 
             BtnNewPageOK.Click();
 
             WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage, pageName))));           
+            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage, pageName))));
         }
 
+        public void EditPageInfomation(string pageName = null, string parentPage = null, int numberOfColumn = 0, string displayAfer = null, bool publicCheckBox = false)
+        {
+            TxtNewPagePageName.SendKeys(pageName);
+
+            if (parentPage != null)
+            {
+                CmbParentPage.SelectItem(parentPage);
+            }
+
+            if (numberOfColumn != 0)
+            {
+                CmbNewPageDisplayAfter.SelectItem(numberOfColumn.ToString());
+            }
+
+            if (displayAfer != null)
+            {
+                CmbNewPageDisplayAfter.SelectItem(displayAfer);
+            }
+
+            if (publicCheckBox != false)
+            {
+                ChbPublic.Check();
+            }
+
+            BtnNewPageOK.Click();
+
+            WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage, pageName))));
+        }
+
+        public void SelectPage(string path)
+        {
+            By parent = By.XPath("//a[.='" + path + "']");
+            IWebElement lnkParent = _driverManagePagePage.FindElement(parent);
+            lnkParent.Click();
+        }
+
+        #endregion
+
+        #region Verify
+
         public void CheckPageNextToPage(string currentPage, string nextPage)
-        { 
+        {
             By next = By.XPath("//a[.='" + currentPage + "']/following::a[1]");
             string nextValue = _driverManagePagePage.FindElement(next).Text;
             Assert.AreEqual(nextPage, nextValue, "\nExpected: " + nextPage + "\nActual: " + nextValue);
         }
+
+        public void CheckPageNotExist(string parentPage, string childPage = null)
+        {
+            By page = By.XPath("//a[.='" + parentPage + "']");
+
+            if (childPage != null)
+            {
+                IWebElement lnkParent = _driverManagePagePage.FindElement(page);
+                lnkParent.MouseTo(_driverManagePagePage);
+                page = By.XPath("//a[.='" + childPage + "']");
+
+            }
+
+            bool isExist = this.isElementExist(page);
+            Assert.AreEqual(false, isExist, "\nPage is exist");
+        }
+
+        public void CheckPageVisible(string pageName)
+        {
+            By page = By.XPath("//a[.='" + pageName + "']");
+            IWebElement lnkPage = _driverManagePagePage.FindElement(page);
+
+            Assert.AreEqual(true, lnkPage.Displayed, "Page: " + pageName + " is invisible and can not be accessed");
+        }
+
+        public void CheckPopupHeader(string headerName)
+        {
+            Thread.Sleep(1000);
+
+            Assert.AreEqual(headerName, DlgPopupHeader.Text, "\nExpected: " + headerName + "\nActual: " + DlgPopupHeader.Text);
+        }
+
         #endregion
     }
 }
