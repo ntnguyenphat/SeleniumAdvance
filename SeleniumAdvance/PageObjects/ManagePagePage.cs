@@ -21,6 +21,9 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _txtNewPagePageName = By.XPath("//div[@id='div_popup']//input[@class='page_txt_name']");
         static readonly By _btnNewPageOK = By.XPath("//div[@id='div_popup']//input[contains(@onclick,'doAddPage')]");
         static readonly By _cmbNewPageDisplayAfter = By.XPath("//div[@id='div_popup']//select[@id='afterpage']");
+        static readonly By _cmbParentPage = By.XPath("//div[@id='div_popup']//select[@id='parent']");
+        static readonly By _cbmNumberOfColumns = By.XPath("//div[@id='div_popup']//select[@id='columnnumber']");
+        static readonly By _chbPublic = By.XPath("//input[@id='ispublic']");
         static string _lnkNewPage = "//a[.='{0}']";
 
         #endregion
@@ -42,6 +45,21 @@ namespace SeleniumAdvance.PageObjects
             get { return _driverManagePagePage.FindElement(_cmbNewPageDisplayAfter); }
         }
 
+        public IWebElement CmbParentPage
+        {
+            get { return _driverManagePagePage.FindElement(_cmbParentPage); }
+        }
+
+        public IWebElement CmbNumberOfColumns
+        {
+            get { return _driverManagePagePage.FindElement(_cbmNumberOfColumns); }
+        }
+
+        public IWebElement ChbPublic
+        {
+            get { return _driverManagePagePage.FindElement(_chbPublic); }
+        }
+
         #endregion
 
         #region Methods
@@ -51,28 +69,67 @@ namespace SeleniumAdvance.PageObjects
             this._driverManagePagePage = driver;
         }
 
-        public void AddPage(string pageName)
-        {
-            GeneralPage generalPage = new GeneralPage(_driverManagePagePage);
-            generalPage.SelectGeneralSetting("Add Page");
+        //public void AddPage(string pageName)
+        //{
+        //    GeneralPage generalPage = new GeneralPage(_driverManagePagePage);
+        //    generalPage.SelectGeneralSetting("Add Page");
 
-            TxtNewPagePageName.SendKeys(pageName);
-            BtnNewPageOK.Click();
+        //    TxtNewPagePageName.SendKeys(pageName);
+        //    BtnNewPageOK.Click();
 
-            WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage, pageName))));
-        }
+        //    WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
+        //    wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage, pageName))));
+        //}
 
-        public void AddPage(string pageName, string displayAfter)
+        //public void AddPage(string pageName, string displayAfter)
+        //{
+        //    this.SelectGeneralSetting("Add Page");
+
+        //    TxtNewPagePageName.SendKeys(pageName);
+        //    CmbNewPageDisplayAfter.SelectItem(displayAfter);
+        //    BtnNewPageOK.Click();
+
+        //    WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
+        //    wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage, pageName))));
+        //}
+
+        public void AddPage(string pageName, string parentPage = null, string numberOfColumn = null, string displayAfer = null, string publicCheckBox = null)
         {
             this.SelectGeneralSetting("Add Page");
-
             TxtNewPagePageName.SendKeys(pageName);
-            CmbNewPageDisplayAfter.SelectItem(displayAfter);
+            
+            if (parentPage != null)
+            {
+                CmbParentPage.SelectItem(parentPage);
+            }
+
+            if (numberOfColumn != null)
+            {
+                CmbNewPageDisplayAfter.SelectItem(numberOfColumn);
+            }
+
+            if (displayAfer != null)
+            {
+                CmbNewPageDisplayAfter.SelectItem(displayAfer);
+            }
+
+            if (publicCheckBox != null)
+            {
+                if (publicCheckBox == "Check")
+                {
+                    bool isPublicCheckboxIsChecked = ChbPublic.Selected;
+                    if (isPublicCheckboxIsChecked == false)
+                    {
+                        ChbPublic.Click();
+                    }
+                }
+
+            }
+
             BtnNewPageOK.Click();
 
             WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage, pageName))));
+            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage, pageName))));           
         }
 
         public void CheckPageNextToPage(string currentPage, string nextPage)

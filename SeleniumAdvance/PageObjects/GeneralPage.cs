@@ -101,8 +101,6 @@ namespace SeleniumAdvance.PageObjects
 
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkMainMenu, repositoryName))));
-
-            //Thread.Sleep(1000);
             return new GeneralPage(_driver);
         }
 
