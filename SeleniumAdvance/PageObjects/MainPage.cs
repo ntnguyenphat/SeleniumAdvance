@@ -10,10 +10,11 @@ using SeleniumAdvance.Ultilities;
 using OpenQA.Selenium.Support.UI;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace SeleniumAdvance.PageObjects
 {
-    public class ManagePagePage : GeneralPage
+    public class MainPage : GeneralPage
     {
         private IWebDriver _driverManagePagePage;
 
@@ -71,7 +72,7 @@ namespace SeleniumAdvance.PageObjects
 
         #region Methods
 
-        public ManagePagePage(IWebDriver driver)
+        public MainPage(IWebDriver driver)
             : base(driver)
         {
             this._driverManagePagePage = driver;
@@ -126,10 +127,16 @@ namespace SeleniumAdvance.PageObjects
                 ChbPublic.Check();
             }
 
+            Thread.Sleep(1000);
             BtnNewPageOK.Click();
 
             WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage, pageName))));
+        }
+
+        public void DeletePage(string pageName)
+        {
+            //TO DO : Need to create method GotoPage, shouldn't use TxTNewPageName element because it is hard to reuse;
         }
 
         public void EditPageInfomation(string pageName = null, string parentPage = null, int numberOfColumn = 0, string displayAfer = null, bool publicCheckBox = false)
@@ -169,40 +176,75 @@ namespace SeleniumAdvance.PageObjects
             lnkParent.Click();
         }
 
-        #endregion
-
-        #region Verify
-
-        public void CheckPageNextToPage(string currentPage, string nextPage)
+        public bool IsPageNextToPage(string currentPage, string nextPage)
         {
-            By next = By.XPath("//a[.='" + currentPage + "']/following::a[1]");
-            string nextValue = _driverManagePagePage.FindElement(next).Text;
-            Assert.AreEqual(nextPage, nextValue, "\nExpected: " + nextPage + "\nActual: " + nextValue);
-        }
-
-        public void CheckPageNotExist(string parentPage, string childPage = null)
-        {
-            By page = By.XPath("//a[.='" + parentPage + "']");
-
-            if (childPage != null)
+            bool isPageNextToPage = false;
+            //a[.='" + nextPage +"']/parent::*/preceding-sibling::*/a[.='" + currentPage +"']
+            By current = By.XPath("//a[.='" + nextPage + "']/parent::*/preceding-sibling::*/a[.='" + currentPage + "']");
+            if (_driverManagePagePage.FindElement(current).Text == currentPage)
             {
-                IWebElement lnkParent = _driverManagePagePage.FindElement(page);
-                lnkParent.MouseTo(_driverManagePagePage);
-                page = By.XPath("//a[.='" + childPage + "']");
-
+                isPageNextToPage = true;
             }
 
-            bool isExist = this.isElementExist(page);
-            Assert.AreEqual(false, isExist, "\nPage is exist");
+                return isPageNextToPage; 
         }
 
-        public void CheckPageVisible(string pageName)
+        public bool DoesPageExist(string pageLink)
         {
-            By page = By.XPath("//a[.='" + pageName + "']");
-            IWebElement lnkPage = _driverManagePagePage.FindElement(page);
+            bool doesPageExist = false;
+            string[] pages = Regex.Split(pageLink, "->");
+            if (pages.Length == 1)
+            {
+                By page = By.XPath("//a[.='" + pages[0] + "']");
+                doesPageExist = this.isElementExist(page);
+            }
+            else
+            {
+                int pageIndex = 0;
+                while (pageIndex + 1 < pages.Length)
+                {
+                    By page = By.XPath("//a[.='" + pages[pageIndex] + "']");
+                    IWebElement lnkParent = _driverManagePagePage.FindElement(page);
+                    lnkParent.MouseTo(_driverManagePagePage);
+                    pageIndex = pageIndex + 1;
+                    page = By.XPath("//a[.='" + pages[pageIndex] + "']");
+                    doesPageExist = this.isElementExist(page);
+                }
+            }
 
-            Assert.AreEqual(true, lnkPage.Displayed, "Page: " + pageName + " is invisible and can not be accessed");
+            return doesPageExist;
         }
+
+        //public void CheckPageNextToPage(string currentPage, string nextPage)
+        //{
+        //    By next = By.XPath("//a[.='" + currentPage + "']/following::a[1]");
+        //    string nextValue = _driverManagePagePage.FindElement(next).Text;
+        //    Assert.AreEqual(nextPage, nextValue, "\nExpected: " + nextPage + "\nActual: " + nextValue);
+        //}
+
+        //public void CheckPageNotExist(string parentPage, string childPage = null)
+        //{
+        //    By page = By.XPath("//a[.='" + parentPage + "']");
+
+        //    if (childPage != null)
+        //    {
+        //        IWebElement lnkParent = _driverManagePagePage.FindElement(page);
+        //        lnkParent.MouseTo(_driverManagePagePage);
+        //        page = By.XPath("//a[.='" + childPage + "']");
+
+        //    }
+
+        //    bool isExist = this.isElementExist(page);
+        //    Assert.AreEqual(false, isExist, "\nPage is exist");
+        //}
+
+        //public void CheckPageVisible(string pageName)
+        //{
+        //    By page = By.XPath("//a[.='" + pageName + "']");
+        //    IWebElement lnkPage = _driverManagePagePage.FindElement(page);
+
+        //    Assert.AreEqual(true, lnkPage.Displayed, "Page: " + pageName + " is invisible and can not be accessed");
+        //}
 
         public void CheckPopupHeader(string headerName)
         {

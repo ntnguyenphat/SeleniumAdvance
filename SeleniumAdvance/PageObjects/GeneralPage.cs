@@ -128,7 +128,7 @@ namespace SeleniumAdvance.PageObjects
                 _driver.FindElement(locatorKey);
                 return true;
             }
-            catch (NoSuchElementException e)
+            catch (NoSuchElementException)
             {
                 return false;
             }

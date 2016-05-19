@@ -44,13 +44,13 @@ namespace SeleniumAdvance.TestCases
             LoginPage loginPage = new LoginPage(driver);
             GeneralPage generalPage = loginPage.Open().Login(Constant.Username, Constant.Password);
 
-            ManagePagePage managePage = new ManagePagePage(driver);
+            MainPage mainPage = new MainPage(driver);
 
-            managePage.AddPage(pageName);
+            mainPage.AddPage(pageName);
 
             //VP: New page is displayed besides "Overview" page
-
-            managePage.CheckPageNextToPage("Overview", pageName);
+            bool isPageNextToPage = mainPage.IsPageNextToPage("Overview", pageName);
+            Assert.AreEqual(true, isPageNextToPage, "The new page isn't displayed besides \"Overview\" page");
         }
 
         [TestMethod]
@@ -67,14 +67,14 @@ namespace SeleniumAdvance.TestCases
             LoginPage loginPage = new LoginPage(driver);
             GeneralPage generalPage = loginPage.Open().Login(Constant.Username, Constant.Password);
 
-            ManagePagePage managePage = new ManagePagePage(driver);
+            MainPage mainPage = new MainPage(driver);
 
-            managePage.AddPage(pageName1);
-            managePage.AddPage(pageName: pageName2, displayAfer: pageName1);
+            mainPage.AddPage(pageName1);
+            mainPage.AddPage(pageName: pageName2, displayAfer: pageName1);
 
             //VP: Page 1 is positioned besides the Page 2
-
-            managePage.CheckPageNextToPage(pageName1, pageName2);
+            bool isPageNextToPage = mainPage.IsPageNextToPage(pageName1, pageName2);
+            Assert.AreEqual(true, isPageNextToPage, "" + pageName2 + "isn't positioned besides" + pageName2);     
         }
 
         [TestMethod]
@@ -82,7 +82,7 @@ namespace SeleniumAdvance.TestCases
         {
             Console.WriteLine("DA_MP_TC014 - Verify that \"Public\" pages can be visible and accessed by all users of working repository");
 
-            string pageName1 = string.Concat("Page1", CommonMethods.GetUniqueString());
+            string pageName = string.Concat("Page1", CommonMethods.GetUniqueString());
 
             //1.Navigate to Dashboard login page
             //2.Log in specific repository with valid account
@@ -95,8 +95,8 @@ namespace SeleniumAdvance.TestCases
             //5.Check Public checkbox
             //6.Click OK button
 
-            ManagePagePage managePage = new ManagePagePage(driver);
-            managePage.AddPage(pageName: pageName1, publicCheckBox: true);
+            MainPage mainPage = new MainPage(driver);
+            mainPage.AddPage(pageName: pageName, publicCheckBox: true);
 
             //7.Click on Log out link
             //8.Log in with another valid account
@@ -105,9 +105,8 @@ namespace SeleniumAdvance.TestCases
             loginPage.Login(Constant.OtherUsername, Constant.OtherPassword);
 
             //VP: Check newly added page is visibled
-
-            managePage.CheckPageNextToPage("Overview", pageName1);
-
+            bool doesPageExist = mainPage.DoesPageExist(pageName);
+            Assert.AreEqual(true, doesPageExist, "" + pageName + "isn't visibled");   
         }
 
         [TestMethod]
@@ -124,20 +123,20 @@ namespace SeleniumAdvance.TestCases
             LoginPage loginPage = new LoginPage(driver);
             loginPage.Open().Login(Constant.Username, Constant.Password);
 
-            ManagePagePage managePage = new ManagePagePage(driver);
-            managePage.AddPage(pageName: parentPageName, publicCheckBox: true);
+            MainPage mainPage = new MainPage(driver);
+            mainPage.AddPage(pageName: parentPageName, publicCheckBox: true);
 
             //3. Go to Global Setting -> Add page. Enter Page Name field. Click on  Select Parent dropdown list
             //4. Select specific page. Click OK button. Click on Log out link. Log in with another valid account
 
-            managePage.AddPage(pageName: childPageName, parentPage: parentPageName);
-            managePage.Logout();
+            mainPage.AddPage(pageName: childPageName, parentPage: parentPageName);
+            mainPage.Logout();
 
             loginPage.Login(Constant.OtherUsername, Constant.OtherPassword);
 
             //VP: Children is invisibled
-
-            managePage.CheckPageNotExist(parentPageName, childPageName);
+            bool doesPageExist = mainPage.DoesPageExist(parentPageName + "->" + childPageName);
+            Assert.AreEqual(true, doesPageExist, "" + childPageName + "isn't visibled"); 
         }
 
         [TestMethod]
@@ -154,44 +153,46 @@ namespace SeleniumAdvance.TestCases
             LoginPage loginPage = new LoginPage(driver);
             loginPage.Open().Login(Constant.Username, Constant.Password);
 
-            ManagePagePage managePage = new ManagePagePage(driver);
-            managePage.AddPage(pageName: pageName1);
+            MainPage mainPage = new MainPage(driver);
+            mainPage.AddPage(pageName: pageName1);
 
             //3. Go to Global Setting -> Add page.  Enter Page Name. Check Public checkbox. Click OK button
             //4. Click on "Test" page. Click on "Edit" link.
 
-            managePage.AddPage(pageName: pageName2, publicCheckBox: true);
-            managePage.SelectPage(pageName1);
-            managePage.SelectGeneralSetting("Edit");
+            mainPage.AddPage(pageName: pageName2, publicCheckBox: true);
+            mainPage.SelectPage(pageName1);
+            mainPage.SelectGeneralSetting("Edit");
 
             //VP: "Edit Page" pop up window is displayed
 
-            managePage.CheckPopupHeader("Edit Page");
+            mainPage.CheckPopupHeader("Edit Page");
 
 
             //5. Check Public checkbox. Click OK button
             //6. Click on "Another Test" page. Click on "Edit" link.
 
-            managePage.EditPageInfomation(publicCheckBox: true);
-            managePage.SelectPage(pageName2);
-            managePage.SelectGeneralSetting("Edit");
+            mainPage.EditPageInfomation(publicCheckBox: true);
+            mainPage.SelectPage(pageName2);
+            mainPage.SelectGeneralSetting("Edit");
 
             //VP: "Edit Page" pop up window is displayed
 
-            managePage.CheckPopupHeader("Edit Page");
+            mainPage.CheckPopupHeader("Edit Page");
 
             //7. Uncheck Public checkbox. Click OK button
             //8. Click Log out link. Log in with another valid account
 
-            managePage.EditPageInfomation(publicCheckBox: false);
-            managePage.Logout();
+            mainPage.EditPageInfomation(publicCheckBox: false);
+            mainPage.Logout();
 
             loginPage.Login(Constant.OtherUsername, Constant.OtherPassword);
 
-            //VP: Check "Test" Page is visible and can be accessed. Check "Another Test" page is invisible
+            //VP: Check "Test" Page is visible and can be accessed. Check "Another Test" page is invisible.
+            bool doesPageName1Exist = mainPage.DoesPageExist(pageName1);
+            Assert.AreEqual(true, doesPageName1Exist, "" + pageName1 + "isn't visibled");
 
-            managePage.CheckPageVisible(pageName1);
-            managePage.CheckPageNotExist(parentPage: pageName2);
+            bool doesPageName2Exist = mainPage.DoesPageExist(pageName2);
+            Assert.AreEqual(false, doesPageName2Exist, "" + pageName2 + "is visibled"); 
         }
     }
 }
