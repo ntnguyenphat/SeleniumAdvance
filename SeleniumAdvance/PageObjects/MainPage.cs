@@ -21,13 +21,13 @@ namespace SeleniumAdvance.PageObjects
         #region Locators
 
         static readonly By _txtNewPagePageName = By.XPath("//div[@id='div_popup']//input[@class='page_txt_name']");
-        static readonly By _btnNewPageOK = By.XPath("//div[@id='div_popup']//input[contains(@onclick,'doAddPage')]");
-        static readonly By _cmbNewPageDisplayAfter = By.XPath("//div[@id='div_popup']//select[@id='afterpage']");
+        static readonly By _btnPageOK = By.XPath("//div[@id='div_popup']//input[contains(@onclick,'doAddPage')]");
+        static readonly By _cmbPageDisplayAfter = By.XPath("//div[@id='div_popup']//select[@id='afterpage']");
         static readonly By _cmbParentPage = By.XPath("//div[@id='div_popup']//select[@id='parent']");
         static readonly By _cbmNumberOfColumns = By.XPath("//div[@id='div_popup']//select[@id='columnnumber']");
         static readonly By _chbPublic = By.XPath("//input[@id='ispublic']");
         static readonly By _dlgPopupHeader = By.XPath("//div[@id='div_popup']//td[@class='ptc']/h2");
-        static string _lnkNewPage = "//a[.='{0}']";
+        static string _lnkPage = "//a[.='{0}']";
 
         #endregion
 
@@ -40,12 +40,12 @@ namespace SeleniumAdvance.PageObjects
 
         public IWebElement BtnNewPageOK
         {
-            get { return _driverManagePagePage.FindElement(_btnNewPageOK); }
+            get { return _driverManagePagePage.FindElement(_btnPageOK); }
         }
 
         public IWebElement CmbNewPageDisplayAfter
         {
-            get { return _driverManagePagePage.FindElement(_cmbNewPageDisplayAfter); }
+            get { return _driverManagePagePage.FindElement(_cmbPageDisplayAfter); }
         }
 
         public IWebElement CmbParentPage
@@ -60,12 +60,12 @@ namespace SeleniumAdvance.PageObjects
 
         public IWebElement ChbPublic
         {
-            get { return _driverManagePagePage.FindElement(_dlgPopupHeader); }
+            get { return _driverManagePagePage.FindElement(_chbPublic); }
         }
 
         public IWebElement DlgPopupHeader
         {
-            get { return _driverManagePagePage.FindElement(_chbPublic); }
+            get { return _driverManagePagePage.FindElement(_dlgPopupHeader); }
         }
 
         #endregion
@@ -131,18 +131,54 @@ namespace SeleniumAdvance.PageObjects
             BtnNewPageOK.Click();
 
             WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage, pageName))));
+            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, pageName))));
         }
 
-        public void DeletePage(string pageName)
+        public void GotoPage(string pageLink)
         {
-            //TO DO : Need to create method GotoPage, shouldn't use TxTNewPageName element because it is hard to reuse;
+            string[] pages = Regex.Split(pageLink, "->");
+            if (pages.Length == 1)
+            {
+                By page = By.XPath("//a[.='" + pages[0] + "']");
+                IWebElement lnkPage = _driverManagePagePage.FindElement(page);
+                lnkPage.Click();
+            }
+            else
+            {
+                int pageIndex = 0;
+                while (pageIndex + 1 < pages.Length)
+                {
+                    By page = By.XPath("//a[.='" + pages[pageIndex] + "']");
+                    IWebElement lnkParent = _driverManagePagePage.FindElement(page);
+                    lnkParent.MouseTo(_driverManagePagePage);
+                    pageIndex = pageIndex + 1;
+                    page = By.XPath("//a[.='" + pages[pageIndex] + "']");
+                    IWebElement lnkPage = _driverManagePagePage.FindElement(page);
+                    if(pageIndex == pages.Length)
+                    {
+                          lnkPage.Click();
+                    }
+                }                            
+            }
+        }
+
+        public void DeletePage(string pageLink)
+        {
+            WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, pageLink))));
+            GotoPage(pageLink);
+            this.SelectGeneralSetting("Delete");
+            IAlert alert = _driverManagePagePage.SwitchTo().Alert();
+            alert.Accept();
         }
 
         public void EditPageInfomation(string pageName = null, string parentPage = null, int numberOfColumn = 0, string displayAfer = null, bool publicCheckBox = false)
         {
-            TxtNewPagePageName.SendKeys(pageName);
-
+            if (pageName != null)
+            {
+                this.GotoPage(pageName);
+                this.SelectGeneralSetting("Edit");
+            }
             if (parentPage != null)
             {
                 CmbParentPage.SelectItem(parentPage);
@@ -162,11 +198,15 @@ namespace SeleniumAdvance.PageObjects
             {
                 ChbPublic.Check();
             }
+            else
+            {
+                ChbPublic.UnCheck();
+            }
 
             BtnNewPageOK.Click();
 
             WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage, pageName))));
+            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, pageName))));
         }
 
         public void SelectPage(string path)
@@ -246,12 +286,23 @@ namespace SeleniumAdvance.PageObjects
         //    Assert.AreEqual(true, lnkPage.Displayed, "Page: " + pageName + " is invisible and can not be accessed");
         //}
 
-        public void CheckPopupHeader(string headerName)
+        public bool DoesPopupExist(string headerName)
         {
+            bool doesPopupExist = false;
             Thread.Sleep(1000);
-
-            Assert.AreEqual(headerName, DlgPopupHeader.Text, "\nExpected: " + headerName + "\nActual: " + DlgPopupHeader.Text);
+            if (headerName == DlgPopupHeader.Text)
+            {
+                doesPopupExist = true;
+            }
+            return doesPopupExist;
         }
+        
+        //public void CheckPopupHeader(string headerName)
+        //{
+        //    Thread.Sleep(1000);
+
+        //    Assert.AreEqual(headerName, DlgPopupHeader.Text, "\nExpected: " + headerName + "\nActual: " + DlgPopupHeader.Text);
+        //}
 
         #endregion
     }

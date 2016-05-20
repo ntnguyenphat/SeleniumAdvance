@@ -20,11 +20,12 @@ namespace SeleniumAdvance.TestCases
             //2. Go to Global Setting -> Add page. Try to go to Global Setting -> Add page again
 
             LoginPage loginPage = new LoginPage(driver);
-            GeneralPage generalPage = loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password);
 
-            generalPage.SelectGeneralSetting("Add Page");
+            MainPage mainPage = new MainPage(driver);
+            mainPage.SelectGeneralSetting("Add Page");
 
-            bool actualResult = generalPage.IsDashboardLockedByDialog();
+            bool actualResult = mainPage.IsDashboardLockedByDialog();
 
             //VP: User cannot go to Global Setting -> Add page while "New Page" dialog appears.
 
@@ -42,7 +43,7 @@ namespace SeleniumAdvance.TestCases
             //2. Go to Global Setting -> Add page. Enter Page Name field
 
             LoginPage loginPage = new LoginPage(driver);
-            GeneralPage generalPage = loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password);
 
             MainPage mainPage = new MainPage(driver);
 
@@ -51,6 +52,9 @@ namespace SeleniumAdvance.TestCases
             //VP: New page is displayed besides "Overview" page
             bool isPageNextToPage = mainPage.IsPageNextToPage("Overview", pageName);
             Assert.AreEqual(true, isPageNextToPage, "The new page isn't displayed besides \"Overview\" page");
+
+            //Post-condition: Delete newly added page
+            mainPage.DeletePage(pageName);
         }
 
         [TestMethod]
@@ -65,7 +69,7 @@ namespace SeleniumAdvance.TestCases
             //2. Go to Global Setting -> Add page. Enter Page Name field
 
             LoginPage loginPage = new LoginPage(driver);
-            GeneralPage generalPage = loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password);
 
             MainPage mainPage = new MainPage(driver);
 
@@ -74,7 +78,11 @@ namespace SeleniumAdvance.TestCases
 
             //VP: Page 1 is positioned besides the Page 2
             bool isPageNextToPage = mainPage.IsPageNextToPage(pageName1, pageName2);
-            Assert.AreEqual(true, isPageNextToPage, "" + pageName2 + "isn't positioned besides" + pageName2);     
+            Assert.AreEqual(true, isPageNextToPage, "" + pageName2 + "isn't positioned besides" + pageName2);
+
+            //Post-condition: Delete newly added page
+            mainPage.DeletePage(pageName2);
+            mainPage.DeletePage(pageName1);
         }
 
         [TestMethod]
@@ -88,7 +96,7 @@ namespace SeleniumAdvance.TestCases
             //2.Log in specific repository with valid account
 
             LoginPage loginPage = new LoginPage(driver);
-            GeneralPage generalPage = loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password);
 
             //3.Go to Global Setting -> Add page
             //4.Enter Page Name field
@@ -101,12 +109,17 @@ namespace SeleniumAdvance.TestCases
             //7.Click on Log out link
             //8.Log in with another valid account
 
-            loginPage = generalPage.Logout();
+            loginPage = mainPage.Logout();
             loginPage.Login(Constant.OtherUsername, Constant.OtherPassword);
 
             //VP: Check newly added page is visibled
             bool doesPageExist = mainPage.DoesPageExist(pageName);
-            Assert.AreEqual(true, doesPageExist, "" + pageName + "isn't visibled");   
+            Assert.AreEqual(true, doesPageExist, "" + pageName + "isn't visibled");
+
+            //Post-condition: Delete newly added page
+            loginPage = mainPage.Logout();
+            loginPage.Login(Constant.Username, Constant.Password);
+            mainPage.DeletePage(pageName);
         }
 
         [TestMethod]
@@ -136,7 +149,13 @@ namespace SeleniumAdvance.TestCases
 
             //VP: Children is invisibled
             bool doesPageExist = mainPage.DoesPageExist(parentPageName + "->" + childPageName);
-            Assert.AreEqual(true, doesPageExist, "" + childPageName + "isn't visibled"); 
+            Assert.AreEqual(false, doesPageExist, "" + childPageName + "is visibled");
+
+            //Post-condition: Delete newly added page
+            loginPage = mainPage.Logout();
+            loginPage.Login(Constant.Username, Constant.Password);
+            mainPage.DeletePage(childPageName);
+            mainPage.DeletePage(parentPageName);
         }
 
         [TestMethod]
@@ -160,24 +179,24 @@ namespace SeleniumAdvance.TestCases
             //4. Click on "Test" page. Click on "Edit" link.
 
             mainPage.AddPage(pageName: pageName2, publicCheckBox: true);
-            mainPage.SelectPage(pageName1);
+            mainPage.GotoPage(pageName1);
             mainPage.SelectGeneralSetting("Edit");
 
             //VP: "Edit Page" pop up window is displayed
-
-            mainPage.CheckPopupHeader("Edit Page");
-
+            bool doesPopupExist1 = mainPage.DoesPopupExist("Edit Page");
+            Assert.AreEqual(true, doesPopupExist1, "Pop up window is not displayed");
 
             //5. Check Public checkbox. Click OK button
             //6. Click on "Another Test" page. Click on "Edit" link.
 
             mainPage.EditPageInfomation(publicCheckBox: true);
-            mainPage.SelectPage(pageName2);
+            mainPage.GotoPage(pageName2);
             mainPage.SelectGeneralSetting("Edit");
 
             //VP: "Edit Page" pop up window is displayed
 
-            mainPage.CheckPopupHeader("Edit Page");
+            bool doesPopupExist2 = mainPage.DoesPopupExist("Edit Page");
+            Assert.AreEqual(true, doesPopupExist2, "Pop up window is not displayed");
 
             //7. Uncheck Public checkbox. Click OK button
             //8. Click Log out link. Log in with another valid account
@@ -189,10 +208,14 @@ namespace SeleniumAdvance.TestCases
 
             //VP: Check "Test" Page is visible and can be accessed. Check "Another Test" page is invisible.
             bool doesPageName1Exist = mainPage.DoesPageExist(pageName1);
-            Assert.AreEqual(true, doesPageName1Exist, "" + pageName1 + "isn't visibled");
+            Assert.AreEqual(true, doesPageName1Exist, "" + pageName1 + " isn't visibled");
 
             bool doesPageName2Exist = mainPage.DoesPageExist(pageName2);
-            Assert.AreEqual(false, doesPageName2Exist, "" + pageName2 + "is visibled"); 
+            Assert.AreEqual(false, doesPageName2Exist, "" + pageName2 + " is visibled");
+           
+            //Post-condition: Delete newly added page
+            mainPage.DeletePage(pageName2);
+            mainPage.DeletePage(pageName1);
         }
     }
 }

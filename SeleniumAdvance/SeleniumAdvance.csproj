@@ -68,7 +68,6 @@
     <Compile Include="TestCases\LoginTestcases.cs" />
     <Compile Include="TestCases\TestBase.cs" />
     <Compile Include="TestCases\MPTestcases.cs" />
-    <Compile Include="TestCases\Verify.cs" />
     <Compile Include="Ultilities\IWebElementExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
