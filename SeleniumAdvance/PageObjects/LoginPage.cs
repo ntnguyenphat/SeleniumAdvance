@@ -54,18 +54,22 @@ namespace SeleniumAdvance.PageObjects
             this._driverLoginPage = driver;
         }
 
-        public GeneralPage Login(string username, string password)
+        public GeneralPage Login(string username, string password, string repositoryName = null)
         {
+            if (repositoryName != null)
+            {
+                CmbRepo.SelectItem(repositoryName);
+            }
             TxtUsername.SendKeys(username);
             TxtPassword.SendKeys(password);
             BtnLogin.Click();
             return this;
         }
 
-        public void SelectRepository(string repositoryName)
-        {
-            CmbRepo.SelectItem(repositoryName);
-        }
+        //public void SelectRepository(string repositoryName)
+        //{
+        //    CmbRepo.SelectItem(repositoryName);
+        //}
 
         public LoginPage Open()
         {

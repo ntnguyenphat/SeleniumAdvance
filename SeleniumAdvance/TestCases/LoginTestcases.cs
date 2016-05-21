@@ -76,8 +76,7 @@ namespace SeleniumAdvance.TestCases
             //3. Enter valid username and password of this repository
 
             loginPage = generalPage.Logout();
-            loginPage.SelectRepository(Constant.AdditionalRepo);
-            generalPage = loginPage.Login(Constant.Username, Constant.Password);
+            generalPage = loginPage.Login(Constant.Username, Constant.Password, Constant.AdditionalRepo);
 
             bool observedResult = generalPage.IsDashboardMainpageDisplayed();
 
@@ -94,7 +93,7 @@ namespace SeleniumAdvance.TestCases
             //2. Choose another repository in Repository list
 
             LoginPage loginPage = new LoginPage(driver);
-            GeneralPage generalPage = loginPage.Open().Login(Constant.Username, Constant.Password);
+            GeneralPage generalPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
             generalPage.ChooseRepository(Constant.AdditionalRepo);
 
             string actualRepositoryName = generalPage.GetRepositoryName();

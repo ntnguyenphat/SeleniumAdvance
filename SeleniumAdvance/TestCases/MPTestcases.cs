@@ -96,7 +96,7 @@ namespace SeleniumAdvance.TestCases
             //2.Log in specific repository with valid account
 
             LoginPage loginPage = new LoginPage(driver);
-            loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
 
             //3.Go to Global Setting -> Add page
             //4.Enter Page Name field
@@ -110,7 +110,7 @@ namespace SeleniumAdvance.TestCases
             //8.Log in with another valid account
 
             loginPage = mainPage.Logout();
-            loginPage.Login(Constant.OtherUsername, Constant.OtherPassword);
+            loginPage.Login(Constant.OtherUsername, Constant.OtherPassword, Constant.DefaultRepo);
 
             //VP: Check newly added page is visibled
             bool doesPageExist = mainPage.DoesPageExist(pageName);
@@ -134,7 +134,7 @@ namespace SeleniumAdvance.TestCases
             //2. Go to Global Setting -> Add page. Enter Page Name field. Check Public checkbox. Click OK button
 
             LoginPage loginPage = new LoginPage(driver);
-            loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
 
             MainPage mainPage = new MainPage(driver);
             mainPage.AddPage(pageName: parentPageName, publicCheckBox: true);
@@ -145,7 +145,7 @@ namespace SeleniumAdvance.TestCases
             mainPage.AddPage(pageName: childPageName, parentPage: parentPageName);
             mainPage.Logout();
 
-            loginPage.Login(Constant.OtherUsername, Constant.OtherPassword);
+            loginPage.Login(Constant.OtherUsername, Constant.OtherPassword, Constant.DefaultRepo);
 
             //VP: Children is invisibled
             bool doesPageExist = mainPage.DoesPageExist(parentPageName + "->" + childPageName);
@@ -153,7 +153,7 @@ namespace SeleniumAdvance.TestCases
 
             //Post-condition: Delete newly added page
             loginPage = mainPage.Logout();
-            loginPage.Login(Constant.Username, Constant.Password);
+            loginPage.Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
             mainPage.DeletePage(childPageName);
             mainPage.DeletePage(parentPageName);
         }
@@ -170,7 +170,7 @@ namespace SeleniumAdvance.TestCases
             //2. Go to Global Setting -> Add page. Enter Page Name. Click OK button
 
             LoginPage loginPage = new LoginPage(driver);
-            loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
 
             MainPage mainPage = new MainPage(driver);
             mainPage.AddPage(pageName: pageName1);
@@ -204,7 +204,7 @@ namespace SeleniumAdvance.TestCases
             mainPage.EditPageInfomation(publicCheckBox: false);
             mainPage.Logout();
 
-            loginPage.Login(Constant.OtherUsername, Constant.OtherPassword);
+            loginPage.Login(Constant.OtherUsername, Constant.OtherPassword, Constant.DefaultRepo);
 
             //VP: Check "Test" Page is visible and can be accessed. Check "Another Test" page is invisible.
             bool doesPageName1Exist = mainPage.DoesPageExist(pageName1);
@@ -214,6 +214,8 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(false, doesPageName2Exist, "" + pageName2 + " is visibled");
            
             //Post-condition: Delete newly added page
+            loginPage = mainPage.Logout();
+            loginPage.Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
             mainPage.DeletePage(pageName2);
             mainPage.DeletePage(pageName1);
         }
@@ -231,7 +233,7 @@ namespace SeleniumAdvance.TestCases
             //3. Add a new parent page
             //4. Add a children page of newly added page
             LoginPage loginPage = new LoginPage(driver);
-            loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
 
             MainPage mainPage = new MainPage(driver);
             mainPage.AddPage(pageName: parentPageName);
@@ -292,6 +294,49 @@ namespace SeleniumAdvance.TestCases
             bool doesParentPageExist = mainPage.DoesPageExist(parentPageName);
             Assert.AreEqual(false, doesParentPageExist, "Parent page isn't deleted");
         }
-            
+
+        [TestMethod]
+        public void TC018()
+        {
+            Console.WriteLine("DA_MP_TC018 - Verify that user is able to add additional sibbling pages to the parent page successfully");
+
+            string parentPageName = string.Concat("Test Parent ", CommonMethods.GetUniqueString());
+            string childPageName1 = string.Concat("Test Child 1 ", CommonMethods.GetUniqueString());
+            string childPageName2 = string.Concat("Test Child 2 ", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page
+            //2. Log in specific repository with valid account
+            //3. Go to Global Setting -> Add page
+            //4. Enter Page Name
+            //5. Click OK button
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            MainPage mainPage = new MainPage(driver);
+            mainPage.AddPage(pageName: parentPageName);
+
+            //6. Go to Global Setting -> Add page
+            //7. Enter Page Name
+            //8. Click on  Parent Page dropdown list
+            //9. Select a parent page
+            //10. Click OK button
+            mainPage.AddPage(pageName: childPageName1, parentPage: parentPageName);
+
+            //11. Go to Global Setting -> Add page
+            //12. Enter Page Name
+            //13. Click on  Parent Page dropdown list
+            //14. Select a parent page
+            //15. Click OK button
+            mainPage.AddPage(pageName: childPageName2, parentPage: parentPageName);
+
+            //16. VP: Check "Test Child 2" is added successfully
+            bool doesChildPageExist = mainPage.DoesPageExist(parentPageName + "->" + childPageName2);
+            Assert.AreEqual(true, doesChildPageExist, "Test child 2 isn't added");
+
+            //Post-condtion: Delete all created pages
+            mainPage.DeletePage(parentPageName + "->" + childPageName2);
+            mainPage.DeletePage(parentPageName + "->" + childPageName1);
+            mainPage.DeletePage(parentPageName);
+        }
     }
 }
