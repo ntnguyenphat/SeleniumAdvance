@@ -72,6 +72,7 @@ namespace SeleniumAdvance.PageObjects
             _driverLoginPage.Navigate().GoToUrl(Constant.HomePageURL);
             return this;
         }
+
         public string GetAlertMessage()
         {
             WebDriverWait wait = new WebDriverWait(_driverLoginPage, TimeSpan.FromSeconds(5));

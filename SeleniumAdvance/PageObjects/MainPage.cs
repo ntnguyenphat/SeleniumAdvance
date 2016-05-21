@@ -154,7 +154,7 @@ namespace SeleniumAdvance.PageObjects
                     pageIndex = pageIndex + 1;
                     page = By.XPath("//a[.='" + pages[pageIndex] + "']");
                     IWebElement lnkPage = _driverManagePagePage.FindElement(page);
-                    if(pageIndex == pages.Length)
+                    if(pageIndex + 1 == pages.Length)
                     {
                           lnkPage.Click();
                     }
@@ -170,6 +170,21 @@ namespace SeleniumAdvance.PageObjects
             this.SelectGeneralSetting("Delete");
             IAlert alert = _driverManagePagePage.SwitchTo().Alert();
             alert.Accept();
+        }
+
+        public string GetAlertMessage(bool closeAlert = false)
+        {
+            WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(5));
+            wait.Until(ExpectedConditions.AlertIsPresent());
+            IAlert alert = _driverManagePagePage.SwitchTo().Alert();
+            string alertMessage = alert.Text;
+            if (closeAlert == true)
+            {
+                alert.Accept();
+                alertMessage = null;
+            }
+            return alertMessage;
+ 
         }
 
         public void EditPageInfomation(string pageName = null, string parentPage = null, int numberOfColumn = 0, string displayAfer = null, bool publicCheckBox = false)
@@ -219,7 +234,6 @@ namespace SeleniumAdvance.PageObjects
         public bool IsPageNextToPage(string currentPage, string nextPage)
         {
             bool isPageNextToPage = false;
-            //a[.='" + nextPage +"']/parent::*/preceding-sibling::*/a[.='" + currentPage +"']
             By current = By.XPath("//a[.='" + nextPage + "']/parent::*/preceding-sibling::*/a[.='" + currentPage + "']");
             if (_driverManagePagePage.FindElement(current).Text == currentPage)
             {
@@ -231,8 +245,10 @@ namespace SeleniumAdvance.PageObjects
 
         public bool DoesPageExist(string pageLink)
         {
+            WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
             bool doesPageExist = false;
-            string[] pages = Regex.Split(pageLink, "->");
+            string[] pages = Regex.Split(pageLink, "->");     
             if (pages.Length == 1)
             {
                 By page = By.XPath("//a[.='" + pages[0] + "']");

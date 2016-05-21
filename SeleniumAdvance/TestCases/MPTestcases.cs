@@ -217,5 +217,81 @@ namespace SeleniumAdvance.TestCases
             mainPage.DeletePage(pageName2);
             mainPage.DeletePage(pageName1);
         }
+
+        [TestMethod]
+        public void TC017()
+        {
+            Console.WriteLine("DA_MP_TC017 - Verify that user can remove any main parent page except \"Overview\" page successfully and the order of pages stays persistent as long as there is not children page under it");
+
+            string parentPageName = string.Concat("Parent", CommonMethods.GetUniqueString());
+            string childPageName = string.Concat("Child", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page
+            //2. Log in specific repository with valid account
+            //3. Add a new parent page
+            //4. Add a children page of newly added page
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password);
+
+            MainPage mainPage = new MainPage(driver);
+            mainPage.AddPage(pageName: parentPageName);
+            mainPage.AddPage(pageName: childPageName, parentPage: parentPageName);
+
+            //5. Click on parent page
+            //6. Click "Delete" link
+            mainPage.GotoPage(parentPageName);
+            mainPage.SelectGeneralSetting("Delete");
+
+            //7. VP: Check confirm message "Are you sure you want to remove this page?" appears
+            string expectedMessage1 = "Are you sure you want to remove this page?";
+            string actualMessage1 = mainPage.GetAlertMessage();
+            Assert.AreEqual(expectedMessage1, actualMessage1, "Confirm message doesn't appear.");
+
+            //8. Click OK button
+            mainPage.GetAlertMessage(closeAlert: true);
+
+            //9. VP: Check warning message "Can not delete page 'Test' since it has child page(s)" appears
+            string expectedMessage2 = "Cannot delete page '" + parentPageName +  "' since it has child page(s).";
+            string actualMessage2 = mainPage.GetAlertMessage().Trim();
+            Assert.AreEqual(expectedMessage2, actualMessage2, "Warning message doesn't appear.");
+
+            //10. Click OK button
+            mainPage.GetAlertMessage(closeAlert: true);
+
+            //11. Click on  children page
+            //12. Click "Delete" link
+            mainPage.GotoPage(parentPageName + "->" + childPageName);
+            mainPage.SelectGeneralSetting("Delete");
+
+            //13. VP: Check confirm message "Are you sure you want to remove this page?" appears
+            string expectedMessage3 = "Are you sure you want to remove this page?";
+            string actualMessage3 = mainPage.GetAlertMessage();
+            Assert.AreEqual(expectedMessage3, actualMessage3, "Confirm message doesn't appear.");
+
+            //14. Click OK button
+            mainPage.GetAlertMessage(closeAlert: true);
+
+            //15. VP: Check children page is deleted
+            bool doesChildPageExist = mainPage.DoesPageExist(parentPageName + "->" + childPageName);
+            Assert.AreEqual(false, doesChildPageExist, "Child page isn't deleted");
+            
+            //16. Click on Parent page
+            //17. Click "Delete" link
+            mainPage.GotoPage(parentPageName);
+            mainPage.SelectGeneralSetting("Delete");
+
+            //18. VP: Check confirm message "Are you sure you want to remove this page?" appears
+            string expectedMessage4 = "Are you sure you want to remove this page?";
+            string actualMessage4 = mainPage.GetAlertMessage();
+            Assert.AreEqual(expectedMessage4, actualMessage4, "Confirm message doesn't appear.");
+
+            //19. Click OK button
+            mainPage.GetAlertMessage(closeAlert: true);
+
+            //20. VP: Check parent page is deleted
+            bool doesParentPageExist = mainPage.DoesPageExist(parentPageName);
+            Assert.AreEqual(false, doesParentPageExist, "Parent page isn't deleted");
+        }
+            
     }
 }
