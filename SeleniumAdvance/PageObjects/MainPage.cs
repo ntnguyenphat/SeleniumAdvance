@@ -165,7 +165,7 @@ namespace SeleniumAdvance.PageObjects
         public void DeletePage(string pageLink)
         {
             WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, pageLink))));
+            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
             GotoPage(pageLink);
             this.SelectGeneralSetting("Delete");
             IAlert alert = _driverManagePagePage.SwitchTo().Alert();
@@ -221,7 +221,7 @@ namespace SeleniumAdvance.PageObjects
             BtnNewPageOK.Click();
 
             WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, pageName))));
+            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
         }
 
         public void SelectPage(string path)

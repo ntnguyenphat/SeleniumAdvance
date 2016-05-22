@@ -338,5 +338,83 @@ namespace SeleniumAdvance.TestCases
             mainPage.DeletePage(parentPageName + "->" + childPageName1);
             mainPage.DeletePage(parentPageName);
         }
+
+        [TestMethod]
+        public void TC019()
+        {
+            Console.WriteLine("DA_MP_TC019 - Verify that user is able to add additional sibbling page levels to the parent page successfully.");
+
+            string childPageName = string.Concat("Child", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Go to Global Setting -> Add page
+            //4. Enter info into all required fields on New Page dialog
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            MainPage mainPage = new MainPage(driver);
+            mainPage.AddPage(pageName: childPageName, parentPage: "Overview");
+
+            //5. VP: Check that newly added page is the child page of Overview page
+            bool doesChildPageExist = mainPage.DoesPageExist("Overview" + "->" + childPageName);
+            Assert.AreEqual(true, doesChildPageExist, "newly added page isn't the child page of Overview page");
+
+            //Post-condition: Delete newly added page
+            mainPage.DeletePage("Overview" + "->" + childPageName);
+        }
+
+        [TestMethod]
+        public void TC020()
+        {
+            Console.WriteLine("DA_MP_TC020 - Verify that user is able to delete sibbling page as long as that page has not children page under it");
+
+            string pageName1 = string.Concat("Page1", CommonMethods.GetUniqueString());
+            string pageName2 = string.Concat("Page2", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Go to Global Setting -> Add page
+            //4. Enter info into all required fields on New Page dialog
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            MainPage mainPage = new MainPage(driver);
+            mainPage.AddPage(pageName: pageName1, parentPage: "Overview");
+
+            //5. Go to Global Setting -> Add page
+            //6. Enter info into all required fields on New Page dialog
+            mainPage.AddPage(pageName: pageName2, parentPage: pageName1);
+
+            //7. Go to the first created page
+            //8. Click Delete link
+            //9. Click Ok button on Confirmation Delete page
+            mainPage.GotoPage("Overview" + "->" + pageName1);
+            mainPage.SelectGeneralSetting("Delete");
+            mainPage.GetAlertMessage(closeAlert: true);
+            
+            //10. VP: Check warning message "Can not delete page 'Test' since it has child page(s)" appears
+            string expectedMessage = "Are you sure you want to remove this page?";
+            string actualMessage = mainPage.GetAlertMessage();
+            Assert.AreEqual(expectedMessage, actualMessage, "Warning message doesn't appear.");
+            
+            //11. Close confirmation dialog
+            mainPage.GetAlertMessage(closeAlert: true);
+
+            //12. Go to the second page
+            //13. Click Delete link
+            //14. Click Ok button on Confirmation Delete page
+            mainPage.GotoPage(pageName1 + "->" + pageName2);
+            mainPage.SelectGeneralSetting("Delete");
+            mainPage.GetAlertMessage(closeAlert: true);
+            
+            //15. Check that Page 2 is deleted successfully
+            bool doesPageExist = mainPage.DoesPageExist(pageName1 + "->" + pageName2);
+            Assert.AreEqual(false, doesPageExist, "Page 2 isn't deleted");
+
+            //Post-condition: Delete all newly added page
+            mainPage.DeletePage("Overview" + "->" + pageName1);
+        }
+         
     }
 }
