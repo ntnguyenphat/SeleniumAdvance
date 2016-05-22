@@ -415,6 +415,96 @@ namespace SeleniumAdvance.TestCases
             //Post-condition: Delete all newly added page
             mainPage.DeletePage("Overview" + "->" + pageName1);
         }
-         
+
+        [TestMethod]
+        public void TC021()
+        {
+            Console.WriteLine("DA_MP_TC021 - Verify that user is able to edit the name of the page (Parent/Sibbling) successfully");
+
+            string pageName1 = string.Concat("Page1", CommonMethods.GetUniqueString());
+            string pageName2 = string.Concat("Page2", CommonMethods.GetUniqueString());
+            string pageName3 = string.Concat("Page3", CommonMethods.GetUniqueString());
+            string pageName4 = string.Concat("Page4", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Go to Global Setting -> Add page
+            //4. Enter info into all required fields on New Page dialog
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            MainPage mainPage = new MainPage(driver);
+            mainPage.AddPage(pageName: pageName1, parentPage: "Overview");
+
+            //5. Go to Global Setting -> Add page
+            //6. Enter info into all required fields on New Page dialog
+            mainPage.AddPage(pageName: pageName2, parentPage: "    " + pageName1);
+
+            //7. Go to the first created page
+            //8. Click Edit link
+            //9. Enter another name into Page Name field
+            //10. Click Ok button on Edit Page dialog
+            mainPage.GotoPage("Overview" + "->" + pageName1);
+            mainPage.SelectGeneralSetting("Edit");
+            mainPage.EditPageInfomation(pageName: pageName3);
+
+            //11. VP: User is able to edit the name of parent page successfully
+            bool doesEditParentPageExist = mainPage.DoesPageExist("Overview" + "->" + pageName3);
+            Assert.AreEqual(true, doesEditParentPageExist, "User isn't able to edit the name of parent page");
+            
+            //12. Go to the second created page
+            //13. Click Edit link
+            //14. Enter another name into Page Name field
+            //15. Click Ok button on Edit Page dialog
+            mainPage.GotoPage("Overview" + "->" + pageName3 + "->" + pageName2);
+            mainPage.SelectGeneralSetting("Edit");
+            mainPage.EditPageInfomation(pageName: pageName4);
+
+            //16. VP: User is able to edit the name of sibbling page successfully
+            bool doesEditChildPageExist = mainPage.DoesPageExist("Overview" + "->" + pageName3 + "->" + pageName4);
+            Assert.AreEqual(true, doesEditChildPageExist, "User isn't able to edit the name of sibbling page");
+
+            //Post-condition: Delete all newly added page
+            mainPage.DeletePage("Overview" + "->" + pageName3 + "->" + pageName4);
+            mainPage.DeletePage("Overview" + "->" + pageName3);
+        }
+
+        [TestMethod]
+        public void TC022()
+        {
+            Console.WriteLine("DA_MP_TC022 - Verify that user is unable to duplicate the name of sibbling page under the same parent page");
+
+            string pageName1 = string.Concat("Page1", CommonMethods.GetUniqueString());
+            string pageName2 = string.Concat("Page2", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page
+            //2. Log in specific repository with valid account
+            //3. Add a new page
+            //4. Add a sibling page of new page
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            MainPage mainPage = new MainPage(driver);
+            mainPage.AddPage(pageName: pageName1);
+            mainPage.AddPage(pageName: pageName2, parentPage: pageName1);
+
+            //5. Go to Global Setting -> Add page
+            //6. Enter Page Name
+            //7. Click on  Parent Page dropdown list
+            //8. Select a parent page
+            //9. Click OK button
+            mainPage.AddPage(pageName: pageName2, parentPage: pageName1);
+
+            //10. Check warning message "Test child already exist. Please enter a different name" appears
+            string expectedMessage =  pageName2 + " already exists. Please enter a different name.";
+            string actualMessage = mainPage.GetAlertMessage().Trim();
+            Assert.AreEqual(expectedMessage, actualMessage, "Warning message doesn't appear.");    
+       
+            //Post-conmainPage.GetAlertMessage()dition: Delete all added pages
+            mainPage.GetAlertMessage(closeAlert: true);
+            mainPage.BtnPageCancel.Click();
+            mainPage.DeletePage(pageName1 + "->" + pageName2);
+            mainPage.DeletePage(pageName1);
+        }
     }
 }

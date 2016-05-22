@@ -22,6 +22,7 @@ namespace SeleniumAdvance.PageObjects
 
         static readonly By _txtNewPagePageName = By.XPath("//div[@id='div_popup']//input[@class='page_txt_name']");
         static readonly By _btnPageOK = By.XPath("//div[@id='div_popup']//input[contains(@onclick,'doAddPage')]");
+        static readonly By _btnPageCancel = By.XPath("//div[@id='div_popup']//input[contains(@onclick,'closeWindow')]");
         static readonly By _cmbPageDisplayAfter = By.XPath("//div[@id='div_popup']//select[@id='afterpage']");
         static readonly By _cmbParentPage = By.XPath("//div[@id='div_popup']//select[@id='parent']");
         static readonly By _cbmNumberOfColumns = By.XPath("//div[@id='div_popup']//select[@id='columnnumber']");
@@ -38,9 +39,14 @@ namespace SeleniumAdvance.PageObjects
             get { return _driverManagePagePage.FindElement(_txtNewPagePageName); }
         }
 
-        public IWebElement BtnNewPageOK
+        public IWebElement BtnPageOK
         {
             get { return _driverManagePagePage.FindElement(_btnPageOK); }
+        }
+
+        public IWebElement BtnPageCancel
+        {
+            get { return _driverManagePagePage.FindElement(_btnPageCancel); }
         }
 
         public IWebElement CmbNewPageDisplayAfter
@@ -128,7 +134,7 @@ namespace SeleniumAdvance.PageObjects
             }
 
             Thread.Sleep(1000);
-            BtnNewPageOK.Click();
+            BtnPageOK.Click();
 
             WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, pageName))));
@@ -174,25 +180,32 @@ namespace SeleniumAdvance.PageObjects
 
         public string GetAlertMessage(bool closeAlert = false)
         {
-            WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(5));
-            wait.Until(ExpectedConditions.AlertIsPresent());
-            IAlert alert = _driverManagePagePage.SwitchTo().Alert();
-            string alertMessage = alert.Text;
-            if (closeAlert == true)
+            bool foundAlert = this.IsAlertDisplayed();
+
+            if (foundAlert == true)
             {
-                alert.Accept();
-                alertMessage = null;
+                IAlert alert = _driverManagePagePage.SwitchTo().Alert();
+                string alertMessage = alert.Text;
+                if (closeAlert == true)
+                {
+                    alert.Accept();
+                    alertMessage = null;
+                }
+                return alertMessage;
             }
-            return alertMessage;
- 
+            else
+            {
+                string alertMessage = null;
+                return alertMessage;
+            }
         }
 
         public void EditPageInfomation(string pageName = null, string parentPage = null, int numberOfColumn = 0, string displayAfer = null, bool publicCheckBox = false)
         {
             if (pageName != null)
             {
-                this.GotoPage(pageName);
-                this.SelectGeneralSetting("Edit");
+                TxtNewPagePageName.Clear();
+                TxtNewPagePageName.SendKeys(pageName);
             }
             if (parentPage != null)
             {
@@ -218,7 +231,7 @@ namespace SeleniumAdvance.PageObjects
                 ChbPublic.UnCheck();
             }
 
-            BtnNewPageOK.Click();
+            BtnPageOK.Click();
 
             WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
