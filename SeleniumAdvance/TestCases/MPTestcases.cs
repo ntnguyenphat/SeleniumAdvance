@@ -384,7 +384,7 @@ namespace SeleniumAdvance.TestCases
 
             //5. Go to Global Setting -> Add page
             //6. Enter info into all required fields on New Page dialog
-            mainPage.AddPage(pageName: pageName2, parentPage: pageName1);
+            mainPage.AddPage(pageName: pageName2, parentPage: "    " + pageName1);
 
             //7. Go to the first created page
             //8. Click Delete link
@@ -394,8 +394,8 @@ namespace SeleniumAdvance.TestCases
             mainPage.GetAlertMessage(closeAlert: true);
             
             //10. VP: Check warning message "Can not delete page 'Test' since it has child page(s)" appears
-            string expectedMessage = "Are you sure you want to remove this page?";
-            string actualMessage = mainPage.GetAlertMessage();
+            string expectedMessage = "Cannot delete page '" + pageName1 + "' since it has child page(s).";
+            string actualMessage = mainPage.GetAlertMessage().Trim();
             Assert.AreEqual(expectedMessage, actualMessage, "Warning message doesn't appear.");
             
             //11. Close confirmation dialog
@@ -404,12 +404,12 @@ namespace SeleniumAdvance.TestCases
             //12. Go to the second page
             //13. Click Delete link
             //14. Click Ok button on Confirmation Delete page
-            mainPage.GotoPage(pageName1 + "->" + pageName2);
+            mainPage.GotoPage("Overview" + "->" + pageName1 + "->" + pageName2);
             mainPage.SelectGeneralSetting("Delete");
             mainPage.GetAlertMessage(closeAlert: true);
             
             //15. Check that Page 2 is deleted successfully
-            bool doesPageExist = mainPage.DoesPageExist(pageName1 + "->" + pageName2);
+            bool doesPageExist = mainPage.DoesPageExist("Overview" + "->" + pageName1 + "->" + pageName2);
             Assert.AreEqual(false, doesPageExist, "Page 2 isn't deleted");
 
             //Post-condition: Delete all newly added page
