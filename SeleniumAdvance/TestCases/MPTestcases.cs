@@ -506,5 +506,156 @@ namespace SeleniumAdvance.TestCases
             mainPage.DeletePage(pageName1 + "->" + pageName2);
             mainPage.DeletePage(pageName1);
         }
+    
+        [TestMethod]
+        public void TC023()
+         {
+             Console.WriteLine("DA_MP_TC023 - Verify that user is able to edit the parent page of the sibbling page");
+             
+             string pageName1 = string.Concat("Page1", CommonMethods.GetUniqueString());
+             string pageName2 = string.Concat("Page2", CommonMethods.GetUniqueString());
+             string pageName3 = string.Concat("Page3", CommonMethods.GetUniqueString());
+
+             //1. Navigate to Dashboard login page
+             //2. Login with valid account
+             //3. Go to Global Setting -> Add page
+             //4. Enter info into all required fields on New Page dialog
+             LoginPage loginPage = new LoginPage(driver);
+             loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+             MainPage mainPage = new MainPage(driver);
+             mainPage.AddPage(pageName: pageName1, parentPage: "Overview");
+
+             //5. Go to Global Setting -> Add page
+             //6. Enter info into all required fields on New Page dialog
+             mainPage.AddPage(pageName: pageName2, parentPage: "    " + pageName1);
+
+             //7. Go to the first created page
+             //8. Click Edit link
+             //9. Enter another name into Page Name field
+             //10. Click Ok button on Edit Page dialog
+             mainPage.GotoPage("Overview" + "->" + pageName1);
+             mainPage.SelectGeneralSetting("Edit");
+             mainPage.EditPageInfomation(pageName: pageName3);
+
+             //11. VP: User is able to edit the parent page of the sibbling page successfully
+             bool doesEditPageExist = mainPage.DoesPageExist("Overview" + "->" + pageName3);
+             Assert.AreEqual(true, doesEditPageExist, "User isn't able to edit the parent page of the sibbling page");
+
+             //Post-condition: Delete all created pages
+             mainPage.DeletePage("Overview" + "->" + pageName3 + "->" + pageName2);
+             mainPage.DeletePage("Overview" + "->" + pageName3);
+         }
+
+        [TestMethod]
+        public void TC024()
+        {
+            Console.WriteLine("DA_MP_TC024 - Verify that \"Bread Crums\" navigation is correct");
+
+            string pageName1 = string.Concat("Page1", CommonMethods.GetUniqueString());
+            string pageName2 = string.Concat("Page2", CommonMethods.GetUniqueString());
+            
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Go to Global Setting -> Add page
+            //4. Enter info into all required fields on New Page dialog
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            MainPage mainPage = new MainPage(driver);
+            mainPage.AddPage(pageName: pageName1, parentPage: "Overview");
+
+            //5. Go to Global Setting -> Add page
+            //6. Enter info into all required fields on New Page dialog
+            mainPage.AddPage(pageName: pageName2, parentPage: "    " + pageName1);
+
+            //7. Click the first breadcrums
+            mainPage.GotoPage("Overview" + "->" + pageName1);
+
+            //8. VP: Check that the first page is navigated
+            bool isFirstPageNavigated = mainPage.IsPageNavigated(pageName1);
+            Assert.AreEqual(true, isFirstPageNavigated, "The first page isn't navigated");
+
+            //9.Click the second breadcrums
+            mainPage.GotoPage("Overview" + "->" + pageName1 + "->" + pageName2);
+
+            //10. VP: Check that the second page is navigated
+            bool isSecondPageNavigated = mainPage.IsPageNavigated(pageName2);
+            Assert.AreEqual(true, isFirstPageNavigated, "The first page isn't navigated");
+
+            //Post-condition: Delete all created pages.
+            mainPage.DeletePage("Overview" + "->" + pageName1 + "->" + pageName2);
+            mainPage.DeletePage("Overview" + "->" + pageName1);
+        }
+
+        [TestMethod]
+        public void TC025()
+        {
+            Console.WriteLine("DA_MP_TC025 - Verify that page listing is correct when user edit \"Display After\"  field of a specific page");
+
+            string pageName1 = string.Concat("Page1", CommonMethods.GetUniqueString());
+            string pageName2 = string.Concat("Page2", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Go to Global Setting -> Add page
+            //4. Enter info into all required fields on New Page dialog
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            MainPage mainPage = new MainPage(driver);
+            mainPage.AddPage(pageName: pageName1);
+
+            //5. Go to Global Setting -> Add page
+            //6. Enter info into all required fields on New Page dialog
+            mainPage.AddPage(pageName: pageName2);
+
+            //7. Click Edit link for the first created page
+            //8. Change value Display After for the second created page to after Overview page
+            //9. Click Ok button on Edit Page dialog
+            mainPage.GotoPage(pageName1);
+            mainPage.SelectGeneralSetting("Edit");
+            mainPage.EditPageInfomation(displayAfer: "Overview");
+
+            //10. VP: Position of the second page follow Overview page
+            bool isPageNextToPage = mainPage.IsPageNextToPage("Overview", pageName1);
+            Assert.AreEqual(true, isPageNextToPage, "The position of second page isn't correct");
+
+            //Post-condition: Delee all created pages
+            mainPage.DeletePage(pageName1);
+            mainPage.DeletePage(pageName2);
+        }
+
+        [TestMethod]
+        public void TC026()
+        {
+            Console.WriteLine("DA_MP_TC026 - Verify that page column is correct when user edit \"Number of Columns\" field of a specific page");
+
+            string pageName = string.Concat("Page", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Go to Global Setting -> Add page
+            //4. Enter info into all required fields on New Page dialog
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            MainPage mainPage = new MainPage(driver);
+            mainPage.AddPage(pageName: pageName, numberOfColumn: 2);
+
+            //5. Go to Global Setting -> Edit link
+            //6. Edit Number of Columns for the above created page
+            //7. Click Ok button on Edit Page dialog
+            mainPage.GotoPage(pageName);
+            mainPage.SelectGeneralSetting("Edit");
+            mainPage.EditPageInfomation(numberOfColumn: 3);
+
+            //8. VP: There are 3 columns on the above created page
+
+            //TO DO : I don't understand the function of the column.
+ 
+            //Post-condition: Delete created page
+            mainPage.DeletePage(pageName);
+        }
     }
 }

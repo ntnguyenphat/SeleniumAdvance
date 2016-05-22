@@ -178,6 +178,20 @@ namespace SeleniumAdvance.PageObjects
             alert.Accept();
         }
 
+        public bool IsPageNavigated(string pageName)
+        {
+            bool isPageNavigated = false;
+            WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
+            string actualTitle = _driverManagePagePage.Title.Substring(_driverManagePagePage.Title.IndexOf("-") + 1,
+                    _driverManagePagePage.Title.Length - _driverManagePagePage.Title.IndexOf("-") - 1).Trim();
+            if (actualTitle == pageName)
+            {
+                isPageNavigated = true;
+            }
+            return isPageNavigated;
+        }
+             
         public string GetAlertMessage(bool closeAlert = false)
         {
             bool foundAlert = this.IsAlertDisplayed();
