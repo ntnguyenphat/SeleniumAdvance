@@ -403,44 +403,9 @@ namespace SeleniumAdvance.TestCases
             panelPage.WaitForAddingPanel(panelName);
             panelPage.ClickEditPanel(panelName);
 
-            //4. Click on Add new link
-            //5. Enter name to Name textbox
-            //6. Click on Finish button
+           
 
-
-            //7. Click on Administer/Panels link
-            //8. Click on add new link
-
-            mainPage.SelectMenuItem("Administer", "Panels");
-            PanelPage panelPage = new PanelPage(driver);
-            panelPage.LnkAddNew.Click();
-            bool actual = panelPage.IsProfileExist(dataName);
-
-            //VP: Data profiles are populated correctly under the "Data Profile" dropped down menu.
-
-            Assert.AreEqual(true, actual, "\nProfile: " + dataName + " is not exist!");
-
-            //9. Enter display name to Display Name textbox
-            //10. Click Ok button to create a panel
-            //11. Click on edit link
-
-            panelPage.TxtDisplayName.SendKeys(panelName);
-            panelPage.ChbSeries.SelectItem(panelSeries, "Value");
-            panelPage.BtnOK.Click();
-            panelPage.WaitForAddingPanel(panelName);
-            panelPage.ClickEditPanel(panelName);
-
-            actual = panelPage.IsProfileExist(dataName);
-
-            //VP: Data profiles are populated correctly under the "Data Profile" dropped down menu.
-
-            Assert.AreEqual(true, actual, "\nProfile: " + dataName + " is not exist!");
-
-            //Post-condtion: Delete created panel
-
-            panelPage.BtnCancel.Click();
-            panelPage.DeletePanel(panelName);
-            dataProfile.DeleteProfile(dataName);
+            
         }
     }
 }
