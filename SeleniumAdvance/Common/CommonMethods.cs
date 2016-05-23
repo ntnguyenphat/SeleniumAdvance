@@ -12,6 +12,7 @@ namespace SeleniumAdvance.Common
         public static string GetUniqueString()
         {
            return DateTime.Now.ToString("ddMMMyyHHmmssfff");
+           
         }
     }
 }
