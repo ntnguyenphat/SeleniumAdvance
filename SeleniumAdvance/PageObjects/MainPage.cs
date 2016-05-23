@@ -84,30 +84,15 @@ namespace SeleniumAdvance.PageObjects
             this._driverManagePagePage = driver;
         }
 
-        //public void AddPage(string pageName)
-        //{
-        //    GeneralPage generalPage = new GeneralPage(_driverManagePagePage);
-        //    generalPage.SelectGeneralSetting("Add Page");
-
-        //    TxtNewPagePageName.SendKeys(pageName);
-        //    BtnNewPageOK.Click();
-
-        //    WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
-        //    wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage, pageName))));
-        //}
-
-        //public void AddPage(string pageName, string displayAfter)
-        //{
-        //    this.SelectGeneralSetting("Add Page");
-
-        //    TxtNewPagePageName.SendKeys(pageName);
-        //    CmbNewPageDisplayAfter.SelectItem(displayAfter);
-        //    BtnNewPageOK.Click();
-
-        //    WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
-        //    wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage, pageName))));
-        //}
-
+        /// <summary>
+        /// Add a new page.
+        /// </summary>
+        /// <param name="pageName">Name of the page.</param>
+        /// <param name="parentPage">Name of the parent page.</param>
+        /// <param name="numberOfColumn">The number of column.</param>
+        /// <param name="displayAfer">The page which the added page displays after.</param>
+        /// <param name="publicCheckBox">Public/Unpublic page .</param>
+        /// <returns></returns>
         public MainPage AddPage(string pageName, string parentPage = null, int numberOfColumn = 0, string displayAfer = null, bool publicCheckBox = false)
         {
             this.SelectGeneralSetting("Add Page");
@@ -141,6 +126,11 @@ namespace SeleniumAdvance.PageObjects
             return this;
         }
 
+        /// <summary>
+        /// Go to a page.
+        /// </summary>
+        /// <param name="pageLink">The page link.</param>
+        /// <returns></returns>
         public MainPage GotoPage(string pageLink)
         {
             string[] pages = Regex.Split(pageLink, "->");
@@ -170,6 +160,11 @@ namespace SeleniumAdvance.PageObjects
             return this;
         }
 
+        /// <summary>
+        /// Delete a page.
+        /// </summary>
+        /// <param name="pageLink">The page link.</param>
+        /// <returns></returns>
         public MainPage DeletePage(string pageLink)
         {
             WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
@@ -181,6 +176,11 @@ namespace SeleniumAdvance.PageObjects
             return this;
         }
 
+        /// <summary>
+        /// Determines if the page is navigated.
+        /// </summary>
+        /// <param name="pageName">Name of the page.</param>
+        /// <returns></returns>
         public bool IsPageNavigated(string pageName)
         {
             bool isPageNavigated = false;
@@ -194,29 +194,16 @@ namespace SeleniumAdvance.PageObjects
             }
             return isPageNavigated;
         }
-             
-        //public string GetAlertMessage(bool closeAlert = false)
-        //{
-        //    bool foundAlert = this.IsAlertDisplayed();
 
-        //    if (foundAlert == true)
-        //    {
-        //        IAlert alert = _driverManagePagePage.SwitchTo().Alert();
-        //        string alertMessage = alert.Text;
-        //        if (closeAlert == true)
-        //        {
-        //            alert.Accept();
-        //            alertMessage = null;
-        //        }
-        //        return alertMessage;
-        //    }
-        //    else
-        //    {
-        //        string alertMessage = null;
-        //        return alertMessage;
-        //    }
-        //}
-
+        /// <summary>
+        /// Edit the information of a page
+        /// </summary>
+        /// <param name="pageName">Name of the page.</param>
+        /// <param name="parentPage">Name of the parent page.</param>
+        /// <param name="numberOfColumn">The number of column.</param>
+        /// <param name="displayAfer">The page which the edited page displays after.</param>
+        /// <param name="publicCheckBox">Public/Unpublic the edited page.</param>
+        /// <returns></returns>
         public MainPage EditPageInfomation(string pageName = null, string parentPage = null, int numberOfColumn = 0, string displayAfer = null, bool publicCheckBox = false)
         {
             if (pageName != null)
@@ -256,14 +243,12 @@ namespace SeleniumAdvance.PageObjects
             return this;
         }
 
-        public MainPage SelectPage(string path)
-        {
-            By parent = By.XPath("//a[.='" + path.Replace(" ", "\u00A0") + "']");
-            IWebElement lnkParent = _driverManagePagePage.FindElement(parent);
-            lnkParent.Click();
-            return this;
-        }
-
+        /// <summary>
+        /// Determines if a page is next to another page.
+        /// </summary>
+        /// <param name="currentPage">The current page.</param>
+        /// <param name="nextPage">The next page.</param>
+        /// <returns></returns>
         public bool IsPageNextToPage(string currentPage, string nextPage)
         {
             bool isPageNextToPage = false;
@@ -276,6 +261,11 @@ namespace SeleniumAdvance.PageObjects
                 return isPageNextToPage; 
         }
 
+        /// <summary>
+        /// Determine if a page exists
+        /// </summary>
+        /// <param name="pageLink">The page link.</param>
+        /// <returns></returns>
         public bool DoesPageExist(string pageLink)
         {
             WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
@@ -304,37 +294,11 @@ namespace SeleniumAdvance.PageObjects
             return doesPageExist;
         }
 
-        //public void CheckPageNextToPage(string currentPage, string nextPage)
-        //{
-        //    By next = By.XPath("//a[.='" + currentPage + "']/following::a[1]");
-        //    string nextValue = _driverManagePagePage.FindElement(next).Text;
-        //    Assert.AreEqual(nextPage, nextValue, "\nExpected: " + nextPage + "\nActual: " + nextValue);
-        //}
-
-        //public void CheckPageNotExist(string parentPage, string childPage = null)
-        //{
-        //    By page = By.XPath("//a[.='" + parentPage + "']");
-
-        //    if (childPage != null)
-        //    {
-        //        IWebElement lnkParent = _driverManagePagePage.FindElement(page);
-        //        lnkParent.MouseTo(_driverManagePagePage);
-        //        page = By.XPath("//a[.='" + childPage + "']");
-
-        //    }
-
-        //    bool isExist = this.isElementExist(page);
-        //    Assert.AreEqual(false, isExist, "\nPage is exist");
-        //}
-
-        //public void CheckPageVisible(string pageName)
-        //{
-        //    By page = By.XPath("//a[.='" + pageName + "']");
-        //    IWebElement lnkPage = _driverManagePagePage.FindElement(page);
-
-        //    Assert.AreEqual(true, lnkPage.Displayed, "Page: " + pageName + " is invisible and can not be accessed");
-        //}
-
+        /// <summary>
+        /// Determine if a popup exists
+        /// </summary>
+        /// <param name="headerName">Name of the header of the popup.</param>
+        /// <returns></returns>
         public bool DoesPopupExist(string headerName)
         {
             bool doesPopupExist = false;
@@ -346,13 +310,6 @@ namespace SeleniumAdvance.PageObjects
             return doesPopupExist;
         }
         
-        //public void CheckPopupHeader(string headerName)
-        //{
-        //    Thread.Sleep(1000);
-
-        //    Assert.AreEqual(headerName, DlgPopupHeader.Text, "\nExpected: " + headerName + "\nActual: " + DlgPopupHeader.Text);
-        //}
-
         #endregion
     }
 }
