@@ -19,16 +19,33 @@ namespace SeleniumAdvance.Ultilities
             actions.MoveToElement(element).Build().Perform();
         }
 
-        public static void SelectItem(this IWebElement element, string item)
+        public static void SelectItem(this IWebElement element, string item, string selectby = "Text")
         {
             SelectElement selector = new SelectElement(element);
-            selector.SelectByText(item);
+            if (selectby == "Value")
+                selector.SelectByValue(item);
+            else
+                selector.SelectByText(item);
+        }
+
+        public static bool IsItemExist(this IWebElement element, string item)
+        {
+            SelectElement selector = new SelectElement(element);
+            List<IWebElement> list = selector.Options.ToList();
+            List<string> listItem = new List<string>();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                listItem.Add(list[i].Text.ToString());
+            }
+
+            return listItem.Contains(item);
         }
 
         public static void Check(this IWebElement element)
         {
             bool isChecked = element.Selected;
-            if(isChecked == false)
+            if (isChecked == false)
             {
                 element.Click();
             }

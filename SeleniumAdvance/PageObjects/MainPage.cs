@@ -108,7 +108,7 @@ namespace SeleniumAdvance.PageObjects
         //    wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkNewPage, pageName))));
         //}
 
-        public void AddPage(string pageName, string parentPage = null, int numberOfColumn = 0, string displayAfer = null, bool publicCheckBox = false)
+        public MainPage AddPage(string pageName, string parentPage = null, int numberOfColumn = 0, string displayAfer = null, bool publicCheckBox = false)
         {
             this.SelectGeneralSetting("Add Page");
             TxtNewPagePageName.SendKeys(pageName);
@@ -138,9 +138,10 @@ namespace SeleniumAdvance.PageObjects
 
             WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, pageName))));
+            return this;
         }
 
-        public void GotoPage(string pageLink)
+        public MainPage GotoPage(string pageLink)
         {
             string[] pages = Regex.Split(pageLink, "->");
             if (pages.Length == 1)
@@ -166,9 +167,10 @@ namespace SeleniumAdvance.PageObjects
                     }
                 }                            
             }
+            return this;
         }
 
-        public void DeletePage(string pageLink)
+        public MainPage DeletePage(string pageLink)
         {
             WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
@@ -176,6 +178,7 @@ namespace SeleniumAdvance.PageObjects
             this.SelectGeneralSetting("Delete");
             IAlert alert = _driverManagePagePage.SwitchTo().Alert();
             alert.Accept();
+            return this;
         }
 
         public bool IsPageNavigated(string pageName)
@@ -192,29 +195,29 @@ namespace SeleniumAdvance.PageObjects
             return isPageNavigated;
         }
              
-        public string GetAlertMessage(bool closeAlert = false)
-        {
-            bool foundAlert = this.IsAlertDisplayed();
+        //public string GetAlertMessage(bool closeAlert = false)
+        //{
+        //    bool foundAlert = this.IsAlertDisplayed();
 
-            if (foundAlert == true)
-            {
-                IAlert alert = _driverManagePagePage.SwitchTo().Alert();
-                string alertMessage = alert.Text;
-                if (closeAlert == true)
-                {
-                    alert.Accept();
-                    alertMessage = null;
-                }
-                return alertMessage;
-            }
-            else
-            {
-                string alertMessage = null;
-                return alertMessage;
-            }
-        }
+        //    if (foundAlert == true)
+        //    {
+        //        IAlert alert = _driverManagePagePage.SwitchTo().Alert();
+        //        string alertMessage = alert.Text;
+        //        if (closeAlert == true)
+        //        {
+        //            alert.Accept();
+        //            alertMessage = null;
+        //        }
+        //        return alertMessage;
+        //    }
+        //    else
+        //    {
+        //        string alertMessage = null;
+        //        return alertMessage;
+        //    }
+        //}
 
-        public void EditPageInfomation(string pageName = null, string parentPage = null, int numberOfColumn = 0, string displayAfer = null, bool publicCheckBox = false)
+        public MainPage EditPageInfomation(string pageName = null, string parentPage = null, int numberOfColumn = 0, string displayAfer = null, bool publicCheckBox = false)
         {
             if (pageName != null)
             {
@@ -249,13 +252,16 @@ namespace SeleniumAdvance.PageObjects
 
             WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
+
+            return this;
         }
 
-        public void SelectPage(string path)
+        public MainPage SelectPage(string path)
         {
             By parent = By.XPath("//a[.='" + path + "']");
             IWebElement lnkParent = _driverManagePagePage.FindElement(parent);
             lnkParent.Click();
+            return this;
         }
 
         public bool IsPageNextToPage(string currentPage, string nextPage)
@@ -279,7 +285,7 @@ namespace SeleniumAdvance.PageObjects
             if (pages.Length == 1)
             {
                 By page = By.XPath("//a[.='" + pages[0] + "']");
-                doesPageExist = this.isElementExist(page);
+                doesPageExist = this.IsElementExist(page);
             }
             else
             {
@@ -291,7 +297,7 @@ namespace SeleniumAdvance.PageObjects
                     lnkParent.MouseTo(_driverManagePagePage);
                     pageIndex = pageIndex + 1;
                     page = By.XPath("//a[.='" + pages[pageIndex] + "']");
-                    doesPageExist = this.isElementExist(page);
+                    doesPageExist = this.IsElementExist(page);
                 }
             }
 

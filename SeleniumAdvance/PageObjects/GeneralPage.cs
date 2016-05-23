@@ -121,10 +121,12 @@ namespace SeleniumAdvance.PageObjects
             return TabSetting.Enabled;
         }
 
-        public bool isElementExist(By locatorKey)
+        public bool IsElementExist(By locatorKey)
         {
             try
             {
+                WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+                wait.Until(ExpectedConditions.ElementExists(locatorKey));
                 _driver.FindElement(locatorKey);
                 return true;
             }
@@ -134,6 +136,34 @@ namespace SeleniumAdvance.PageObjects
             }
         }
 
+        public string GetAlertMessage(bool closeAlert = false)
+        {
+            bool foundAlert = this.IsAlertDisplayed();
+
+            if (foundAlert == true)
+            {
+                IAlert alert = _driver.SwitchTo().Alert();
+                string alertMessage = alert.Text;
+
+                if (closeAlert == true)
+                {
+                    alert.Accept();
+                    Thread.Sleep(1000);
+                }
+                return alertMessage;
+            }
+            else
+            {
+                string alertMessage = null;
+                return alertMessage;
+            }
+        }
+
+        public void WaitElementExist(By locator)
+        {
+            WebDriverWait wait = new WebDriverWait(_driver,TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists(locator));
+        }
         #endregion
 
     }

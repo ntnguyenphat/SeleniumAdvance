@@ -54,7 +54,7 @@ namespace SeleniumAdvance.PageObjects
             this._driverLoginPage = driver;
         }
 
-        public GeneralPage Login(string username, string password, string repositoryName = null)
+        public MainPage Login(string username, string password, string repositoryName = null)
         {
             if (repositoryName != null)
             {
@@ -63,7 +63,7 @@ namespace SeleniumAdvance.PageObjects
             TxtUsername.SendKeys(username);
             TxtPassword.SendKeys(password);
             BtnLogin.Click();
-            return this;
+            return new MainPage(_driver);
         }
 
         //public void SelectRepository(string repositoryName)

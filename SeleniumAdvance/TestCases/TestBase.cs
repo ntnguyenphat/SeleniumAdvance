@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using SeleniumAdvance.Common;
+using SeleniumAdvance.PageObjects;
 
 namespace SeleniumAdvance.TestCases
 {
@@ -28,7 +29,10 @@ namespace SeleniumAdvance.TestCases
         public void TestCleanupMethod()
         {
             Console.WriteLine("Test Cleanup");
-
+            Console.WriteLine("Cleanup all current page");
+            //GeneralPage generalPage = new GeneralPage(driver);
+            //generalPage.Logout().Login(Constant.Username, Constant.Password);
+            
             //Close browser
             driver.Quit();
         }
