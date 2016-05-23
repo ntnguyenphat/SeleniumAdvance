@@ -43,6 +43,24 @@ namespace SeleniumAdvance.Ultilities
             return listItem.Contains(item);
         }
 
+        public static bool IsItemSorted(this IWebElement element)
+        {
+            SelectElement selector = new SelectElement(element);
+            List<IWebElement> list = selector.Options.ToList();
+            List<string> listItem = new List<string>();
+            bool flag = true;
+
+            for (int i = 0; i < list.Count - 1; i++)
+            {
+                if (string.Compare(list[i].Text, list[i++].Text) < 0)
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            return flag;
+        }
+
         public static void Check(this IWebElement element)
         {
             bool isChecked = element.Selected;

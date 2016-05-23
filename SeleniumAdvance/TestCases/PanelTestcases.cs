@@ -93,8 +93,6 @@ namespace SeleniumAdvance.TestCases
         {
             Console.WriteLine("DA_PANEL_TC029 - Verify that user is unable to create new panel when (*) required field is not filled");
 
-            string pageName = string.Concat("Page", CommonMethods.GetUniqueString());
-
             //1. Navigate to Dashboard login page
             //2. Select specific repository
             //3. Enter valid username and password
@@ -125,9 +123,9 @@ namespace SeleniumAdvance.TestCases
         public void TC030()
         {
             Console.WriteLine("DA_PANEL_TC030 - Verify that no special character except '@' character is allowed to be inputted into \"Display Name\" field");
-            
+
             string panelFalse = "Logigear#$%";
-            string panelTrue = string.Concat("@",CommonMethods.GetUniqueString());
+            string panelTrue = string.Concat("@", CommonMethods.GetUniqueString());
             string panelSeries = "name";
 
             //1. Navigate to Dashboard login page
@@ -148,7 +146,7 @@ namespace SeleniumAdvance.TestCases
             panelPage.TxtDisplayName.SendKeys(panelFalse);
             panelPage.BtnOK.Click();
 
-            string actual = panelPage.GetAlertMessage(closeAlert:true);
+            string actual = panelPage.GetAlertMessage(closeAlert: true);
             string expected = "Invalid display name. The name can't contain high ASCII characters or any of following characters: /:*?<>|\"#{[]{};";
 
             //VP: Warning message: "Display Name is required field" show up
@@ -161,7 +159,7 @@ namespace SeleniumAdvance.TestCases
 
             panelPage.TxtDisplayName.Clear();
             panelPage.TxtDisplayName.SendKeys(panelTrue);
-            panelPage.ChbSeries.SelectItem(panelSeries,"Value");
+            panelPage.ChbSeries.SelectItem(panelSeries, "Value");
             panelPage.BtnOK.Click();
 
             bool actualCreated = panelPage.IsPanelCreated(panelTrue);
@@ -169,6 +167,10 @@ namespace SeleniumAdvance.TestCases
             //VP: The new panel is created
 
             Assert.AreEqual(true, actualCreated, "\nPanel is not created!");
+
+            //Post-condition: Delete created panel
+
+            panelPage.DeletePanel(panelTrue);
         }
 
         [TestMethod]
@@ -188,7 +190,7 @@ namespace SeleniumAdvance.TestCases
 
             PanelPage panelPage = new PanelPage(driver);
             panelPage.LnkAddNew.Click();
-            
+
             string actual = panelPage.GetSettingHeader();
             string expected = "Chart Settings";
 
@@ -216,10 +218,229 @@ namespace SeleniumAdvance.TestCases
         }
 
         [TestMethod]
-
         public void TC032()
         {
             Console.WriteLine("DA_PANEL_TC032 - Verify that user is not allowed to create panel with duplicated \"Display Name\"");
+
+            string panelName = CommonMethods.GetUniqueString();
+            string panelSeries = "name";
+
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Click on Administer/Panels link
+            //4. Click on Add new link
+
+            LoginPage loginPage = new LoginPage(driver);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            mainPage.SelectMenuItem("Administer", "Panels");
+            PanelPage panelPage = new PanelPage(driver);
+            panelPage.LnkAddNew.Click();
+
+            //5. Enter display name to "Display name" field.
+            //6. Click on OK button
+
+            panelPage.TxtDisplayName.SendKeys(panelName);
+            panelPage.ChbSeries.SelectItem(panelSeries, "Value");
+            panelPage.BtnOK.Click();
+            panelPage.WaitForAddingPanel(panelName);
+
+            panelPage.LnkAddNew.Click();
+            panelPage.TxtDisplayName.SendKeys(panelName);
+            panelPage.ChbSeries.SelectItem(panelSeries, "Value");
+            panelPage.BtnOK.Click();
+
+            string actual = panelPage.GetAlertMessage(closeAlert: true);
+            string expected = panelName + " already exists. Please enter a different name";
+
+            //VP: Warning message: "Dupicated panel already exists. Please enter a different name" show up
+
+            Assert.AreEqual(expected, actual, "\nExpected: " + expected + "\nActual: " + actual);
+
+            //Post-condtion: Delete created panel
+
+            panelPage.DeletePanel(panelName);
+        }
+
+        [TestMethod]
+        public void TC033()
+        {
+            Console.WriteLine("DA_PANEL_TC033 - Verify that \"Data Profile\" listing of \"Add New Panel\" and \"Edit Panel\" control/form are in alphabetical order");
+
+            string panelName = string.Concat("Panel", CommonMethods.GetUniqueString());
+            string panelSeries = "name";
+
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Click on Administer/Panels link
+            //4. Click on Add new link
+
+            LoginPage loginPage = new LoginPage(driver);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            mainPage.SelectMenuItem("Administer", "Panels");
+            PanelPage panelPage = new PanelPage(driver);
+            panelPage.LnkAddNew.Click();
+
+            bool actual = panelPage.ChbDataProfile.IsItemSorted();
+
+            //VP: Data Profile list is in alphabetical order
+
+            Assert.AreEqual(true, actual, "\nData Profile Combo box is not sorted!");
+
+            //5. Enter display name to Display Name textbox
+            //6. Click Ok button to create a panel
+            //7. Click on edit link
+
+            panelPage.TxtDisplayName.SendKeys(panelName);
+            panelPage.ChbSeries.SelectItem(panelSeries, "Value");
+            panelPage.BtnOK.Click();
+            panelPage.WaitForAddingPanel(panelName);
+            panelPage.ClickEditPanel(panelName);
+
+            actual = panelPage.ChbDataProfile.IsItemSorted();
+
+            //VP: Data Profile list is in alphabetical order
+
+            Assert.AreEqual(true, actual, "\nData Profile Combo box is not sorted!");
+
+            //Post-condtion: Delete created panel
+
+            panelPage.BtnCancel.Click();
+            panelPage.DeletePanel(panelName);
+        }
+
+        [TestMethod]
+        public void TC034()
+        {
+            Console.WriteLine(@"DA_PANEL_TC034 - Verify that newly created data profiles are populated correctly under the ""Data Profile"" dropped down menu in  ""Add New Panel"" and ""Edit Panel"" control/form");
+
+            string dataName = string.Concat("Data", CommonMethods.GetUniqueString());
+            string panelName = string.Concat("Panel", CommonMethods.GetUniqueString());
+            string panelSeries = "name";
+
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Click on Administer/Data Profiles link
+
+            LoginPage loginPage = new LoginPage(driver);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            mainPage.SelectMenuItem("Administer", "Data Profiles");
+            DataProfilePage dataProfile = new DataProfilePage(driver);
+
+            //4. Click on Add new link
+            //5. Enter name to Name textbox
+            //6. Click on Finish button
+
+            dataProfile.LnkAddNew.Click();
+            dataProfile.TxtName.SendKeys(dataName);
+            dataProfile.BtnFinish.Click();
+
+            //7. Click on Administer/Panels link
+            //8. Click on add new link
+
+            mainPage.SelectMenuItem("Administer", "Panels");
+            PanelPage panelPage = new PanelPage(driver);
+            panelPage.LnkAddNew.Click();
+            bool actual = panelPage.IsProfileExist(dataName);
+
+            //VP: Data profiles are populated correctly under the "Data Profile" dropped down menu.
+
+            Assert.AreEqual(true, actual, "\nProfile: " + dataName + " is not exist!");
+
+            //9. Enter display name to Display Name textbox
+            //10. Click Ok button to create a panel
+            //11. Click on edit link
+
+            panelPage.TxtDisplayName.SendKeys(panelName);
+            panelPage.ChbSeries.SelectItem(panelSeries, "Value");
+            panelPage.BtnOK.Click();
+            panelPage.WaitForAddingPanel(panelName);
+            panelPage.ClickEditPanel(panelName);
+
+            actual = panelPage.IsProfileExist(dataName);
+
+            //VP: Data profiles are populated correctly under the "Data Profile" dropped down menu.
+
+            Assert.AreEqual(true, actual, "\nProfile: " + dataName + " is not exist!");
+
+            //Post-condtion: Delete created panel
+
+            panelPage.BtnCancel.Click();
+            panelPage.DeletePanel(panelName);
+            dataProfile.DeleteProfile(dataName);
+        }
+
+        [TestMethod]
+        public void TC035()
+        {
+            Console.WriteLine("DA_PANEL_TC035 - Verify that no special character except '@' character is allowed to be inputted into \"Chart Title\" field");
+
+            string panelName = string.Concat("Panel@", CommonMethods.GetUniqueString());
+            string chartTitleFalse = "Chart#$%";
+            string chartTitleTrue = "Chart@";
+            string panelSeries = "name";
+
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Click Administer link
+            //4. Click Panel link
+            //5. Click Add New link
+            //6. Enter value into Display Name field
+            //7. Enter value into Chart Title field with special characters except "@"
+            //8. Click Ok button
+
+            LoginPage loginPage = new LoginPage(driver);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            mainPage.SelectMenuItem("Administer", "Panels");
+            PanelPage panelPage = new PanelPage(driver);
+            panelPage.LnkAddNew.Click();
+            panelPage.TxtDisplayName.SendKeys(panelName);
+            panelPage.ChbSeries.SelectItem(panelSeries, "Value");
+            panelPage.BtnOK.Click();
+            panelPage.WaitForAddingPanel(panelName);
+            panelPage.ClickEditPanel(panelName);
+
+            //4. Click on Add new link
+            //5. Enter name to Name textbox
+            //6. Click on Finish button
+
+
+            //7. Click on Administer/Panels link
+            //8. Click on add new link
+
+            mainPage.SelectMenuItem("Administer", "Panels");
+            PanelPage panelPage = new PanelPage(driver);
+            panelPage.LnkAddNew.Click();
+            bool actual = panelPage.IsProfileExist(dataName);
+
+            //VP: Data profiles are populated correctly under the "Data Profile" dropped down menu.
+
+            Assert.AreEqual(true, actual, "\nProfile: " + dataName + " is not exist!");
+
+            //9. Enter display name to Display Name textbox
+            //10. Click Ok button to create a panel
+            //11. Click on edit link
+
+            panelPage.TxtDisplayName.SendKeys(panelName);
+            panelPage.ChbSeries.SelectItem(panelSeries, "Value");
+            panelPage.BtnOK.Click();
+            panelPage.WaitForAddingPanel(panelName);
+            panelPage.ClickEditPanel(panelName);
+
+            actual = panelPage.IsProfileExist(dataName);
+
+            //VP: Data profiles are populated correctly under the "Data Profile" dropped down menu.
+
+            Assert.AreEqual(true, actual, "\nProfile: " + dataName + " is not exist!");
+
+            //Post-condtion: Delete created panel
+
+            panelPage.BtnCancel.Click();
+            panelPage.DeletePanel(panelName);
+            dataProfile.DeleteProfile(dataName);
         }
     }
 }

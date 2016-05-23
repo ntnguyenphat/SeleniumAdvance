@@ -34,6 +34,7 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _chbSeries = By.XPath("//select[@id='cbbSeriesField']");
         static readonly By _lblSettingHeader = By.XPath("//fieldset[@id='fdSettings']/legend");
 
+
         //static readonly By _chbStatistic = By.XPath("//select[@id='cbbStatField']");
 
         #endregion
@@ -115,6 +116,45 @@ namespace SeleniumAdvance.PageObjects
         {
             return LblSettingHeader.Text;
         }
+
+        public void WaitForAddingPanel(string panelName)
+        {
+            By panel = By.XPath("//a[.='" + panelName + "']");
+            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists(panel));
+            wait.Until(ExpectedConditions.ElementToBeClickable(_lnkAddNew));
+        }
+
+        public PanelPage ClickEditPanel(string panelName)
+        {
+            By xpath = By.XPath("//a[.='" + panelName + "']/ancestor::tr//a[.='Edit']");
+            _driverPanelPage.FindElement(xpath).Click();
+            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists(_txtDisplayName));
+            return this;
+        }
+
+        public void ClickDeletePanel(string panelName)
+        {
+            By xpath = By.XPath("//a[.='" + panelName + "']/ancestor::tr//a[.='Delete']");
+            _driverPanelPage.FindElement(xpath).Click();
+            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.AlertIsPresent());
+        }
+
+        public PanelPage DeletePanel(string panelName)
+        {
+            By xpath = By.XPath("//a[.='" + panelName + "']/ancestor::tr//a[.='Delete']");
+            if(this.IsElementExist(xpath))
+            {
+                this.SelectMenuItem("Administer", "Panels");
+            }
+            ClickDeletePanel(panelName);
+            IAlert alert = _driverPanelPage.SwitchTo().Alert();
+            alert.Accept();
+            return this;
+        }
+
         #endregion
     }
 }

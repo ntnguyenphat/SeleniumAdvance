@@ -164,6 +164,7 @@ namespace SeleniumAdvance.PageObjects
             WebDriverWait wait = new WebDriverWait(_driver,TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(locator));
         }
+
         #endregion
 
     }
