@@ -147,7 +147,8 @@ namespace SeleniumAdvance.PageObjects
                 if (closeAlert == true)
                 {
                     alert.Accept();
-                    Thread.Sleep(1000);
+                    WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+                    wait.Until(ExpectedConditions.ElementToBeClickable(_lnkAccount));
                 }
                 return alertMessage;
             }

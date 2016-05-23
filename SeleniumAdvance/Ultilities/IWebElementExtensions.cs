@@ -8,6 +8,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumAdvance.Common;
+using System.Threading;
 
 namespace SeleniumAdvance.Ultilities
 {
@@ -57,6 +58,15 @@ namespace SeleniumAdvance.Ultilities
             {
                 element.Click();
             }
+        }
+
+        public static void ChooseAndWait(this IWebElement element,TimeSpan time)
+        {
+            element.Click();
+
+            //TODO: Need to handle wait by Driverwait
+
+            Thread.Sleep(time);
         }
     }
 }
