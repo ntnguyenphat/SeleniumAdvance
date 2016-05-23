@@ -123,14 +123,13 @@ namespace SeleniumAdvance.PageObjects
 
         public bool IsElementExist(By locatorKey)
         {
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
             try
             {
-                WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
                 wait.Until(ExpectedConditions.ElementExists(locatorKey));
-                _driver.FindElement(locatorKey);
                 return true;
             }
-            catch (NoSuchElementException)
+            catch
             {
                 return false;
             }

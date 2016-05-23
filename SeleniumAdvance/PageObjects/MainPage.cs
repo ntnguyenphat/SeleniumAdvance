@@ -137,7 +137,7 @@ namespace SeleniumAdvance.PageObjects
             BtnPageOK.Click();
 
             WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, pageName))));
+            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, pageName).Replace(" ", "\u00A0"))));
             return this;
         }
 
@@ -146,7 +146,7 @@ namespace SeleniumAdvance.PageObjects
             string[] pages = Regex.Split(pageLink, "->");
             if (pages.Length == 1)
             {
-                By page = By.XPath("//a[.='" + pages[0] + "']");
+                By page = By.XPath("//a[.='" + pages[0].Replace(" ", "\u00A0") + "']");
                 IWebElement lnkPage = _driverManagePagePage.FindElement(page);
                 lnkPage.Click();
             }
@@ -155,11 +155,11 @@ namespace SeleniumAdvance.PageObjects
                 int pageIndex = 0;
                 while (pageIndex + 1 < pages.Length)
                 {
-                    By page = By.XPath("//a[.='" + pages[pageIndex] + "']");
+                    By page = By.XPath("//a[.='" + pages[pageIndex].Replace(" ", "\u00A0") + "']");
                     IWebElement lnkParent = _driverManagePagePage.FindElement(page);
                     lnkParent.MouseTo(_driverManagePagePage);
                     pageIndex = pageIndex + 1;
-                    page = By.XPath("//a[.='" + pages[pageIndex] + "']");
+                    page = By.XPath("//a[.='" + pages[pageIndex].Replace(" ", "\u00A0") + "']");
                     IWebElement lnkPage = _driverManagePagePage.FindElement(page);
                     if(pageIndex + 1 == pages.Length)
                     {
@@ -258,7 +258,7 @@ namespace SeleniumAdvance.PageObjects
 
         public MainPage SelectPage(string path)
         {
-            By parent = By.XPath("//a[.='" + path + "']");
+            By parent = By.XPath("//a[.='" + path.Replace(" ", "\u00A0") + "']");
             IWebElement lnkParent = _driverManagePagePage.FindElement(parent);
             lnkParent.Click();
             return this;
@@ -284,7 +284,7 @@ namespace SeleniumAdvance.PageObjects
             string[] pages = Regex.Split(pageLink, "->");     
             if (pages.Length == 1)
             {
-                By page = By.XPath("//a[.='" + pages[0] + "']");
+                By page = By.XPath("//a[.='" + pages[0].Replace(" ", "\u00A0") + "']");
                 doesPageExist = this.IsElementExist(page);
             }
             else
@@ -292,11 +292,11 @@ namespace SeleniumAdvance.PageObjects
                 int pageIndex = 0;
                 while (pageIndex + 1 < pages.Length)
                 {
-                    By page = By.XPath("//a[.='" + pages[pageIndex] + "']");
+                    By page = By.XPath("//a[.='" + pages[pageIndex].Replace(" ", "\u00A0") + "']");
                     IWebElement lnkParent = _driverManagePagePage.FindElement(page);
                     lnkParent.MouseTo(_driverManagePagePage);
                     pageIndex = pageIndex + 1;
-                    page = By.XPath("//a[.='" + pages[pageIndex] + "']");
+                    page = By.XPath("//a[.='" + pages[pageIndex].Replace(" ", "\u00A0") + "']");
                     doesPageExist = this.IsElementExist(page);
                 }
             }
