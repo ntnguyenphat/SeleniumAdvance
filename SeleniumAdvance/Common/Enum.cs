@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using OpenQA.Selenium;
 
 namespace SeleniumAdvance.Common
 {
-    public class CommonMethods
+    public class Enum
     {
-        public static string GetUniqueString()
+        public enum PanelType
         {
-           return DateTime.Now.ToString("ddMMMyyHHmmssfff");
+            Chart, Indicator, Report, HeatMap
         }
     }
 }

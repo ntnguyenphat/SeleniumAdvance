@@ -32,6 +32,7 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _btnCancel = By.XPath("//input[@id='Cancel']");
         static readonly By _lnkAddNew = By.XPath("//a[contains(@href,'openAddPanel')]");
         static readonly By _chbSeries = By.XPath("//select[@id='cbbSeriesField']");
+        static readonly By _lblSettingHeader = By.XPath("//fieldset[@id='fdSettings']/legend");
 
         //static readonly By _chbStatistic = By.XPath("//select[@id='cbbStatField']");
 
@@ -86,7 +87,10 @@ namespace SeleniumAdvance.PageObjects
         {
             get { return _driver.FindElement(_chbSeries); }
         }
-
+        public IWebElement LblSettingHeader
+        {
+            get { return _driver.FindElement(_lblSettingHeader); }
+        }
         #endregion
 
         #region Methods
@@ -105,6 +109,11 @@ namespace SeleniumAdvance.PageObjects
         {
             By panel = By.XPath("//a[.='" + panelName + "']");
             return this.IsElementExist(panel);
+        }
+
+        public string GetSettingHeader()
+        {
+            return LblSettingHeader.Text;
         }
         #endregion
     }

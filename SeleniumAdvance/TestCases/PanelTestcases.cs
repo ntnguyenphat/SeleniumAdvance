@@ -15,7 +15,7 @@ namespace SeleniumAdvance.TestCases
         [TestMethod]
         public void TC027()
         {
-            Console.WriteLine("DA_MP_TC027 - Verify that when \"Choose panels\" form is expanded all pre-set panels are populated and sorted correctly ");
+            Console.WriteLine("DA_PANEL_TC027 - Verify that when \"Choose panels\" form is expanded all pre-set panels are populated and sorted correctly ");
 
             string pageName = string.Concat("Page", CommonMethods.GetUniqueString());
 
@@ -64,7 +64,7 @@ namespace SeleniumAdvance.TestCases
         [TestMethod]
         public void TC028()
         {
-            Console.WriteLine("DA_MP_TC028 - Verify that when \"Add New Panel\" form is on focused all other control/form is disabled or locked.");
+            Console.WriteLine("DA_PANEL_TC028 - Verify that when \"Add New Panel\" form is on focused all other control/form is disabled or locked.");
 
             //1. Navigate to Dashboard login page
             //2. Login with valid account
@@ -91,7 +91,7 @@ namespace SeleniumAdvance.TestCases
         [TestMethod]
         public void TC029()
         {
-            Console.WriteLine("DA_MP_TC029 - Verify that user is unable to create new panel when (*) required field is not filled");
+            Console.WriteLine("DA_PANEL_TC029 - Verify that user is unable to create new panel when (*) required field is not filled");
 
             string pageName = string.Concat("Page", CommonMethods.GetUniqueString());
 
@@ -124,7 +124,7 @@ namespace SeleniumAdvance.TestCases
         [TestMethod]
         public void TC030()
         {
-            Console.WriteLine("DA_MP_TC030 - Verify that no special character except '@' character is allowed to be inputted into \"Display Name\" field");
+            Console.WriteLine("DA_PANEL_TC030 - Verify that no special character except '@' character is allowed to be inputted into \"Display Name\" field");
             
             string panelFalse = "Logigear#$%";
             string panelTrue = string.Concat("@",CommonMethods.GetUniqueString());
@@ -174,19 +174,12 @@ namespace SeleniumAdvance.TestCases
         [TestMethod]
         public void TC031()
         {
-            Console.WriteLine("DA_MP_TC031 - Verify that correct panel setting form is displayed with corresponding panel type selected");
-
-            string panelFalse = "Logigear#$%";
-            string panelTrue = string.Concat("@", CommonMethods.GetUniqueString());
-            string panelSeries = "name";
+            Console.WriteLine("DA_PANEL_TC031 - Verify that correct panel setting form is displayed with corresponding panel type selected");
 
             //1. Navigate to Dashboard login page
-            //2. Select specific repository
-            //3. Enter valid username and password
-            //4. Click on Login button
-            //5. Click on Administer/Panels link
-            //6. Click on "Add new" link
-            //7. Click on OK button
+            //2. Login with valid account
+            //3. Click on Administer/Panels link
+            //4. Click on Add new link
 
             LoginPage loginPage = new LoginPage(driver);
             MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
@@ -195,30 +188,38 @@ namespace SeleniumAdvance.TestCases
 
             PanelPage panelPage = new PanelPage(driver);
             panelPage.LnkAddNew.Click();
-            panelPage.TxtDisplayName.SendKeys(panelFalse);
-            panelPage.BtnOK.Click();
+            
+            string actual = panelPage.GetSettingHeader();
+            string expected = "Chart Settings";
 
-            string actual = panelPage.GetAlertMessage(closeAlert: true);
-            string expected = "Invalid display name. The name can't contain high ASCII characters or any of following characters: /:*?<>|\"#{[]{};";
-
-            //VP: Warning message: "Display Name is required field" show up
+            //VP: Chart panel setting form is displayed "chart setting" under Display Name field
 
             Assert.AreEqual(expected, actual, "\nExpected: " + expected + "\nActual: " + actual);
 
-            //8. Close Warning Message box
-            //9. Click Add New link
-            //10. Enter value into Display Name field with special character is @
+            //5. Select Indicator type
 
-            panelPage.TxtDisplayName.Clear();
-            panelPage.TxtDisplayName.SendKeys(panelTrue);
-            panelPage.ChbSeries.SelectItem(panelSeries, "Value");
-            panelPage.BtnOK.Click();
+            panelPage.RdIndicator.ChooseAndWait(TimeSpan.FromSeconds(3));
 
-            bool actualCreated = panelPage.IsPanelCreated(panelTrue);
+            actual = panelPage.GetSettingHeader();
+            expected = "Indicator setting";
 
-            //VP: The new panel is created
+            //VP: Chart panel setting form is displayed "Indicator setting" under Display Name field
 
-            Assert.AreEqual(true, actualCreated, "\nPanel is not created!");
+            Assert.AreEqual(expected, actual, "\nExpected: " + expected + "\nActual: " + actual);
+
+            //6: Select Report type
+
+            panelPage.RdReport.Click();
+
+            //VP:TODO - Report panel setting form is displayed "View mode" under Display Name.
+
+        }
+
+        [TestMethod]
+
+        public void TC032()
+        {
+            Console.WriteLine("DA_PANEL_TC032 - Verify that user is not allowed to create panel with duplicated \"Display Name\"");
         }
     }
 }

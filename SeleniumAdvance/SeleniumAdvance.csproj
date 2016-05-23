@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Common\CommonMethods.cs" />
     <Compile Include="Common\Constant.cs" />
+    <Compile Include="Common\Enum.cs" />
     <Compile Include="PageObjects\GeneralPage.cs" />
     <Compile Include="PageObjects\LoginPage.cs" />
     <Compile Include="PageObjects\MainPage.cs" />
