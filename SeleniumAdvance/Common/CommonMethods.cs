@@ -9,6 +9,10 @@ namespace SeleniumAdvance.Common
 {
     public class CommonMethods
     {
+        /// <summary>
+        /// Gets the unique string.
+        /// </summary>
+        /// <returns></returns>
         public static string GetUniqueString()
         {
            return DateTime.Now.ToString("ddMMMyyHHmmssfff");

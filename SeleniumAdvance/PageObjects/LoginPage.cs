@@ -54,6 +54,13 @@ namespace SeleniumAdvance.PageObjects
             this._driverLoginPage = driver;
         }
 
+        /// <summary>
+        /// Login to TA Dashboard page
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="repositoryName">Name of the repository.</param>
+        /// <returns></returns>
         public MainPage Login(string username, string password, string repositoryName = null)
         {
             if (repositoryName != null)
@@ -66,17 +73,20 @@ namespace SeleniumAdvance.PageObjects
             return new MainPage(_driver);
         }
 
-        //public void SelectRepository(string repositoryName)
-        //{
-        //    CmbRepo.SelectItem(repositoryName);
-        //}
-
+        /// <summary>
+        /// Opens Login page of TA Dashboard page
+        /// </summary>
+        /// <returns></returns>
         public LoginPage Open()
         {
             _driverLoginPage.Navigate().GoToUrl(Constant.HomePageURL);
             return this;
         }
 
+        /// <summary>
+        /// Get the message of the alert dialog.
+        /// </summary>
+        /// <returns></returns>
         public string GetAlertMessage()
         {
             WebDriverWait wait = new WebDriverWait(_driverLoginPage, TimeSpan.FromSeconds(5));
