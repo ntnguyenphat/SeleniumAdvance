@@ -399,13 +399,31 @@ namespace SeleniumAdvance.TestCases
             panelPage.LnkAddNew.Click();
             panelPage.TxtDisplayName.SendKeys(panelName);
             panelPage.ChbSeries.SelectItem(panelSeries, "Value");
+            panelPage.TxtChartTitle.SendKeys(chartTitleFalse);
+            panelPage.BtnOK.Click();
+
+            string actual = panelPage.GetAlertMessage(closeAlert: true);
+            string expected = "Invalid display name. The name can't contain high ASCII characters or any of following characters: /:*?<>|\"#{[]{};";
+
+            //VP: Message "Invalid display name. The name can't contain high ASCII characters or any of following characters: /:*?<>|"#{[]{};" is displayed
+
+            Assert.AreEqual(expected, actual, "\nExpected: " + expected + "\nActual: " + actual);
+
+            //9. Close Warning Message box
+            //10. Click Add New link
+            //11. Enter value into Display Name field
+            //12. Enter value into Chart Title field with special character is @
+
+            panelPage.TxtChartTitle.Clear();
+            panelPage.TxtChartTitle.SendKeys(chartTitleTrue);
             panelPage.BtnOK.Click();
             panelPage.WaitForAddingPanel(panelName);
-            panelPage.ClickEditPanel(panelName);
 
-           
+            bool actualCreated = panelPage.IsPanelCreated(panelName);
 
-            
+            //VP: The new panel is created
+
+            Assert.AreEqual(true, actualCreated, "\nPanel: " + panelName + " is not created!");
         }
     }
 }

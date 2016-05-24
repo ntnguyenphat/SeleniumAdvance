@@ -190,6 +190,7 @@ namespace SeleniumAdvance.TestCases
             loginPage.Login(Constant.OtherUsername, Constant.OtherPassword, Constant.DefaultRepo);
 
             //VP: Check "Test" Page is visible and can be accessed. Check "Another Test" page is invisible.
+
             bool doesPageName1Exist = mainPage.DoesPageExist(pageName1);
             Assert.AreEqual(true, doesPageName1Exist, "\n" + pageName1 + " isn't visibled");
 

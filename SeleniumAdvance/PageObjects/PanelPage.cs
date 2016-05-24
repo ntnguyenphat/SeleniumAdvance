@@ -33,7 +33,7 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _lnkAddNew = By.XPath("//a[contains(@href,'openAddPanel')]");
         static readonly By _chbSeries = By.XPath("//select[@id='cbbSeriesField']");
         static readonly By _lblSettingHeader = By.XPath("//fieldset[@id='fdSettings']/legend");
-
+        static readonly By _txtChartTitle = By.XPath("//input[@id='txtChartTitle']");
 
         //static readonly By _chbStatistic = By.XPath("//select[@id='cbbStatField']");
 
@@ -92,6 +92,10 @@ namespace SeleniumAdvance.PageObjects
         {
             get { return _driver.FindElement(_lblSettingHeader); }
         }
+        public IWebElement TxtChartTitle
+        {
+            get { return _driver.FindElement(_txtChartTitle); }
+        }
         #endregion
 
         #region Methods
@@ -123,6 +127,11 @@ namespace SeleniumAdvance.PageObjects
             WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(panel));
             wait.Until(ExpectedConditions.ElementToBeClickable(_lnkAddNew));
+        }
+
+        public void WaitForDialog()
+        {
+
         }
 
         public PanelPage ClickEditPanel(string panelName)
