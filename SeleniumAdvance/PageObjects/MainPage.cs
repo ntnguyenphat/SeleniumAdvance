@@ -92,6 +92,9 @@ namespace SeleniumAdvance.PageObjects
         /// <param name="numberOfColumn">The number of column.</param>
         /// <param name="displayAfer">The page which the added page displays after.</param>
         /// <param name="publicCheckBox">Public/Unpublic page .</param>
+        /// <Author>Phat</Author>
+        /// <Modidified by>Long : Handle White space in page's name. Re-write arguments so that the method can be re-used</Modidified>
+        /// <Modified by> Phat : Return page object instead of void</Modified>
         /// <returns></returns>
         public MainPage AddPage(string pageName, string parentPage = null, int numberOfColumn = 0, string displayAfer = null, bool publicCheckBox = false)
         {
@@ -130,6 +133,8 @@ namespace SeleniumAdvance.PageObjects
         /// Go to a page.
         /// </summary>
         /// <param name="pageLink">The page link.</param>
+        /// <Author>Long</Author>
+        /// <Modified by> Phat: Return page object instead of void</Modified>
         /// <returns></returns>
         public MainPage GotoPage(string pageLink)
         {
@@ -164,6 +169,8 @@ namespace SeleniumAdvance.PageObjects
         /// Delete a page.
         /// </summary>
         /// <param name="pageLink">The page link.</param>
+        /// <Author>Long</Author>
+        /// <Modified by> Phat: Return page object instead of void</Modified>
         /// <returns></returns>
         public MainPage DeletePage(string pageLink)
         {
@@ -180,6 +187,7 @@ namespace SeleniumAdvance.PageObjects
         /// Determines if the page is navigated.
         /// </summary>
         /// <param name="pageName">Name of the page.</param>
+        /// <Author>Long</Author>
         /// <returns></returns>
         public bool IsPageNavigated(string pageName)
         {
@@ -203,6 +211,9 @@ namespace SeleniumAdvance.PageObjects
         /// <param name="numberOfColumn">The number of column.</param>
         /// <param name="displayAfer">The page which the edited page displays after.</param>
         /// <param name="publicCheckBox">Public/Unpublic the edited page.</param>
+        /// <Author>Phat</Author>
+        /// <Modified by> Long: Edit some arguments so that the method can be re-used in many TCs</Modified>
+        /// <Modified by> Phat: Return page object instead of void </Modified>
         /// <returns></returns>
         public MainPage EditPageInfomation(string pageName = null, string parentPage = null, int numberOfColumn = 0, string displayAfer = null, bool publicCheckBox = false)
         {
@@ -248,6 +259,8 @@ namespace SeleniumAdvance.PageObjects
         /// </summary>
         /// <param name="currentPage">The current page.</param>
         /// <param name="nextPage">The next page.</param>
+        /// <Author>Phat</Author>
+        /// <Modified by>Long: Edit the XPATH </Modified>
         /// <returns></returns>
         public bool IsPageNextToPage(string currentPage, string nextPage)
         {
@@ -265,6 +278,7 @@ namespace SeleniumAdvance.PageObjects
         /// Determine if a page exists
         /// </summary>
         /// <param name="pageLink">The page link.</param>
+        /// <Author>Long</Author>
         /// <returns></returns>
         public bool DoesPageExist(string pageLink)
         {
@@ -298,6 +312,7 @@ namespace SeleniumAdvance.PageObjects
         /// Determine if a popup exists
         /// </summary>
         /// <param name="headerName">Name of the header of the popup.</param>
+        /// <Author>Phat</Author>
         /// <returns></returns>
         public bool DoesPopupExist(string headerName)
         {

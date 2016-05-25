@@ -60,6 +60,7 @@ namespace SeleniumAdvance.PageObjects
 
         /// <summary>
         /// Determines if dashboard mainpage displayed].
+        /// <Author>Long and Phat</Author>
         /// </summary>
         /// <returns></returns>
         public bool IsDashboardMainpageDisplayed()
@@ -70,6 +71,7 @@ namespace SeleniumAdvance.PageObjects
 
         /// <summary>
         /// Determines if alert dialog displayed].
+        /// <Author>Long and Phat</Author>
         /// </summary>
         /// <returns></returns>
         public bool IsAlertDisplayed()
@@ -90,6 +92,7 @@ namespace SeleniumAdvance.PageObjects
 
         /// <summary>
         /// Log out from TA Dashboard page.
+        /// <Author>Long and Phat</Author>
         /// </summary>
         /// <returns></returns>
         public LoginPage Logout()
@@ -111,6 +114,7 @@ namespace SeleniumAdvance.PageObjects
         /// Switch the repository which the user wants to work on
         /// </summary>
         /// <param name="repositoryName">Name of the repository.</param>
+        /// <Author>Long and Phat</Author>
         /// <returns></returns>
         public GeneralPage ChooseRepository(string repositoryName)
         {
@@ -123,6 +127,7 @@ namespace SeleniumAdvance.PageObjects
 
         /// <summary>
         /// Get the name of the repository.
+        /// <Author>Long and Phat</Author>
         /// </summary>
         /// <returns></returns>
         public string GetRepositoryName()
@@ -134,6 +139,7 @@ namespace SeleniumAdvance.PageObjects
         /// Select settings of general setting menu.
         /// </summary>
         /// <param name="item">settings</param>
+        /// <Author>Long and Phat</Author>
         public void SelectGeneralSetting(string item)
         {
             TabSetting.MouseTo(_driver);
@@ -144,6 +150,7 @@ namespace SeleniumAdvance.PageObjects
         /// <summary>
         /// Determines if dashboard is locked by dialog].
         /// </summary>
+        /// <Author>Long and Phat</Author>
         /// <returns></returns>
         public bool IsDashboardLockedByDialog()
         {
@@ -154,6 +161,7 @@ namespace SeleniumAdvance.PageObjects
         /// Determines if element exists.
         /// </summary>
         /// <param name="locatorKey">locator key.</param>
+        /// <Author>Long and Phat</Author>
         /// <returns></returns>
         public bool IsElementExist(By locatorKey)
         {
@@ -173,6 +181,7 @@ namespace SeleniumAdvance.PageObjects
         /// Gets the message of the alert dialog.
         /// </summary>
         /// <param name="closeAlert">close alert.</param>
+        /// <Author>Long and Phat</Author>
         /// <returns></returns>
         public string GetAlertMessage(bool closeAlert = false)
         {
@@ -202,6 +211,7 @@ namespace SeleniumAdvance.PageObjects
         /// Wait for the element exist.
         /// </summary>
         /// <param name="locator">The locator.</param>
+        /// <Author>Long and Phat</Author>
         public void WaitElementExist(By locator)
         {
             WebDriverWait wait = new WebDriverWait(_driver,TimeSpan.FromSeconds(10));

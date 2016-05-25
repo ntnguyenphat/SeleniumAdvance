@@ -60,6 +60,7 @@ namespace SeleniumAdvance.PageObjects
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <param name="repositoryName">Name of the repository.</param>
+        /// <Author>Long and Phat</Author>
         /// <returns></returns>
         public MainPage Login(string username, string password, string repositoryName = null)
         {
@@ -75,6 +76,7 @@ namespace SeleniumAdvance.PageObjects
 
         /// <summary>
         /// Opens Login page of TA Dashboard page
+        /// <Author>Long and Phat</Author>
         /// </summary>
         /// <returns></returns>
         public LoginPage Open()
@@ -86,6 +88,7 @@ namespace SeleniumAdvance.PageObjects
         /// <summary>
         /// Get the message of the alert dialog.
         /// </summary>
+        /// <Author>Long and Phat</Author>
         /// <returns></returns>
         public string GetAlertMessage()
         {
