@@ -14,12 +14,26 @@ namespace SeleniumAdvance.Ultilities
 {
     public static class IWebElementExtensions
     {
+        /// <summary>
+        /// Move mouse to a element
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="webDriver">The web driver.</param>
+        /// <Author>Phat</Author>
         public static void MouseTo(this IWebElement element, IWebDriver webDriver)
         {
             Actions actions = new Actions(webDriver);
             actions.MoveToElement(element).Build().Perform();
         }
 
+
+        /// <summary>
+        /// Selects an item.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="item">The item.</param>
+        /// <param name="selectby">The selectby.</param>
+        /// <Author>Phat</Author>
         public static void SelectItem(this IWebElement element, string item, string selectby = "Text")
         {
             SelectElement selector = new SelectElement(element);
@@ -29,6 +43,14 @@ namespace SeleniumAdvance.Ultilities
                 selector.SelectByText(item);
         }
 
+
+        /// <summary>
+        /// Determines if a element exists
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="item">The item.</param>
+        /// <Author>Phat</Author>
+        /// <returns></returns>
         public static bool IsItemExist(this IWebElement element, string item)
         {
             SelectElement selector = new SelectElement(element);
@@ -43,6 +65,12 @@ namespace SeleniumAdvance.Ultilities
             return listItem.Contains(item);
         }
 
+        /// <summary>
+        /// Determines if a element sorted.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <Author>Phat</Author>
+        /// <returns></returns>
         public static bool IsItemSorted(this IWebElement element)
         {
             SelectElement selector = new SelectElement(element);
@@ -61,6 +89,11 @@ namespace SeleniumAdvance.Ultilities
             return flag;
         }
 
+        /// <summary>
+        /// Check or uncheck a checkbox
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <Author>Phat</Author>
         public static void Check(this IWebElement element)
         {
             bool isChecked = element.Selected;
@@ -69,6 +102,12 @@ namespace SeleniumAdvance.Ultilities
                 element.Click();
             }
         }
+
+        /// <summary>
+        /// Check or uncheck a checkbox
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <Author>Long</Author>
         public static void UnCheck(this IWebElement element)
         {
             bool isChecked = element.Selected;
@@ -78,6 +117,13 @@ namespace SeleniumAdvance.Ultilities
             }
         }
 
+
+        /// <summary>
+        /// Chooses a element then wait
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="time">The time.</param>
+        /// <Author>Phat</Author>
         public static void ChooseAndWait(this IWebElement element,TimeSpan time)
         {
             element.Click();

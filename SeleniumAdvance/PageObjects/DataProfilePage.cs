@@ -60,6 +60,13 @@ namespace SeleniumAdvance.PageObjects
             this._driverDataProfile = driver;
         }
 
+
+        /// <summary>
+        /// Wait for adding profile.
+        /// </summary>
+        /// <param name="profileName">Name of the profile.</param>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
         public void WaitForAddingProfile(string profileName)
         {
             By panel = By.XPath("//a[.='" + profileName + "']");
@@ -69,6 +76,14 @@ namespace SeleniumAdvance.PageObjects
             wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//a[@href='#Administer']")));
         }
 
+
+        /// <summary>
+        /// Click Edit Profile link
+        /// </summary>
+        /// <param name="profileName">Name of the profile.</param>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
+        /// <returns></returns>
         public DataProfilePage ClickEditProfile(string profileName)
         {
             By xpath = By.XPath("//a[.='" + profileName + "']/ancestor::tr//a[.='Edit']");
@@ -78,6 +93,14 @@ namespace SeleniumAdvance.PageObjects
             return this;
         }
 
+
+        /// <summary>
+        /// Click Delete Profile link
+        /// </summary>
+        /// <param name="profileName">Name of the profile.</param>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
+        /// <returns></returns>
         public void ClickDeleteProfile(string profileName)
         {
             By xpath = By.XPath("//a[.='" + profileName + "']/ancestor::tr//a[.='Delete']");
@@ -86,6 +109,14 @@ namespace SeleniumAdvance.PageObjects
             wait.Until(ExpectedConditions.AlertIsPresent());
         }
 
+
+        /// <summary>
+        /// Deletes a profile.
+        /// </summary>
+        /// <param name="profileName">Name of the profile.</param>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
+        /// <returns></returns>
         public DataProfilePage DeleteProfile(string profileName)
         {
             By xpath = By.XPath("//a[.='" + profileName + "']/ancestor::tr//a[.='Delete']");

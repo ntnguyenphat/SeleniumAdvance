@@ -12,6 +12,11 @@ namespace SeleniumAdvance.TestCases
     [TestClass]
     public class PanelTestcases : TestBase
     {
+
+        /// <summary>Verify that when \"Choose panels\" form is expanded all pre-set panels are populated and sorted correctly
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
         [TestMethod]
         public void TC027()
         {
@@ -61,6 +66,10 @@ namespace SeleniumAdvance.TestCases
             mainPage.DeletePage(pageName);
         }
 
+        /// <summary>Verify that when \"Add New Panel\" form is on focused all other control/form is disabled or locked
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
         [TestMethod]
         public void TC028()
         {
@@ -88,6 +97,11 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(true, actual, "\nDashboard is not locked by dialog!");
         }
 
+
+        /// <summary>Verify that user is unable to create new panel when (*) required field is not filled
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
         [TestMethod]
         public void TC029()
         {
@@ -119,6 +133,10 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(expected, actual, "\nExpected: " + expected + "\nActual: " + actual);
         }
 
+        /// <summary>Verify that no special character except '@' character is allowed to be inputted into \"Display Name\" field
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
         [TestMethod]
         public void TC030()
         {
@@ -173,6 +191,10 @@ namespace SeleniumAdvance.TestCases
             panelPage.DeletePanel(panelTrue);
         }
 
+        /// <summary>Verify that correct panel setting form is displayed with corresponding panel type selected
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
         [TestMethod]
         public void TC031()
         {
@@ -217,6 +239,10 @@ namespace SeleniumAdvance.TestCases
 
         }
 
+        /// <summary>Verify that user is not allowed to create panel with duplicated \"Display Name\
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
         [TestMethod]
         public void TC032()
         {
@@ -262,6 +288,10 @@ namespace SeleniumAdvance.TestCases
             panelPage.DeletePanel(panelName);
         }
 
+        /// <summary>Verify that \"Data Profile\" listing of \"Add New Panel\" and \"Edit Panel\" control/form are in alphabetical order
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
         [TestMethod]
         public void TC033()
         {
@@ -310,6 +340,10 @@ namespace SeleniumAdvance.TestCases
             panelPage.DeletePanel(panelName);
         }
 
+        /// <summary>Verify that newly created data profiles are populated correctly under the ""Data Profile"" dropped down menu in  ""Add New Panel"" and ""Edit Panel"" control/form
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
         [TestMethod]
         public void TC034()
         {
@@ -372,6 +406,10 @@ namespace SeleniumAdvance.TestCases
             dataProfile.DeleteProfile(dataName);
         }
 
+        /// <summary>Verify that no special character except '@' character is allowed to be inputted into \"Chart Title\" field
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
         [TestMethod]
         public void TC035()
         {

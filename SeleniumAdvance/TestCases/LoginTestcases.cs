@@ -10,6 +10,10 @@ namespace SeleniumAdvance.TestCases
     [TestClass]
     public class LoginTestcases : TestBase
     {
+
+        /// <summary>Verify that user can login specific repository successfully via Dashboard login page with correct credentials
+        /// </summary>
+        /// <Author>Long and Phat</Author>
         [TestMethod]
         public void TC001()
         {
@@ -28,6 +32,9 @@ namespace SeleniumAdvance.TestCases
 
         }
 
+        /// <summary>Verify that user fails to login specific repository successfully via Dashboard login page with incorrect credentials.
+        /// </summary>
+        /// <Author>Long and Phat</Author>
         [TestMethod]
         public void TC002()
         {
@@ -45,6 +52,9 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(expectedMessage, observedMessage, "\nActual: " + observedMessage + "\nExpected: " + expectedMessage);
         }
 
+        /// <summary>Verify that user fails to log in specific repository successfully via Dashboard login page with correct username and incorrect password
+        /// </summary>
+        /// <Author>Long and Phat</Author>
         [TestMethod]
         public void TC003()
         {
@@ -62,6 +72,9 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(expectedMessage, observedMessage, "\nActual: " + observedMessage + "\nExpected: " + expectedMessage);
         }
 
+        /// <summary>Verify that user is able to log in different repositories successfully after logging out current repository
+        /// </summary>
+        /// <Author>Long and Phat</Author>
         [TestMethod]
         public void TC004()
         {
@@ -84,6 +97,9 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(true, observedResult, "Dashboard Mainpage is not displayed!");
         }
 
+        /// <summary>Verify that there is no Login dialog when switching between 2 repositories with the same account
+        /// </summary>
+        /// <Author>Long and Phat</Author>
         [TestMethod]
         public void TC005()
         {
@@ -106,6 +122,9 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(Constant.AdditionalRepo, actualRepositoryName, "\nActual: " + actualRepositoryName + "\nExpected: " + Constant.AdditionalRepo);
         }
 
+        /// <summary>Verify that \"Password\" input is case sensitive
+        /// </summary>
+        /// <Author>Long and Phat</Author>
         [TestMethod]
         public void TC006()
         {
@@ -135,6 +154,9 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(expectedMessage, actualMessage, "\nActual: " + actualMessage + "\nExpected: " + expectedMessage);
         }
 
+        /// <summary>Verify that \"Username\" is not case sensitive
+        /// </summary>
+        /// <Author>Long and Phat</Author>
         [TestMethod]
         public void TC007()
         {
@@ -163,6 +185,9 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(true, actualMainPageDisplayed, "MainPage is not displayed!");
         }
 
+        /// <summary>Verify that password with special characters is working correctly
+        /// </summary>
+        /// <Author>Long and Phat</Author>
         [TestMethod]
         public void TC008()
         {
@@ -180,6 +205,9 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(true, actualMainPageDisplayed, "MainPage is not displayed!");
         }
 
+        /// <summary>Verify that username with special characters is working correctly
+        /// </summary>
+        /// <Author>Long and Phat</Author>
         [TestMethod]
         public void TC009()
         {
@@ -197,6 +225,9 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(true, actualMainPageDisplayed, "MainPage is not displayed!");
         }
 
+        /// <summary>Verify that the page works correctly for the case when no input entered to Password and Username field
+        /// </summary>
+        /// <Author>Long and Phat</Author>
         [TestMethod]
         public void TC010()
         {

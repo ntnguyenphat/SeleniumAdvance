@@ -105,6 +105,14 @@ namespace SeleniumAdvance.PageObjects
             this._driverPanelPage = driver;
         }
 
+
+        /// <summary>
+        /// Determines if a profile exists
+        /// </summary>
+        /// <param name="profileName">Name of the profile.</param>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
+        /// <returns></returns>
         public bool IsProfileExist(string profileName)
         {
             return ChbDataProfile.IsItemExist(profileName);
@@ -116,11 +124,25 @@ namespace SeleniumAdvance.PageObjects
             return this.IsElementExist(panel);
         }
 
+
+        /// <summary>
+        /// Get header of the setting
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
+        /// <returns></returns>
         public string GetSettingHeader()
         {
             return LblSettingHeader.Text;
         }
 
+
+        /// <summary>
+        /// Wait for adding panel.
+        /// </summary>
+        /// <param name="panelName">Name of the panel.</param>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
         public void WaitForAddingPanel(string panelName)
         {
             By panel = By.XPath("//a[.='" + panelName + "']");
@@ -134,6 +156,14 @@ namespace SeleniumAdvance.PageObjects
 
         }
 
+
+        /// <summary>
+        /// Click Edit Panel link
+        /// </summary>
+        /// <param name="panelName">Name of the panel.</param>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
+        /// <returns></returns>
         public PanelPage ClickEditPanel(string panelName)
         {
             By xpath = By.XPath("//a[.='" + panelName + "']/ancestor::tr//a[.='Edit']");
@@ -143,6 +173,14 @@ namespace SeleniumAdvance.PageObjects
             return this;
         }
 
+
+        /// <summary>
+        /// Click Delete Panel link
+        /// </summary>
+        /// <param name="panelName">Name of the panel.</param>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
+        /// <returns></returns>
         public void ClickDeletePanel(string panelName)
         {
             By xpath = By.XPath("//a[.='" + panelName + "']/ancestor::tr//a[.='Delete']");
@@ -151,6 +189,14 @@ namespace SeleniumAdvance.PageObjects
             wait.Until(ExpectedConditions.AlertIsPresent());
         }
 
+
+        /// <summary>
+        /// Delete a panel
+        /// </summary>
+        /// <param name="panelName">Name of the panel.</param>
+        /// <Author>Phat</Author>
+        /// <Created date>23/05/2016</Created>
+        /// <returns></returns>
         public PanelPage DeletePanel(string panelName)
         {
             By xpath = By.XPath("//a[.='" + panelName + "']/ancestor::tr//a[.='Delete']");
