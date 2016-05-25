@@ -6,6 +6,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using SeleniumAdvance.Ultilities;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace SeleniumAdvance.TestCases
 {
@@ -462,6 +463,62 @@ namespace SeleniumAdvance.TestCases
             //VP: The new panel is created
 
             Assert.AreEqual(true, actualCreated, "\nPanel: " + panelName + " is not created!");
+        }
+
+        /// <summary>Verify that all chart types ( Pie, Single Bar, Stacked Bar, Group Bar, Line ) are listed correctly under "Chart Type" dropped down menu.
+        /// </summary>
+        /// <Author>Long</Author>
+        /// <Created date>26/05/2016</Created>
+        [TestMethod]
+        public void TC036()
+        {
+            Console.WriteLine("DA_PANEL_TC036 - Verify that all chart types ( Pie, Single Bar, Stacked Bar, Group Bar, Line ) are listed correctly under \"Chart Type\" dropped down menu");
+
+            string pageName = string.Concat("Page ", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page
+            //2. Select a specific repository 
+            //3. Enter valid Username and Password
+            //4. Click 'Login' button
+            //5. Click 'Add Page' link
+            //6. Enter Page Name
+            //7. Click 'OK' button
+
+            LoginPage loginPage = new LoginPage(driver);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+            mainPage.AddPage(pageName: pageName);
+
+            //8. Click 'Choose Panels' button
+            //9. Click 'Create new panel' button
+            //10. Click 'Chart Type' drop-down menu
+
+            PanelPage panelPage = new PanelPage(driver);
+            panelPage.UnhideChoosePanelsPage();
+            panelPage.BtnCreateNewPanel.Click();
+
+            //11. VP: Check that 'Chart Type' are listed 5 options: 'Pie', 'Single Bar', 'Stacked Bar', 'Group Bar' and 'Line'
+
+            int numberOfListedOptions = panelPage.GetNumberOfItemsInComboBox("Chart Type");
+            Assert.AreEqual("5", numberOfListedOptions.ToString(), "There are more/less than 5 options in 'Chart Type' drop-down menu");
+
+            bool IsPieOptionPresent = panelPage.IsItemPresentInCombobox("Chart Type", "Pie");
+            Assert.AreEqual(true, IsPieOptionPresent, "Pie option isn't present in 'Chart Type' drop-down menu");
+
+            bool IsSingleBarOptionPresent = panelPage.IsItemPresentInCombobox("Chart Type", "Single Bar");
+            Assert.AreEqual(true, IsSingleBarOptionPresent, "Single Bar option isn't present in 'Chart Type' drop-down menu");
+
+            bool IsStackedBarOptionPresent = panelPage.IsItemPresentInCombobox("Chart Type", "Stacked Bar");
+            Assert.AreEqual(true, IsStackedBarOptionPresent, "Stacked Bar option isn't present in 'Chart Type' drop-down menu");
+
+            bool IsGroupBarOptionPresent = panelPage.IsItemPresentInCombobox("Chart Type", "Group Bar");
+            Assert.AreEqual(true, IsGroupBarOptionPresent, "Group Bar option isn't present in 'Chart Type' drop-down menu");
+
+            bool IsLineOptionPresent = panelPage.IsItemPresentInCombobox("Chart Type", "Line");
+            Assert.AreEqual(true, IsLineOptionPresent, "Line option isn't present in 'Chart Type' drop-down menu");
+
+            //Post-condition: Delete created page
+            panelPage.BtnCancel.Click();
+            mainPage.DeletePage(pageName);
         }
     }
 }

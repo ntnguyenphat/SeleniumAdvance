@@ -28,6 +28,7 @@ namespace SeleniumAdvance.TestCases
             bool observedResult = generalPage.IsDashboardMainpageDisplayed();
 
             //VP: Verify that Dashboard Mainpage appears
+
             Assert.AreEqual(true, observedResult, "Dashboard Mainpage is not displayed!");
 
         }
@@ -49,6 +50,7 @@ namespace SeleniumAdvance.TestCases
             string observedMessage = "Username or password is invalid";
 
             //VP: Verify that Dashboard Error message "Username or password is invalid" appears
+
             Assert.AreEqual(expectedMessage, observedMessage, "\nActual: " + observedMessage + "\nExpected: " + expectedMessage);
         }
 
@@ -69,6 +71,7 @@ namespace SeleniumAdvance.TestCases
             string observedMessage = "Username or password is invalid";
 
             //VP: Verify that Dashboard Error message "Username or password is invalid" appears
+
             Assert.AreEqual(expectedMessage, observedMessage, "\nActual: " + observedMessage + "\nExpected: " + expectedMessage);
         }
 
@@ -94,6 +97,7 @@ namespace SeleniumAdvance.TestCases
             bool observedResult = generalPage.IsDashboardMainpageDisplayed();
 
             //VP: Verify that Dashboard Mainpage appears
+
             Assert.AreEqual(true, observedResult, "Dashboard Mainpage is not displayed!");
         }
 

@@ -22,9 +22,12 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _lnkLogout = By.XPath("//a[@href='logout.do']");
         static readonly By _lblRepositoryName = By.XPath("//a[@href='#Repository']/span");
         static readonly By _tabSetting = By.XPath("//li[@class='mn-setting']");
+        static readonly By _btnChoosePanels = By.XPath("//a[@id='btnChoosepanel']");
         static string _lnkMainMenu = "//li[@class='sep']/parent::*/../a[contains(.,'{0}')]";
         static string _lnkSubMenu = "//li[@class='sep']/parent::*/../a[contains(.,'{0}')]/following::a[contains(.,'{1}')]";
         static string _lnkSettingItem = "//li[@class='mn-setting']//a[ .='{0}']";
+        static string _cbbName = "//select[contains(@id,'cbb{0}')]";
+
 
         #endregion
 
@@ -47,6 +50,11 @@ namespace SeleniumAdvance.PageObjects
         public IWebElement TabSetting
         {
             get { return _driver.FindElement(_tabSetting); }
+        }
+
+        public IWebElement BtnChoosePanels
+        {
+            get { return _driver.FindElement(_btnChoosePanels); }
         }
 
         #endregion
@@ -211,14 +219,83 @@ namespace SeleniumAdvance.PageObjects
         /// Wait for the element exist.
         /// </summary>
         /// <param name="locator">The locator.</param>
-        /// <Author>Long and Phat</Author>
+        /// <Author>Phat</Author>
         public void WaitElementExist(By locator)
         {
             WebDriverWait wait = new WebDriverWait(_driver,TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(locator));
         }
 
+        /// <summary>
+        /// Unhide Choose Panels page.
+        /// </summary>
+        /// <Author>Long</Author>
+        /// <Created date>25/05/2016</Created>
+        public void UnhideChoosePanelsPage()
+        {
+            string statusOfChoosePanelsButton = BtnChoosePanels.GetAttribute("class");
+            if(statusOfChoosePanelsButton != "selected")
+            {
+                BtnChoosePanels.Click();
+            }
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//div[@class='cpbutton']/span[.='Create new panel']")));
+        }
+
+        /// <summary>
+        /// Hide Choose Panels page.
+        /// </summary>
+        /// <Author>Long</Author>
+        /// <Created date>25/05/2016</Created>
+        public void HideChoosePanelsPage()
+        {
+            string statusOfChoosePanelsButton = BtnChoosePanels.GetAttribute("class");
+            if (statusOfChoosePanelsButton == "selected")
+            {
+                BtnChoosePanels.Click();
+            }
+        }
+
+        /// <summary>
+        /// Determines if an item exist in Combobox.
+        /// </summary>
+        /// <param name="comboboxName">Name of the combobox.</param>
+        /// <param name="comboboxItem">The combobox item.</param>
+        /// <Author>Long</Author>
+        /// <Created date>26/05/2016</Created>
+        /// <returns></returns>
+        public bool IsItemPresentInCombobox(string comboboxName, string comboboxItem)
+        {
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(string.Format(_cbbName, comboboxName).Replace(" ", ""))));
+            bool isItemPresentInCombobox = false;
+            var combo = _driver.FindElement(By.XPath(string.Format(_cbbName,comboboxName).Replace(" ","")));
+            foreach (var item in combo.FindElements(By.TagName("option")))
+            {
+                if (item.GetAttribute("value") == comboboxItem)
+                {
+                    isItemPresentInCombobox = true;
+                }
+            }
+            return isItemPresentInCombobox;
+        }
+
         #endregion
+
+        /// <summary>
+        /// Get the number of items in ComboBox.
+        /// </summary>
+        /// <param name="comboboxName">Name of the combobox.</param>
+        /// <Author>Long</Author>
+        /// <Created date>26/05/2016</Created>
+        /// <returns></returns>
+        public int GetNumberOfItemsInComboBox(string comboboxName)
+        {
+            IWebElement combo = _driver.FindElement(By.XPath(string.Format(_cbbName, comboboxName).Replace(" ", "")));
+            SelectElement listBox = new SelectElement(combo);
+            int numberOfItems = listBox.Options.Count();
+            return numberOfItems;
+        }
 
     }
 }

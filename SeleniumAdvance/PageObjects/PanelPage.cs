@@ -34,6 +34,7 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _chbSeries = By.XPath("//select[@id='cbbSeriesField']");
         static readonly By _lblSettingHeader = By.XPath("//fieldset[@id='fdSettings']/legend");
         static readonly By _txtChartTitle = By.XPath("//input[@id='txtChartTitle']");
+        static readonly By _btnCreateNewPanel = By.XPath("//div[@class='cpbutton']/span[.='Create new panel']");
 
         //static readonly By _chbStatistic = By.XPath("//select[@id='cbbStatField']");
 
@@ -44,58 +45,77 @@ namespace SeleniumAdvance.PageObjects
         {
             get { return _driver.FindElement(_tabDisplaySetting); }
         }
+
         public IWebElement TabFilter
         {
             get { return _driver.FindElement(_tabFilter); }
         }
+
         public IWebElement RdChart
         {
             get { return _driver.FindElement(_rdChart); }
         }
+
         public IWebElement RdIndicator
         {
             get { return _driver.FindElement(_rdIndicator); }
         }
+
         public IWebElement RdReport
         {
             get { return _driver.FindElement(_rdReport); }
         }
+
         public IWebElement RdHeatMap
         {
             get { return _driver.FindElement(_rdHeatMap); }
         }
+
         public IWebElement ChbDataProfile
         {
             get { return _driver.FindElement(_chbDataProfile); }
         }
+
         public IWebElement TxtDisplayName
         {
             get { return _driver.FindElement(_txtDisplayName); }
         }
+
         public IWebElement BtnOK
         {
             get { return _driver.FindElement(_btnOK); }
         }
+
         public IWebElement BtnCancel
         {
             get { return _driver.FindElement(_btnCancel); }
         }
+
         public IWebElement LnkAddNew
         {
             get { return _driver.FindElement(_lnkAddNew); }
         }
+
         public IWebElement ChbSeries
         {
             get { return _driver.FindElement(_chbSeries); }
         }
+
         public IWebElement LblSettingHeader
         {
             get { return _driver.FindElement(_lblSettingHeader); }
         }
+
         public IWebElement TxtChartTitle
         {
             get { return _driver.FindElement(_txtChartTitle); }
         }
+
+        public IWebElement BtnCreateNewPanel
+        {
+            get { return _driver.FindElement(_btnCreateNewPanel); }
+        }
+
         #endregion
 
         #region Methods
@@ -118,12 +138,17 @@ namespace SeleniumAdvance.PageObjects
             return ChbDataProfile.IsItemExist(profileName);
         }
 
+        /// <summary>
+        /// Determines if a panel is created.
+        /// </summary>
+        /// <param name="panelName">Name of the panel.</param>
+        /// <Author>Phat</Author>
+        /// <returns></returns>
         public bool IsPanelCreated(string panelName)
         {
             By panel = By.XPath("//a[.='" + panelName + "']");
             return this.IsElementExist(panel);
         }
-
 
         /// <summary>
         /// Get header of the setting
@@ -156,7 +181,6 @@ namespace SeleniumAdvance.PageObjects
 
         }
 
-
         /// <summary>
         /// Click Edit Panel link
         /// </summary>
@@ -173,7 +197,6 @@ namespace SeleniumAdvance.PageObjects
             return this;
         }
 
-
         /// <summary>
         /// Click Delete Panel link
         /// </summary>
@@ -188,7 +211,6 @@ namespace SeleniumAdvance.PageObjects
             WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.AlertIsPresent());
         }
-
 
         /// <summary>
         /// Delete a panel

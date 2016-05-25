@@ -19,8 +19,9 @@ namespace SeleniumAdvance.TestCases
             Console.WriteLine("Test Initialize");
 
             //Start Firefox browser and maximize window
-            FirefoxBinary ffBinary = new FirefoxBinary(@"C:\Program Files\Mozilla Firefox\firefox.exe");
-            driver = new FirefoxDriver(ffBinary,new FirefoxProfile());
+            //FirefoxBinary ffBinary = new FirefoxBinary(@"C:\Program Files\Mozilla Firefox\firefox.exe");
+            //driver = new FirefoxDriver(ffBinary,new FirefoxProfile());
+            driver = new FirefoxDriver();
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
         }

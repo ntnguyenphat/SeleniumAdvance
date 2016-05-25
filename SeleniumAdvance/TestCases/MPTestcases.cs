@@ -55,6 +55,7 @@ namespace SeleniumAdvance.TestCases
             mainPage.AddPage(pageName);
 
             //VP: New page is displayed besides "Overview" page
+
             bool isPageNextToPage = mainPage.IsPageNextToPage("Overview", pageName);
             Assert.AreEqual(true, isPageNextToPage, "\nThe new page isn't displayed besides \"Overview\" page");
 
@@ -85,10 +86,12 @@ namespace SeleniumAdvance.TestCases
             mainPage.AddPage(pageName: pageName2, displayAfer: pageName1);
 
             //VP: Page 1 is positioned besides the Page 2
+
             bool isPageNextToPage = mainPage.IsPageNextToPage(pageName1, pageName2);
             Assert.AreEqual(true, isPageNextToPage, "\n" + pageName2 + " isn't positioned besides" + pageName1);
 
             //Post-condition: Delete newly added page
+
             mainPage.DeletePage(pageName2).DeletePage(pageName1);
         }
 
@@ -123,10 +126,12 @@ namespace SeleniumAdvance.TestCases
             loginPage.Login(Constant.OtherUsername, Constant.OtherPassword, Constant.DefaultRepo);
 
             //VP: Check newly added page is visibled
+
             bool doesPageExist = mainPage.DoesPageExist(pageName);
             Assert.AreEqual(true, doesPageExist, "\n" + pageName + " isn't visibled");
 
             //Post-condition: Delete newly added page
+
             loginPage = mainPage.Logout();
             loginPage.Login(Constant.Username, Constant.Password).DeletePage(pageName);
         }
@@ -161,10 +166,12 @@ namespace SeleniumAdvance.TestCases
             loginPage.Login(Constant.OtherUsername, Constant.OtherPassword, Constant.DefaultRepo);
 
             //VP: Children is invisibled
+
             bool doesPageExist = mainPage.DoesPageExist(parentPageName + "->" + childPageName);
             Assert.AreEqual(false, doesPageExist, "\n" + childPageName + " is visibled");
 
             //Post-condition: Delete newly added page
+
             loginPage = mainPage.Logout();
             loginPage.Login(Constant.Username, Constant.Password, Constant.DefaultRepo).DeletePage(childPageName).DeletePage(parentPageName);
         }
@@ -197,6 +204,7 @@ namespace SeleniumAdvance.TestCases
             mainPage.SelectGeneralSetting("Edit");
 
             //VP: "Edit Page" pop up window is displayed
+
             bool doesPopupExist1 = mainPage.DoesPopupExist("Edit Page");
             Assert.AreEqual(true, doesPopupExist1, "\nPop up window is not displayed");
 
