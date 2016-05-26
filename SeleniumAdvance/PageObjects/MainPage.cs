@@ -93,8 +93,8 @@ namespace SeleniumAdvance.PageObjects
         /// <param name="displayAfer">The page which the added page displays after.</param>
         /// <param name="publicCheckBox">Public/Unpublic page .</param>
         /// <Author>Phat</Author>
-        /// <Modidified by>Long : Handle White space in page's name. Re-write arguments so that the method can be re-used</Modidified>
-        /// <Modified by> Phat : Return page object instead of void</Modified>
+        /// <Modidified>Long : Handle White space in page's name. Re-write arguments so that the method can be re-used</Modidified>
+        /// <Modified> Phat : Return page object instead of void</Modified>
         /// <returns></returns>
         public MainPage AddPage(string pageName, string parentPage = null, int numberOfColumn = 0, string displayAfer = null, bool publicCheckBox = false)
         {
@@ -134,7 +134,7 @@ namespace SeleniumAdvance.PageObjects
         /// </summary>
         /// <param name="pageLink">The page link.</param>
         /// <Author>Long</Author>
-        /// <Modified by> Phat: Return page object instead of void</Modified>
+        /// <Modified>Phat: Return page object instead of void</Modified>
         /// <returns></returns>
         public MainPage GotoPage(string pageLink)
         {
@@ -170,7 +170,7 @@ namespace SeleniumAdvance.PageObjects
         /// </summary>
         /// <param name="pageLink">The page link.</param>
         /// <Author>Long</Author>
-        /// <Modified by> Phat: Return page object instead of void</Modified>
+        /// <Modified>Phat: Return page object instead of void</Modified>
         /// <returns></returns>
         public MainPage DeletePage(string pageLink)
         {
@@ -212,8 +212,8 @@ namespace SeleniumAdvance.PageObjects
         /// <param name="displayAfer">The page which the edited page displays after.</param>
         /// <param name="publicCheckBox">Public/Unpublic the edited page.</param>
         /// <Author>Phat</Author>
-        /// <Modified by> Long: Edit some arguments so that the method can be re-used in many TCs</Modified>
-        /// <Modified by> Phat: Return page object instead of void </Modified>
+        /// <Modified> Long: Edit some arguments so that the method can be re-used in many TCs</Modified>
+        /// <Modified> Phat: Return page object instead of void </Modified>
         /// <returns></returns>
         public MainPage EditPageInfomation(string pageName = null, string parentPage = null, int numberOfColumn = 0, string displayAfer = null, bool publicCheckBox = false)
         {
@@ -260,7 +260,7 @@ namespace SeleniumAdvance.PageObjects
         /// <param name="currentPage">The current page.</param>
         /// <param name="nextPage">The next page.</param>
         /// <Author>Phat</Author>
-        /// <Modified by>Long: Edit the XPATH </Modified>
+        /// <Modified>Long: Edit the XPATH </Modified>
         /// <returns></returns>
         public bool IsPageNextToPage(string currentPage, string nextPage)
         {

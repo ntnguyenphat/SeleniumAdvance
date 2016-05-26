@@ -66,7 +66,7 @@ namespace SeleniumAdvance.PageObjects
         /// </summary>
         /// <param name="profileName">Name of the profile.</param>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <Startdate>23/05/2016</Startdate>
         public void WaitForAddingProfile(string profileName)
         {
             By panel = By.XPath("//a[.='" + profileName + "']");
@@ -82,7 +82,7 @@ namespace SeleniumAdvance.PageObjects
         /// </summary>
         /// <param name="profileName">Name of the profile.</param>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <Startdate>23/05/2016</Startdate>
         /// <returns></returns>
         public DataProfilePage ClickEditProfile(string profileName)
         {
@@ -99,7 +99,7 @@ namespace SeleniumAdvance.PageObjects
         /// </summary>
         /// <param name="profileName">Name of the profile.</param>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <Startdate>23/05/2016</Startdate>
         /// <returns></returns>
         public void ClickDeleteProfile(string profileName)
         {
@@ -115,7 +115,7 @@ namespace SeleniumAdvance.PageObjects
         /// </summary>
         /// <param name="profileName">Name of the profile.</param>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <Startdate>23/05/2016</Startdate>
         /// <returns></returns>
         public DataProfilePage DeleteProfile(string profileName)
         {

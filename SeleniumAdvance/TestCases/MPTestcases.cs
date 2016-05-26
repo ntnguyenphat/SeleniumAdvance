@@ -37,8 +37,8 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that user is able to add additional pages besides \"Overview\" page successfully
         /// </summary>
         /// <Author>Phat</Author>
-        /// <Modified by>Long: Use modified Addpage method. Use Assert to verify</Modified>
-        /// <Modified by>Phat: Make the code tidy</Modified>
+        /// <Modified>Long: Use modified Addpage method. Use Assert to verify</Modified>
+        /// <Modified>Phat: Make the code tidy</Modified>
         [TestMethod]
         public void TC012()
         {
@@ -66,8 +66,8 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that the newly added main parent page is positioned at the location specified as set with \"Displayed After\" field of \"New Page\" form on the main page bar/\"Parent Page\" dropped down menu
         /// </summary>
         /// <Author>Phat</Author>
-        /// <Modified by>Long: Use modified Addpage method. Use Assert to verify </Modified>
-        /// <Modified by>Phat: Make the code tidy</Modified>
+        /// <Modified>Long: Use modified Addpage method. Use Assert to verify </Modified>
+        /// <Modified>Phat: Make the code tidy</Modified>
         [TestMethod]
         public void TC013()
         {
@@ -98,7 +98,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that \"Public\" pages can be visible and accessed by all users of working repository
         /// </summary>
         /// <Author>Long</Author>
-        /// <Modified by>Phat: Make the code tidy</Modified>
+        /// <Modified>Phat: Make the code tidy</Modified>
         [TestMethod]
         public void TC014()
         {
@@ -139,8 +139,8 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that non \"Public\" pages can only be accessed and visible to their creators with condition that all parent pages above it are \"Public\
         /// </summary>
         /// <Author>Phat</Author>
-        /// <Modified by>Long: Use modified Addpage method. Use Assert to verify</Modified>
-        /// <Modified by>Phat: Make the code tidy</Modified>
+        /// <Modified>Long: Use modified Addpage method. Use Assert to verify</Modified>
+        /// <Modified>Phat: Make the code tidy</Modified>
         [TestMethod]
         public void TC015()
         {
@@ -179,8 +179,8 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that user is able to edit the \"Public\" setting of any page successfully
         /// </summary>
         /// <Author>Phat</Author>
-        /// <Modified by>Long: Use modified Addpage method. Use Assert to verify</Modified>
-        /// <Modified by>Phat: Make the code tidy
+        /// <Modified>Long: Use modified Addpage method. Use Assert to verify</Modified>
+        /// <Modified>Phat: Make the code tidy
         [TestMethod]
         public void TC016()
         {
@@ -242,7 +242,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that user can remove any main parent page except \"Overview\" page successfully and the order of pages stays persistent as long as there is not children page under it
         /// </summary>
         /// <Author>Long</Author>
-        /// <Modified by>Phat: Make the code tidy</Modified>
+        /// <Modified>Phat: Make the code tidy</Modified>
         [TestMethod]
         public void TC017()
         {
@@ -330,7 +330,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that user is able to add additional sibbling pages to the parent page successfully
         /// </summary>
         /// <Author>Long</Author>
-        /// <Modified by>Phat: Make the code tidy</Modified>
+        /// <Modified>Phat: Make the code tidy</Modified>
         [TestMethod]
         public void TC018()
         {
@@ -379,7 +379,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that user is able to add additional sibbling page levels to the parent page successfully
         /// </summary>
         /// <Author>Long</Author>
-        /// <Modified by>Phat: Make the code tidy</Modified>
+        /// <Modified>Phat: Make the code tidy</Modified>
         [TestMethod]
         public void TC019()
         {
@@ -410,7 +410,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that user is able to delete sibbling page as long as that page has not children page under it
         /// </summary>
         /// <Author>Long</Author>
-        /// <Modified by>Phat: Make the code tidy</Modified>
+        /// <Modified>Phat: Make the code tidy</Modified>
         [TestMethod]
         public void TC020()
         {
@@ -471,7 +471,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that user is able to edit the name of the page (Parent/Sibbling) successfully
         /// </summary>
         /// <Author>Long</Author>
-        /// <Modified by>Phat: Make the code tidy</Modified>
+        /// <Modified>Phat: Make the code tidy</Modified>
         [TestMethod]
         public void TC021()
         {
@@ -531,7 +531,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that user is unable to duplicate the name of sibbling page under the same parent page
         /// </summary>
         /// <Author>Long</Author>
-        /// <Modified by>Phat: Make the code tidy</Modified>
+        /// <Modified>Phat: Make the code tidy</Modified>
         [TestMethod]
         public void TC022()
         {
@@ -576,7 +576,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that user is able to edit the parent page of the sibbling page
         /// </summary>
         /// <Author>Long</Author>
-        /// <Modified by>Phat: Make the code tidy</Modified>
+        /// <Modified>Phat: Make the code tidy</Modified>
         [TestMethod]
         public void TC023()
          {
@@ -623,7 +623,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that \"Bread Crums\" navigation is correct
         /// </summary>
         /// <Author>Long</Author>
-        /// <Modified by>Phat: Make the code tidy</Modified>
+        /// <Modified>Phat: Make the code tidy</Modified>
         [TestMethod]
         public void TC024()
         {
@@ -672,7 +672,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that page listing is correct when user edit \"Display After\"  field of a specific page
         /// </summary>
         /// <Author>Long</Author>
-        /// <Modified by>Phat: Make the code tidy</Modified>
+        /// <Modified>Phat: Make the code tidy</Modified>
         [TestMethod]
         public void TC025()
         {
@@ -715,7 +715,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that page column is correct when user edit \"Number of Columns\" field of a specific page
         /// </summary>
         /// <Author>Long</Author>
-        /// <Modified by>Phat: Make the code tidy</Modified>
+        /// <Modified>Phat: Make the code tidy</Modified>
         [TestMethod]
         public void TC026()
         {

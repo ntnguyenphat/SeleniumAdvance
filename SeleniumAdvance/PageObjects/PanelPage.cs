@@ -35,6 +35,7 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _lblSettingHeader = By.XPath("//fieldset[@id='fdSettings']/legend");
         static readonly By _txtChartTitle = By.XPath("//input[@id='txtChartTitle']");
         static readonly By _btnCreateNewPanel = By.XPath("//div[@class='cpbutton']/span[.='Create new panel']");
+        static readonly By _cmbChartType = By.XPath("//select[@id='cbbChartType']");
 
         //static readonly By _chbStatistic = By.XPath("//select[@id='cbbStatField']");
 
@@ -114,6 +115,11 @@ namespace SeleniumAdvance.PageObjects
         public IWebElement BtnCreateNewPanel
         {
             get { return _driver.FindElement(_btnCreateNewPanel); }
+        }
+
+        public IWebElement CmbChartType
+        {
+            get { return _driver.FindElement(_cmbChartType); }
         }
 
         #endregion

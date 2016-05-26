@@ -79,8 +79,8 @@ namespace SeleniumAdvance.PageObjects
 
         /// <summary>
         /// Determines if alert dialog displayed].
-        /// <Author>Long and Phat</Author>
         /// </summary>
+        /// <Author>Long and Phat</Author>
         /// <returns></returns>
         public bool IsAlertDisplayed()
         {
@@ -100,8 +100,8 @@ namespace SeleniumAdvance.PageObjects
 
         /// <summary>
         /// Log out from TA Dashboard page.
-        /// <Author>Long and Phat</Author>
         /// </summary>
+        /// <Author>Long and Phat</Author>
         /// <returns></returns>
         public LoginPage Logout()
         {
@@ -135,8 +135,8 @@ namespace SeleniumAdvance.PageObjects
 
         /// <summary>
         /// Get the name of the repository.
-        /// <Author>Long and Phat</Author>
         /// </summary>
+        /// <Author>Long and Phat</Author>
         /// <returns></returns>
         public string GetRepositoryName()
         {
@@ -230,7 +230,7 @@ namespace SeleniumAdvance.PageObjects
         /// Unhide Choose Panels page.
         /// </summary>
         /// <Author>Long</Author>
-        /// <Created date>25/05/2016</Created>
+        /// <Startdate>25/05/2016</Startdate>
         public void UnhideChoosePanelsPage()
         {
             string statusOfChoosePanelsButton = BtnChoosePanels.GetAttribute("class");
@@ -246,7 +246,7 @@ namespace SeleniumAdvance.PageObjects
         /// Hide Choose Panels page.
         /// </summary>
         /// <Author>Long</Author>
-        /// <Created date>25/05/2016</Created>
+        /// <Startdate>25/05/2016</Startdate>
         public void HideChoosePanelsPage()
         {
             string statusOfChoosePanelsButton = BtnChoosePanels.GetAttribute("class");
@@ -262,7 +262,7 @@ namespace SeleniumAdvance.PageObjects
         /// <param name="comboboxName">Name of the combobox.</param>
         /// <param name="comboboxItem">The combobox item.</param>
         /// <Author>Long</Author>
-        /// <Created date>26/05/2016</Created>
+        /// <Startdate>26/05/2016</Startdate>
         /// <returns></returns>
         public bool IsItemPresentInCombobox(string comboboxName, string comboboxItem)
         {
@@ -287,7 +287,7 @@ namespace SeleniumAdvance.PageObjects
         /// </summary>
         /// <param name="comboboxName">Name of the combobox.</param>
         /// <Author>Long</Author>
-        /// <Created date>26/05/2016</Created>
+        /// <Startdate>26/05/2016</Startdate>
         /// <returns></returns>
         public int GetNumberOfItemsInComboBox(string comboboxName)
         {

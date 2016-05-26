@@ -17,7 +17,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that when \"Choose panels\" form is expanded all pre-set panels are populated and sorted correctly
         /// </summary>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <Startdate>23/05/2016</Startdate>
         [TestMethod]
         public void TC027()
         {
@@ -70,7 +70,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that when \"Add New Panel\" form is on focused all other control/form is disabled or locked
         /// </summary>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <Startdate>23/05/2016</Startdate>
         [TestMethod]
         public void TC028()
         {
@@ -102,7 +102,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that user is unable to create new panel when (*) required field is not filled
         /// </summary>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <Startdate>23/05/2016</Startdate>
         [TestMethod]
         public void TC029()
         {
@@ -137,7 +137,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that no special character except '@' character is allowed to be inputted into \"Display Name\" field
         /// </summary>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <Startdate>23/05/2016</Startdate>
         [TestMethod]
         public void TC030()
         {
@@ -195,7 +195,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that correct panel setting form is displayed with corresponding panel type selected
         /// </summary>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <Startdate>23/05/2016</Startdate>
         [TestMethod]
         public void TC031()
         {
@@ -243,7 +243,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that user is not allowed to create panel with duplicated \"Display Name\
         /// </summary>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <Startdate>23/05/2016</Startdate>
         [TestMethod]
         public void TC032()
         {
@@ -292,7 +292,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that \"Data Profile\" listing of \"Add New Panel\" and \"Edit Panel\" control/form are in alphabetical order
         /// </summary>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <Startdate>23/05/2016</Startdate>
         [TestMethod]
         public void TC033()
         {
@@ -344,7 +344,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that newly created data profiles are populated correctly under the ""Data Profile"" dropped down menu in  ""Add New Panel"" and ""Edit Panel"" control/form
         /// </summary>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <Startdate>23/05/2016</Startdate>
         [TestMethod]
         public void TC034()
         {
@@ -410,7 +410,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that no special character except '@' character is allowed to be inputted into \"Chart Title\" field
         /// </summary>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <Startdate>23/05/2016</Startdate>
         [TestMethod]
         public void TC035()
         {
@@ -468,7 +468,7 @@ namespace SeleniumAdvance.TestCases
         /// <summary>Verify that all chart types ( Pie, Single Bar, Stacked Bar, Group Bar, Line ) are listed correctly under "Chart Type" dropped down menu.
         /// </summary>
         /// <Author>Long</Author>
-        /// <Created date>26/05/2016</Created>
+        /// <Startdate>26/05/2016</Startdate>
         [TestMethod]
         public void TC036()
         {
@@ -512,13 +512,63 @@ namespace SeleniumAdvance.TestCases
 
             bool IsGroupBarOptionPresent = panelPage.IsItemPresentInCombobox("Chart Type", "Group Bar");
             Assert.AreEqual(true, IsGroupBarOptionPresent, "Group Bar option isn't present in 'Chart Type' drop-down menu");
-
+  
             bool IsLineOptionPresent = panelPage.IsItemPresentInCombobox("Chart Type", "Line");
             Assert.AreEqual(true, IsLineOptionPresent, "Line option isn't present in 'Chart Type' drop-down menu");
 
             //Post-condition: Delete created page
             panelPage.BtnCancel.Click();
             mainPage.DeletePage(pageName);
+        }
+
+        /// <summary>Verify that "Category", "Series" and "Caption" field are enabled and disabled correctly corresponding to each type of the "Chart Type"
+        /// </summary>
+        /// <Author>Long</Author>
+        /// <Startdate>27/05/2016</Startdate>
+        [TestMethod]
+        public void TC037()
+        {
+            Console.WriteLine("DA_PANEL_TC037 - Verify that \"Category\", \"Series\" and \"Caption\" field are enabled and disabled correctly corresponding to each type of the \"Chart Type\"");
+
+            string pageName = string.Concat("Page ", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page
+            //2. Select a specific repository 
+            //3. Enter valid Username and Password
+            //4. Click 'Login' button
+            //5. Click 'Add Page' button
+            //6. Enter Page Name
+            //7. Click 'OK' button
+
+            LoginPage loginPage = new LoginPage(driver);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+            mainPage.AddPage(pageName: pageName);
+
+            //8. Click 'Choose Panels' button
+            //9. Click 'Create new panel' button
+            //10. Click 'Chart Type' drop-down menu
+            //11. Select 'Pie' Chart Type
+
+            PanelPage panelPage = new PanelPage(driver);
+            panelPage.UnhideChoosePanelsPage();
+            panelPage.BtnCreateNewPanel.Click();
+            panelPage.CmbChartType.SelectItem(item: "Pie", selectby: "Value");
+
+            //12. VP: Check that 'Category' and 'Caption' are disabled, 'Series' is enabled
+
+            //13. Click 'Chart Type' drop-down menu
+            //14. Select 'Single Bar' Chart Type
+            //15. VP: Check that 'Category' is disabled, 'Series' and 'Caption' are enabled
+            //16. Click 'Chart Type' drop-down menu
+            //17. Select 'Stacked Bar' Chart Type
+            //18. Check that 'Category' ,'Series' and 'Caption' are enabled
+            //19. Click 'Chart Type' drop-down menu
+            //20. Select 'Group Bar' Chart Type
+            //21. VP: Check that 'Category' ,'Series' and 'Caption' are enabled
+            //22. Click 'Chart Type' drop-down menu
+            //23. Select 'Line' Chart Type
+            //24. VP: Check that 'Category' ,'Series' and 'Caption' are enabled
+
         }
     }
 }
