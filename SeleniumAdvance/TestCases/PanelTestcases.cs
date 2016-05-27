@@ -7,6 +7,7 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumAdvance.Ultilities;
 using System.Collections.Generic;
 using System.Threading;
+using OpenQA.Selenium;
 
 namespace SeleniumAdvance.TestCases
 {
@@ -178,7 +179,7 @@ namespace SeleniumAdvance.TestCases
 
             panelPage.TxtDisplayName.Clear();
             panelPage.TxtDisplayName.SendKeys(panelTrue);
-            panelPage.ChbSeries.SelectItem(panelSeries, "Value");
+            panelPage.CmbSeries.SelectItem(panelSeries, "Value");
             panelPage.BtnOK.Click();
 
             bool actualCreated = panelPage.IsPanelCreated(panelTrue);
@@ -223,7 +224,7 @@ namespace SeleniumAdvance.TestCases
 
             //5. Select Indicator type
 
-            panelPage.RdIndicator.ChooseAndWait(TimeSpan.FromSeconds(3));
+            panelPage.RbIndicator.ChooseAndWait(TimeSpan.FromSeconds(3));
 
             actual = panelPage.GetSettingHeader();
             expected = "Indicator setting";
@@ -234,7 +235,7 @@ namespace SeleniumAdvance.TestCases
 
             //6: Select Report type
 
-            panelPage.RdReport.Click();
+            panelPage.RbReport.Click();
 
             //VP:TODO - Report panel setting form is displayed "View mode" under Display Name.
 
@@ -268,13 +269,13 @@ namespace SeleniumAdvance.TestCases
             //6. Click on OK button
 
             panelPage.TxtDisplayName.SendKeys(panelName);
-            panelPage.ChbSeries.SelectItem(panelSeries, "Value");
+            panelPage.CmbSeries.SelectItem(panelSeries, "Value");
             panelPage.BtnOK.Click();
             panelPage.WaitForAddingPanel(panelName);
 
             panelPage.LnkAddNew.Click();
             panelPage.TxtDisplayName.SendKeys(panelName);
-            panelPage.ChbSeries.SelectItem(panelSeries, "Value");
+            panelPage.CmbSeries.SelectItem(panelSeries, "Value");
             panelPage.BtnOK.Click();
 
             string actual = panelPage.GetAlertMessage(closeAlert: true);
@@ -313,7 +314,7 @@ namespace SeleniumAdvance.TestCases
             PanelPage panelPage = new PanelPage(driver);
             panelPage.LnkAddNew.Click();
 
-            bool actual = panelPage.ChbDataProfile.IsItemSorted();
+            bool actual = panelPage.CmbDataProfile.IsItemSorted();
 
             //VP: Data Profile list is in alphabetical order
 
@@ -324,12 +325,12 @@ namespace SeleniumAdvance.TestCases
             //7. Click on edit link
 
             panelPage.TxtDisplayName.SendKeys(panelName);
-            panelPage.ChbSeries.SelectItem(panelSeries, "Value");
+            panelPage.CmbSeries.SelectItem(panelSeries, "Value");
             panelPage.BtnOK.Click();
             panelPage.WaitForAddingPanel(panelName);
             panelPage.ClickEditPanel(panelName);
 
-            actual = panelPage.ChbDataProfile.IsItemSorted();
+            actual = panelPage.CmbDataProfile.IsItemSorted();
 
             //VP: Data Profile list is in alphabetical order
 
@@ -389,7 +390,7 @@ namespace SeleniumAdvance.TestCases
             //11. Click on edit link
 
             panelPage.TxtDisplayName.SendKeys(panelName);
-            panelPage.ChbSeries.SelectItem(panelSeries, "Value");
+            panelPage.CmbSeries.SelectItem(panelSeries, "Value");
             panelPage.BtnOK.Click();
             panelPage.WaitForAddingPanel(panelName);
             panelPage.ClickEditPanel(panelName);
@@ -437,7 +438,7 @@ namespace SeleniumAdvance.TestCases
             PanelPage panelPage = new PanelPage(driver);
             panelPage.LnkAddNew.Click();
             panelPage.TxtDisplayName.SendKeys(panelName);
-            panelPage.ChbSeries.SelectItem(panelSeries, "Value");
+            panelPage.CmbSeries.SelectItem(panelSeries, "Value");
             panelPage.TxtChartTitle.SendKeys(chartTitleFalse);
             panelPage.BtnOK.Click();
 
@@ -498,7 +499,7 @@ namespace SeleniumAdvance.TestCases
 
             //11. VP: Check that 'Chart Type' are listed 5 options: 'Pie', 'Single Bar', 'Stacked Bar', 'Group Bar' and 'Line'
 
-            int numberOfListedOptions = panelPage.GetNumberOfItemsInComboBox("Chart Type");
+            int numberOfListedOptions = panelPage.GetNumberOfItemsInCombobox("Chart Type");
             Assert.AreEqual("5", numberOfListedOptions.ToString(), "There are more/less than 5 options in 'Chart Type' drop-down menu");
 
             bool IsPieOptionPresent = panelPage.IsItemPresentInCombobox("Chart Type", "Pie");
@@ -517,6 +518,7 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(true, IsLineOptionPresent, "Line option isn't present in 'Chart Type' drop-down menu");
 
             //Post-condition: Delete created page
+
             panelPage.BtnCancel.Click();
             mainPage.DeletePage(pageName);
         }
@@ -556,19 +558,196 @@ namespace SeleniumAdvance.TestCases
 
             //12. VP: Check that 'Category' and 'Caption' are disabled, 'Series' is enabled
 
+            Assert.AreEqual(false, panelPage.CmbCategory.Enabled, "Category is not disabled");
+            Assert.AreEqual(false, panelPage.TxtCaptionNextToCategory.Enabled, "Caption next to Category is not disabled");
+            Assert.AreEqual(false, panelPage.TxtCaptionNextToSeries.Enabled, "Caption next to Series is not disabled");
+            Assert.AreEqual(true, panelPage.CmbSeries.Enabled, "Series is not enabled");
+
             //13. Click 'Chart Type' drop-down menu
             //14. Select 'Single Bar' Chart Type
+
+            panelPage.CmbChartType.SelectItem(item: "Single Bar", selectby: "Value");
+
             //15. VP: Check that 'Category' is disabled, 'Series' and 'Caption' are enabled
+
+            Assert.AreEqual(false, panelPage.CmbCategory.Enabled, "Category is not disabled");
+            Assert.AreEqual(true, panelPage.TxtCaptionNextToCategory.Enabled, "Caption next to Category is not enabled");
+            Assert.AreEqual(true, panelPage.TxtCaptionNextToSeries.Enabled, "Caption next to Series is not enabled");
+            Assert.AreEqual(true, panelPage.CmbSeries.Enabled, "Series is not enabled");
+
             //16. Click 'Chart Type' drop-down menu
             //17. Select 'Stacked Bar' Chart Type
-            //18. Check that 'Category' ,'Series' and 'Caption' are enabled
+
+            panelPage.CmbChartType.SelectItem(item: "Stacked Bar", selectby: "Value");
+
+            //18. VP: Check that 'Category' ,'Series' and 'Caption' are enabled
+
+            Assert.AreEqual(true, panelPage.CmbCategory.Enabled, "Category is not enabled");
+            Assert.AreEqual(true, panelPage.TxtCaptionNextToCategory.Enabled, "Caption next to Category is not enabled");
+            Assert.AreEqual(true, panelPage.TxtCaptionNextToSeries.Enabled, "Caption next to Series is not enabled");
+            Assert.AreEqual(true, panelPage.CmbSeries.Enabled, "Series is not enabled");
+
             //19. Click 'Chart Type' drop-down menu
             //20. Select 'Group Bar' Chart Type
+
+            panelPage.CmbChartType.SelectItem(item: "Group Bar", selectby: "Value");
+
             //21. VP: Check that 'Category' ,'Series' and 'Caption' are enabled
+
+            Assert.AreEqual(true, panelPage.CmbCategory.Enabled, "Category is not enabled");
+            Assert.AreEqual(true, panelPage.TxtCaptionNextToCategory.Enabled, "Caption next to Category is not enabled");
+            Assert.AreEqual(true, panelPage.TxtCaptionNextToSeries.Enabled, "Caption next to Series is not enabled");
+            Assert.AreEqual(true, panelPage.CmbSeries.Enabled, "Series is not enabled");
+
             //22. Click 'Chart Type' drop-down menu
             //23. Select 'Line' Chart Type
+
+            panelPage.CmbChartType.SelectItem(item: "Line", selectby: "Value");
+
             //24. VP: Check that 'Category' ,'Series' and 'Caption' are enabled
 
+            Assert.AreEqual(true, panelPage.CmbCategory.Enabled, "Category is not enabled");
+            Assert.AreEqual(true, panelPage.TxtCaptionNextToCategory.Enabled, "Caption next to Category is not enabled");
+            Assert.AreEqual(true, panelPage.TxtCaptionNextToSeries.Enabled, "Caption next to Series is not enabled");
+            Assert.AreEqual(true, panelPage.CmbSeries.Enabled, "Series is not enabled");
+
+            //Post-condition: Delete created page
+
+            panelPage.BtnCancel.Click();
+            mainPage.DeletePage(pageName);
         }
+
+        /// <summary>Verify that all settings within "Add New Panel" and "Edit Panel" form stay unchanged when user switches between "2D" and "3D" radio buttons
+        /// </summary>
+        /// <Author>Long</Author>
+        /// <Startdate>27/05/2016</Startdate>
+        [TestMethod]
+        public void TC038()
+        {
+            Console.WriteLine("DA_PANEL_TC038 - Verify that all settings within \"Add New Panel\" and \"Edit Panel\" form stay unchanged when user switches between \"2D\" and \"3D\" radio buttons");
+
+            string pageName = string.Concat("Page ", CommonMethods.GetUniqueString());
+            string panelDisplayName = string.Concat("Panel Display ", CommonMethods.GetUniqueString());
+            string chartTitle = string.Concat("Chart Title ", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page
+            //2. Select a specific repository 
+            //3. Enter valid Username and Password
+            //4. Click 'Login' button
+            //5. Click 'Add Page' button
+            //6. Enter Page Name
+            //7. Click 'OK' button
+
+            LoginPage loginPage = new LoginPage(driver);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+            mainPage.AddPage(pageName: pageName);
+
+            //8. Click 'Choose Panels' button
+            //9. Click 'Create new panel' button
+            //10. Click 'Chart Type' drop-down menu
+            //11. Select a specific Chart Type - Stacked Bar
+            //12. Select 'Data Profile' drop-down menu - Test Case Execution
+            //13. Enter 'Display Name' and 'Chart Title'
+            //14. Select 'Show Title' checkbox - On
+            //15. Select 'Legends' radio button - Top
+            //16. Select 'Style' radio button - 3D
+
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            PanelPage panelPage = new PanelPage(driver);
+            panelPage.UnhideChoosePanelsPage();
+            panelPage.BtnCreateNewPanel.Click();
+            panelPage.CmbDataProfile.SelectItem(item: "Test Case Execution", selectby: "Text");
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//input[@id='txtDisplayName']")));
+            panelPage.TxtDisplayName.SendKeys(panelDisplayName);
+            panelPage.TxtChartTitle.SendKeys(chartTitle);
+            panelPage.ChbShowTitle.Check();
+            panelPage.RbLegendsTop.Check();
+            panelPage.CmbChartType.SelectItem(item: "Stacked Bar", selectby: "Value");
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//select[@id='cbbSeriesField']")));
+            panelPage.CmbCategory.SelectItem(item: "name", selectby: "Value");
+            panelPage.CmbSeries.SelectItem(item: "location", selectby: "Value");
+
+            panelPage.RbStyle3D.Check();
+
+            //17. VP: Check that settings of 'Chart Type', 'Data Profile', 'Display Name', 'Chart Title', 'Show Title' and 'Legends' stay unchanged.
+
+            Assert.AreEqual("Stacked Bar", panelPage.GetSelectedItemOfCombobox("Chart Type"), "Setting of Chart Type combobox has changed");
+            Assert.AreEqual("Test Case Execution", panelPage.GetSelectedItemOfCombobox("Profile"), "Setting of Data Profile combobox has changed");
+            Assert.AreEqual("Name", panelPage.GetSelectedItemOfCombobox("Category"), "Setting of Category combobox has changed");
+            Assert.AreEqual("Location", panelPage.GetSelectedItemOfCombobox("Series"), "Setting of Series combobox has changed");
+            Assert.AreEqual(panelDisplayName, panelPage.TxtDisplayName.GetAttribute("value"), "Name input in Display Name textbox has changed");
+            Assert.AreEqual(chartTitle, panelPage.TxtChartTitle.GetAttribute("value"), "Title input in Chart Title textbox has changed");
+            Assert.AreEqual(true, panelPage.ChbShowTitle.Selected, "Setting of Show Title checkbox has changed");
+            Assert.AreEqual(true, panelPage.RbLegendsTop.Selected, "Setting of Legends radio button has changed");
+
+            //18. Select 'Style' radio button - 2D
+
+            panelPage.RbStyle2D.Check();
+
+            //19. VP: Check that settings of 'Chart Type', 'Data Profile', 'Display Name', 'Chart Title', 'Show Title' and 'Legends' stay unchanged.
+
+            Assert.AreEqual("Stacked Bar", panelPage.GetSelectedItemOfCombobox("Chart Type"), "Setting of Chart Type combobox has changed");
+            Assert.AreEqual("Test Case Execution", panelPage.GetSelectedItemOfCombobox("Profile"), "Setting of Data Profile combobox has changed");
+            Assert.AreEqual("Name", panelPage.GetSelectedItemOfCombobox("Category"), "Setting of Category combobox has changed");
+            Assert.AreEqual("Location", panelPage.GetSelectedItemOfCombobox("Series"), "Setting of Series combobox has changed");
+            Assert.AreEqual(panelDisplayName, panelPage.TxtDisplayName.GetAttribute("value"), "Name input in Display Name textbox has changed");
+            Assert.AreEqual(chartTitle, panelPage.TxtChartTitle.GetAttribute("value"), "Title input in Chart Title textbox has changed");
+            Assert.AreEqual(true, panelPage.ChbShowTitle.Selected, "Setting of Show Title checkbox has changed");
+            Assert.AreEqual(true, panelPage.RbLegendsTop.Selected, "Setting of Legends radio button has changed");
+
+            //20. Click OK button
+
+            panelPage.BtnOK.Click();
+
+            //21. Select a page in drop-down menu - pagename
+            //22. Enter path of Folder
+            //23. Click OK button
+
+            panelPage.CmbSelectPage.SelectItem(item: pageName, selectby: "Text");
+            panelPage.TxtFolder.Clear();
+            panelPage.TxtFolder.SendKeys("/Car Rental/Actions");
+            //wait.Until(ExpectedConditions.StalenessOf(panelPage.BtnOK));
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//div[@class='div_button']/input[@id='OK']")));
+            panelPage.BtnOK.Click();
+
+            //24. Click 'Edit Panel' button of the created panel
+            //25. Select 'Style' radio button - 3D
+
+            panelPage.SelectMenuItem("Administer", "Panels");
+            panelPage.ClickEditPanel(panelDisplayName);
+            panelPage.RbStyle3D.Check();
+
+            //26. VP: Check that settings of 'Chart Type', 'Data Profile', 'Display Name', 'Chart Title', 'Show Title' and 'Legends' stay unchanged.
+
+            Assert.AreEqual("Stacked Bar", panelPage.GetSelectedItemOfCombobox("Chart Type"), "Setting of Chart Type combobox has changed");
+            Assert.AreEqual("Test Case Execution", panelPage.GetSelectedItemOfCombobox("Profile"), "Setting of Data Profile combobox has changed");
+            Assert.AreEqual("Name", panelPage.GetSelectedItemOfCombobox("Category"), "Setting of Category combobox has changed");
+            Assert.AreEqual("Location", panelPage.GetSelectedItemOfCombobox("Series"), "Setting of Series combobox has changed");
+            Assert.AreEqual(panelDisplayName, panelPage.TxtDisplayName.Text, "Name input in Display Name textbox has changed");
+            Assert.AreEqual(chartTitle, panelPage.TxtChartTitle.Text, "Title input in Chart Title textbox has changed");
+            Assert.AreEqual(true, panelPage.ChbShowTitle.Selected, "Setting of Show Title checkbox has changed");
+            Assert.AreEqual(true, panelPage.RbLegendsTop.Selected, "Setting of Legends radio button has changed");
+
+            //27. Select 'Style' radio button - 2D
+
+            panelPage.RbStyle2D.Check();
+
+            //28. VP: Check that settings of 'Chart Type', 'Data Profile', 'Display Name', 'Chart Title', 'Show Title' and 'Legends' stay unchanged.
+
+            Assert.AreEqual("Stacked Bar", panelPage.GetSelectedItemOfCombobox("Chart Type"), "Setting of Chart Type combobox has changed");
+            Assert.AreEqual("Test Case Execution", panelPage.GetSelectedItemOfCombobox("Profile"), "Setting of Data Profile combobox has changed");
+            Assert.AreEqual("Name", panelPage.GetSelectedItemOfCombobox("Category"), "Setting of Category combobox has changed");
+            Assert.AreEqual("Location", panelPage.GetSelectedItemOfCombobox("Series"), "Setting of Series combobox has changed");
+            Assert.AreEqual(panelDisplayName, panelPage.TxtDisplayName.Text, "Name input in Display Name textbox has changed");
+            Assert.AreEqual(chartTitle, panelPage.TxtChartTitle.Text, "Title input in Chart Title textbox has changed");
+            Assert.AreEqual(true, panelPage.ChbShowTitle.Selected, "Setting of Show Title checkbox has changed");
+            Assert.AreEqual(true, panelPage.RbLegendsTop.Selected, "Setting of Legends radio button has changed");
+
+            //Post-condition: Delete created panel and page.
+            panelPage.BtnCancel.Click();
+            panelPage.DeletePanel(panelDisplayName);
+            mainPage.DeletePage(pageName);
+        }
+
     }
 }

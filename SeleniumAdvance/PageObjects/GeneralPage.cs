@@ -9,6 +9,7 @@ using SeleniumAdvance.Ultilities;
 using OpenQA.Selenium.Support.UI;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
+using System.Collections.ObjectModel;
 
 namespace SeleniumAdvance.PageObjects
 {
@@ -110,6 +111,12 @@ namespace SeleniumAdvance.PageObjects
             return new LoginPage(_driver);
         }
 
+        /// <summary>
+        /// Selects the menu item.
+        /// </summary>
+        /// <param name="mainMenu">The main menu.</param>
+        /// <param name="subMenu">The sub menu.</param>
+        /// <Author>Long and Phat</Author>
         public void SelectMenuItem(string mainMenu, string subMenu)
         {
             IWebElement LnkMainMenu = _driver.FindElement(By.XPath(string.Format(_lnkMainMenu, mainMenu)));
@@ -289,7 +296,7 @@ namespace SeleniumAdvance.PageObjects
         /// <Author>Long</Author>
         /// <Startdate>26/05/2016</Startdate>
         /// <returns></returns>
-        public int GetNumberOfItemsInComboBox(string comboboxName)
+        public int GetNumberOfItemsInCombobox(string comboboxName)
         {
             IWebElement combo = _driver.FindElement(By.XPath(string.Format(_cbbName, comboboxName).Replace(" ", "")));
             SelectElement listBox = new SelectElement(combo);
@@ -297,5 +304,19 @@ namespace SeleniumAdvance.PageObjects
             return numberOfItems;
         }
 
+        /// <summary>
+        /// Get the selected item of combobox.
+        /// </summary>
+        /// <param name="comboboxName">Name of the combobox.</param>
+        /// <Author>Long</Author>
+        /// <Startdate>27/05/2016</Startdate>
+        /// <returns></returns>
+        public string GetSelectedItemOfCombobox(string comboboxName)
+        {
+            IWebElement combo = _driver.FindElement(By.XPath(string.Format(_cbbName, comboboxName).Replace(" ", "")));
+            SelectElement listBox = new SelectElement(combo);
+            string selectedItem = listBox.SelectedOption.Text.Trim();
+            return selectedItem;
+        }
     }
 }

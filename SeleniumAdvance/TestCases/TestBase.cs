@@ -23,7 +23,7 @@ namespace SeleniumAdvance.TestCases
             //driver = new FirefoxDriver(ffBinary,new FirefoxProfile());
             driver = new FirefoxDriver();
             driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
+            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(30));
         }
 
 

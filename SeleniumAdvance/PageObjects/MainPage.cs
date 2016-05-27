@@ -171,15 +171,16 @@ namespace SeleniumAdvance.PageObjects
         /// <param name="pageLink">The page link.</param>
         /// <Author>Long</Author>
         /// <Modified>Phat: Return page object instead of void</Modified>
+        /// <Modified>Long: Wait after deleting a page - 27/05/2016</Modified>
         /// <returns></returns>
         public MainPage DeletePage(string pageLink)
         {
-            WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
             GotoPage(pageLink);
             this.SelectGeneralSetting("Delete");
             IAlert alert = _driverManagePagePage.SwitchTo().Alert();
             alert.Accept();
+            WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
             return this;
         }
 

@@ -26,7 +26,6 @@ namespace SeleniumAdvance.Ultilities
             actions.MoveToElement(element).Build().Perform();
         }
 
-
         /// <summary>
         /// Selects an item.
         /// </summary>
@@ -116,7 +115,6 @@ namespace SeleniumAdvance.Ultilities
                 element.Click();
             }
         }
-
 
         /// <summary>
         /// Chooses a element then wait
