@@ -656,14 +656,14 @@ namespace SeleniumAdvance.TestCases
             PanelPage panelPage = new PanelPage(driver);
             panelPage.UnhideChoosePanelsPage();
             panelPage.BtnCreateNewPanel.Click();
-            panelPage.CmbDataProfile.SelectItem(item: "Test Case Execution", selectby: "Text");
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//input[@id='txtDisplayName']")));
             panelPage.TxtDisplayName.SendKeys(panelDisplayName);
             panelPage.TxtChartTitle.SendKeys(chartTitle);
+            panelPage.CmbDataProfile.SelectItem(item: "Test Case Execution", selectby: "Text");
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//input[@id='chkShowTitle']")));
             panelPage.ChbShowTitle.Check();
             panelPage.RbLegendsTop.Check();
             panelPage.CmbChartType.SelectItem(item: "Stacked Bar", selectby: "Value");
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//select[@id='cbbSeriesField']")));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//select[@id='cbbSeriesField']")));
             panelPage.CmbCategory.SelectItem(item: "name", selectby: "Value");
             panelPage.CmbSeries.SelectItem(item: "location", selectby: "Value");
 
@@ -705,10 +705,9 @@ namespace SeleniumAdvance.TestCases
 
             panelPage.CmbSelectPage.SelectItem(item: pageName, selectby: "Text");
             panelPage.TxtFolder.Clear();
-            panelPage.TxtFolder.SendKeys("/Car Rental/Actions");
-            //wait.Until(ExpectedConditions.StalenessOf(panelPage.BtnOK));
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//div[@class='div_button']/input[@id='OK']")));
+            panelPage.TxtFolder.SendKeys("/Car Rental/Tests");
             panelPage.BtnOK.Click();
+            wait.Until(ExpectedConditions.StalenessOf(panelPage.BtnOK));
 
             //24. Click 'Edit Panel' button of the created panel
             //25. Select 'Style' radio button - 3D
@@ -723,8 +722,8 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual("Test Case Execution", panelPage.GetSelectedItemOfCombobox("Profile"), "Setting of Data Profile combobox has changed");
             Assert.AreEqual("Name", panelPage.GetSelectedItemOfCombobox("Category"), "Setting of Category combobox has changed");
             Assert.AreEqual("Location", panelPage.GetSelectedItemOfCombobox("Series"), "Setting of Series combobox has changed");
-            Assert.AreEqual(panelDisplayName, panelPage.TxtDisplayName.Text, "Name input in Display Name textbox has changed");
-            Assert.AreEqual(chartTitle, panelPage.TxtChartTitle.Text, "Title input in Chart Title textbox has changed");
+            Assert.AreEqual(panelDisplayName, panelPage.TxtDisplayName.GetAttribute("value"), "Name input in Display Name textbox has changed");
+            Assert.AreEqual(chartTitle, panelPage.TxtChartTitle.GetAttribute("value"), "Title input in Chart Title textbox has changed");
             Assert.AreEqual(true, panelPage.ChbShowTitle.Selected, "Setting of Show Title checkbox has changed");
             Assert.AreEqual(true, panelPage.RbLegendsTop.Selected, "Setting of Legends radio button has changed");
 
@@ -738,8 +737,8 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual("Test Case Execution", panelPage.GetSelectedItemOfCombobox("Profile"), "Setting of Data Profile combobox has changed");
             Assert.AreEqual("Name", panelPage.GetSelectedItemOfCombobox("Category"), "Setting of Category combobox has changed");
             Assert.AreEqual("Location", panelPage.GetSelectedItemOfCombobox("Series"), "Setting of Series combobox has changed");
-            Assert.AreEqual(panelDisplayName, panelPage.TxtDisplayName.Text, "Name input in Display Name textbox has changed");
-            Assert.AreEqual(chartTitle, panelPage.TxtChartTitle.Text, "Title input in Chart Title textbox has changed");
+            Assert.AreEqual(panelDisplayName, panelPage.TxtDisplayName.GetAttribute("value"), "Name input in Display Name textbox has changed");
+            Assert.AreEqual(chartTitle, panelPage.TxtChartTitle.GetAttribute("value"), "Title input in Chart Title textbox has changed");
             Assert.AreEqual(true, panelPage.ChbShowTitle.Selected, "Setting of Show Title checkbox has changed");
             Assert.AreEqual(true, panelPage.RbLegendsTop.Selected, "Setting of Legends radio button has changed");
 

@@ -28,7 +28,7 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _rbHeatMap = By.XPath("//label[contains(.,'Heat Map')]/input[contains(@id,'radPanelType')]");
         static readonly By _cmbDataProfile = By.XPath("//select[@id='cbbProfile']");
         static readonly By _txtDisplayName = By.XPath("//input[@id='txtDisplayName']");
-        static readonly By _btnOK = By.XPath("//input[@id='OK']");
+        static readonly By _btnOK = By.XPath("//div[@class='ui-dialog editpanelDlg' and contains(@style,'display: block')]//input[@id='OK']");
         static readonly By _btnCancel = By.XPath("//input[@id='Cancel']");
         static readonly By _lnkAddNew = By.XPath("//a[contains(@href,'openAddPanel')]");
         static readonly By _lblSettingHeader = By.XPath("//fieldset[@id='fdSettings']/legend");
@@ -222,7 +222,7 @@ namespace SeleniumAdvance.PageObjects
         /// </summary>
         /// <param name="profileName">Name of the profile.</param>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <<Startdate>>23/05/2016</<Startdate>>
         /// <returns></returns>
         public bool IsProfileExist(string profileName)
         {
@@ -245,7 +245,7 @@ namespace SeleniumAdvance.PageObjects
         /// Get header of the setting
         /// </summary>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <<Startdate>>23/05/2016</<Startdate>>
         /// <returns></returns>
         public string GetSettingHeader()
         {
@@ -257,7 +257,7 @@ namespace SeleniumAdvance.PageObjects
         /// </summary>
         /// <param name="panelName">Name of the panel.</param>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <<Startdate>>23/05/2016</<Startdate>>
         public void WaitForAddingPanel(string panelName)
         {
             By panel = By.XPath("//a[.='" + panelName + "']");
@@ -276,7 +276,7 @@ namespace SeleniumAdvance.PageObjects
         /// </summary>
         /// <param name="panelName">Name of the panel.</param>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <Startdate>23/05/2016</<Startdate>>
         /// <returns></returns>
         public PanelPage ClickEditPanel(string panelName)
         {
@@ -292,7 +292,7 @@ namespace SeleniumAdvance.PageObjects
         /// </summary>
         /// <param name="panelName">Name of the panel.</param>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <Startdate>23/05/2016</Startdate>
         /// <returns></returns>
         public void ClickDeletePanel(string panelName)
         {
@@ -307,7 +307,8 @@ namespace SeleniumAdvance.PageObjects
         /// </summary>
         /// <param name="panelName">Name of the panel.</param>
         /// <Author>Phat</Author>
-        /// <Created date>23/05/2016</Created>
+        /// <Startdate>23/05/2016</Startdate>
+        /// <Modified>Long: Wait until Panel is deleted - 28/05/2016</Modified>
         /// <returns></returns>
         public PanelPage DeletePanel(string panelName)
         {
@@ -319,6 +320,8 @@ namespace SeleniumAdvance.PageObjects
             ClickDeletePanel(panelName);
             IAlert alert = _driverPanelPage.SwitchTo().Alert();
             alert.Accept();
+            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.StalenessOf(_driverPanelPage.FindElement(xpath)));
             return this;
         }
 
