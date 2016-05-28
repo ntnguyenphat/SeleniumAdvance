@@ -654,19 +654,23 @@ namespace SeleniumAdvance.TestCases
 
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             PanelPage panelPage = new PanelPage(driver);
+
             panelPage.UnhideChoosePanelsPage();
             panelPage.BtnCreateNewPanel.Click();
             panelPage.TxtDisplayName.SendKeys(panelDisplayName);
             panelPage.TxtChartTitle.SendKeys(chartTitle);
             panelPage.CmbDataProfile.SelectItem(item: "Test Case Execution", selectby: "Text");
+
             wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//input[@id='chkShowTitle']")));
+
             panelPage.ChbShowTitle.Check();
             panelPage.RbLegendsTop.Check();
             panelPage.CmbChartType.SelectItem(item: "Stacked Bar", selectby: "Value");
+
             wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//select[@id='cbbSeriesField']")));
+
             panelPage.CmbCategory.SelectItem(item: "name", selectby: "Value");
             panelPage.CmbSeries.SelectItem(item: "location", selectby: "Value");
-
             panelPage.RbStyle3D.Check();
 
             //17. VP: Check that settings of 'Chart Type', 'Data Profile', 'Display Name', 'Chart Title', 'Show Title' and 'Legends' stay unchanged.
@@ -707,6 +711,7 @@ namespace SeleniumAdvance.TestCases
             panelPage.TxtFolder.Clear();
             panelPage.TxtFolder.SendKeys("/Car Rental/Tests");
             panelPage.BtnOK.Click();
+
             wait.Until(ExpectedConditions.StalenessOf(panelPage.BtnOK));
 
             //24. Click 'Edit Panel' button of the created panel
@@ -743,9 +748,59 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(true, panelPage.RbLegendsTop.Selected, "Setting of Legends radio button has changed");
 
             //Post-condition: Delete created panel and page.
+
             panelPage.BtnCancel.Click();
             panelPage.DeletePanel(panelDisplayName);
             mainPage.DeletePage(pageName);
+        }
+
+        /// <summary>Verify that all settings within "Add New Panel" and "Edit Panel" form stay unchanged when user switches between "Legends" radio buttons
+        /// </summary>
+        /// <Author>Long</Author>
+        /// <Startdate>28/05/2016</Startdate>
+        [TestMethod]
+        public void TC039()
+        {
+            Console.WriteLine("DA_PANEL_TC039 - Verify that all settings within \"Add New Panel\" and \"Edit Panel\" form stay unchanged when user switches between \"Legends\" radio buttons");
+            string value = "";
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Click Administer link
+            //4. Click Panel link
+            //5. Click Add New link
+            //6. Click None radio button for Legend
+
+            LoginPage loginPage = new LoginPage(driver);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            mainPage.SelectMenuItem("Administer", "Panels");
+            PanelPage panelPage = new PanelPage(driver);
+            panelPage.LnkAddNew.Click();
+            panelPage.RbLegendsNone.Check();
+            panelPage.GetCurrentSerttingsInPanelDialog(out value);
+            //7. VP: All settings are unchange in Add New Panel dialog
+
+            //8. Click Top radio button for Legend
+            //9. VP: All settings are unchange in Add New Panel dialoge
+            //10. Click Right radio button for Legend
+            //11. VP: All settings are unchange in Add New Panel dialog
+            //12. Click Bottom radio button for Legend
+            //13. VP: All settings are unchange in Add New Panel dialog
+            //14. Click Left radio button for Legend
+            //15. VP: All settings are unchange in Add New Panel dialog
+            //16. Create a new panel
+            //17. Click Edit Panel link
+            //18. Click None radio button for Legend
+            //19. VP: All settings are unchange in Add New Panel dialog
+            //20. Click Top radio button for Legend
+            //21. VP: All settings are unchange in Add New Panel dialog
+            //22. Click Right radio button for Legend
+            //23. VP: All settings are unchange in Add New Panel dialog
+            //24. Click Bottom radio button for Legend
+            //25. VP: All settings are unchange in Add New Panel dialog
+            //26. Click Left radio button for Legend
+            //27. VP: All settings are unchange in Add New Panel dialog
+
         }
 
     }

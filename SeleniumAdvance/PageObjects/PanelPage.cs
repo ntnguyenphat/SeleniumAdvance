@@ -11,6 +11,7 @@ using OpenQA.Selenium.Support.UI;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
 using System.Text.RegularExpressions;
+using System.Collections.ObjectModel;
 
 namespace SeleniumAdvance.PageObjects
 {
@@ -50,6 +51,11 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _cmbSelectPage = By.XPath("//select[@id='cbbPages']");
         static readonly By _txtHeight = By.XPath("//input[@id='txtHeight']");
         static readonly By _txtFolder = By.XPath("//input[@id='txtFolder']");
+        static readonly By _chbDataLabelsSeries = By.XPath("//input[@id='chkSeriesName']"); 
+        static readonly By _chbDataLabelsCategories = By.XPath("//input[@id='chkCategoriesName']"); 
+        static readonly By _chbDataLabelsValue = By.XPath("//input[@id='chkValue']"); 
+        static readonly By _chbDataLebelsPercentage = By.XPath("//input[@id='chkPercentage']"); 
+        static string panelType ="//table[@id='infoSettings']//td[.='Type']/following-sibling::td/descendant::input";
         //static string _lnkEdit = "a[.='{0}']/following::a[.='Edit']";
         //static string _lnkDelete = "a[.='{0}']/following::a[.='Delete']";
 
@@ -208,6 +214,26 @@ namespace SeleniumAdvance.PageObjects
             get { return _driverPanelPage.FindElement(_txtFolder); }
         }
 
+        public IWebElement ChbDataLabelsSeries
+        {
+            get { return _driverPanelPage.FindElement(_chbDataLabelsSeries); }
+        }
+
+        public IWebElement ChbDataLabelsCategories
+        {
+            get { return _driverPanelPage.FindElement(_chbDataLabelsCategories); }
+        }
+
+        public IWebElement ChbDataLabelsValue
+        {
+            get { return _driverPanelPage.FindElement(_chbDataLabelsValue); }
+        }
+
+        public IWebElement ChbDataLebelsPercentage
+        {
+            get { return _driverPanelPage.FindElement(_chbDataLebelsPercentage); }
+        }
+
         #endregion
 
         #region Methods
@@ -325,6 +351,33 @@ namespace SeleniumAdvance.PageObjects
             return this;
         }
 
+        public string GetSelectedItemOfPanelType()
+        {
+            string selectedItem ="";
+            ReadOnlyCollection<IWebElement> RadioButtonGroup = _driverPanelPage.FindElements(By.XPath(panelType));
+            foreach (IWebElement RadioButton in RadioButtonGroup)
+            {   
+                if(RadioButton.Selected == true)
+                {
+                    string index = RadioButton.GetAttribute("value");
+                    if (index == "1")
+                        selectedItem = "Chart";
+                    else if (index == "2")
+                        selectedItem = "Indicator";
+                    else if (index == "3")
+                        selectedItem = "Report";
+                    else if (index == "4")
+                        selectedItem = "Heat Map";
+
+                }
+            }
+            return selectedItem;   
+        }
+
+        public void GetCurrentSerttingsInPanelDialog(out string selectedItemOfPanelType)
+        {
+            selectedItemOfPanelType = this.GetSelectedItemOfPanelType();
+        }
         #endregion
     }
 }

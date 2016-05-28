@@ -298,9 +298,9 @@ namespace SeleniumAdvance.PageObjects
         /// <returns></returns>
         public int GetNumberOfItemsInCombobox(string comboboxName)
         {
-            IWebElement combo = _driver.FindElement(By.XPath(string.Format(_cbbName, comboboxName).Replace(" ", "")));
-            SelectElement listBox = new SelectElement(combo);
-            int numberOfItems = listBox.Options.Count();
+            IWebElement Combo = _driver.FindElement(By.XPath(string.Format(_cbbName, comboboxName).Replace(" ", "")));
+            SelectElement ListBox = new SelectElement(Combo);
+            int numberOfItems = ListBox.Options.Count();
             return numberOfItems;
         }
 
@@ -313,9 +313,9 @@ namespace SeleniumAdvance.PageObjects
         /// <returns></returns>
         public string GetSelectedItemOfCombobox(string comboboxName)
         {
-            IWebElement combo = _driver.FindElement(By.XPath(string.Format(_cbbName, comboboxName).Replace(" ", "")));
-            SelectElement listBox = new SelectElement(combo);
-            string selectedItem = listBox.SelectedOption.Text.Trim();
+            IWebElement Combo = _driver.FindElement(By.XPath(string.Format(_cbbName, comboboxName).Replace(" ", "")));
+            SelectElement ListBox = new SelectElement(Combo);
+            string selectedItem = ListBox.SelectedOption.Text.Trim();
             return selectedItem;
         }
     }
