@@ -446,6 +446,17 @@ namespace SeleniumAdvance.PageObjects
         }
 
         /// <summary>
+        /// The class is used to make out parameter optional
+        /// </summary>
+        /// <typeparam name="Type">The type : String, int, bool....</typeparam>
+        /// <Author>Long</Author>
+        /// <Startdate>Long</Startdate>
+        public class OptionalOut<Type>
+        {
+            public Type Result { get; set; }
+        }
+
+        /// <summary>
         /// Get the current settings of panel dialog.
         /// </summary>
         /// <param name="typeOfPanel">The type of panel.</param>
@@ -453,8 +464,8 @@ namespace SeleniumAdvance.PageObjects
         /// <param name="panelDisplayName">Display name of the panel.</param>
         /// <param name="title">The title.</param>
         /// <param name="isShowTitleChecked">if set to <c>true</c> [is show title checked].</param>
-        /// <param name="stasticFieldName">Name of the stastic field.</param>
-        /// <param name="stasticFieldValue">The stastic field value.</param>
+        /// <param name="statisticFieldName">Name of the stastic field.</param>
+        /// <param name="statisticFieldValue">The stastic field value.</param>
         /// <param name="isPercentageChecked">if set to <c>true</c> [is percentage checked].</param>
         /// <param name="from">From.</param>
         /// <param name="color">The color.</param>
@@ -482,106 +493,127 @@ namespace SeleniumAdvance.PageObjects
         /// <param name="isSetAsHeatValueChecked">if set to <c>true</c> [is set as heat value checked].</param>
         /// <Author>Long</Author>
         /// <Startdate>29/05/2016</Startdate>
-        public void GetCurrentSettingsInPanelDialog(out string typeOfPanel, out string dataProfileName, out string panelDisplayName, out string title, out bool isShowTitleChecked,
-            out string stasticFieldName, out string stasticFieldValue, out bool isPercentageChecked, out string from, out string color, out string chartType,
-            out bool isCaptionNextToCategoryEnabled, out bool isCaptionNextToSeriesEnabled, out bool isCategoryInChartSettingsEnable, out bool isDataLabelsSeriesEnables,
-            out bool isDataLabelsCategoriesEnabled, out bool isDataLabelsValueEnabled, out bool isDataLabelsPercentageEnabled,
-            out string seriesName, out bool isLegendsNoneChecked, out bool isLegendsTopChecked, out bool isLegendsRightChecked, out bool isLegendsBottomChecked, out bool isLegendsLeftChecked,
-            out bool isStyle2DChecked, out bool isStyle3DChecked, out string captionNexToCategory, out string captionNextToSeries, out string categoryName, out bool isStasticOnEnabled,
-            out string seriesValue, out bool isSetAsHeatValueChecked)
+        public void GetCurrentSettingsInPanelDialog(out string typeOfPanel, out string dataProfileName, out string panelDisplayName, OptionalOut<string> title = null, OptionalOut<bool> isShowTitleChecked = null,
+             OptionalOut<string> statisticFieldName = null, OptionalOut<string> statisticFieldValue = null, OptionalOut<bool> isPercentageChecked = null, OptionalOut<string> from = null, OptionalOut<string> color = null, OptionalOut<string> chartType = null,
+             OptionalOut<bool> isCaptionNextToCategoryEnabled = null, OptionalOut<bool> isCaptionNextToSeriesEnabled = null, OptionalOut<bool> isCategoryInChartSettingsEnable = null, OptionalOut<bool> isDataLabelsSeriesEnables = null, OptionalOut<bool> isDataLabelsSeriesChecked = null,
+             OptionalOut<bool> isDataLabelsCategoriesEnabled = null, OptionalOut<bool> isDataLabelsCategoriesChecked = null, OptionalOut<bool> isDataLabelsValueEnabled = null, OptionalOut<bool> isDataLabelsValueChecked = null, OptionalOut<bool> isDataLabelsPercentageEnabled = null,
+             OptionalOut<bool> isDataLabelsPercentageChecked = null, OptionalOut<string> seriesName = null, OptionalOut<bool> isLegendsNoneChecked = null, OptionalOut<bool> isLegendsTopChecked = null, OptionalOut<bool> isLegendsRightChecked = null, OptionalOut<bool> isLegendsBottomChecked = null, 
+             OptionalOut<bool> isLegendsLeftChecked = null, OptionalOut<bool> isStyle2DChecked = null, OptionalOut<bool> isStyle3DChecked = null, OptionalOut<string> captionNexToCategory = null, OptionalOut<string> captionNextToSeries = null, OptionalOut<string> categoryName = null, 
+             OptionalOut<bool> isStasticOnEnabled = null, OptionalOut<string> seriesValue = null, OptionalOut<bool> isSetAsHeatValueChecked = null)
         {
             typeOfPanel = GetTypeOfPanel();
             dataProfileName = GetSelectedItemOfCombobox("Profile");
             panelDisplayName = TxtDisplayName.GetAttribute("value");
-            title = "";
-            isShowTitleChecked = false;
-            stasticFieldName = "";
-            stasticFieldValue = "";
-            isPercentageChecked = false;
-            from = "";
-            color = "";
-            chartType = ""; 
-            isCaptionNextToCategoryEnabled = false;
-            isCaptionNextToSeriesEnabled = false;
-            isCategoryInChartSettingsEnable = false;
-            isDataLabelsSeriesEnables = false;
-            isDataLabelsCategoriesEnabled = false;
-            isDataLabelsValueEnabled = false;
-            isDataLabelsPercentageEnabled = false;
-            seriesName = "";
-            isLegendsNoneChecked = false;
-            isLegendsTopChecked = false;
-            isLegendsRightChecked = false;
-            isLegendsBottomChecked = false;
-            isLegendsLeftChecked = false;
-            isStyle2DChecked = false;
-            isStyle3DChecked = false;
-            captionNexToCategory = "";
-            captionNextToSeries = "";
-            categoryName = "";
-            isStasticOnEnabled = false;
-            seriesValue = "";
-            isSetAsHeatValueChecked = false;
             if (typeOfPanel != "Report")
             {
-                title = TxtChartTitle.GetAttribute("value");
-                isShowTitleChecked = ChbShowTitle.Selected;
+                if (title != null)
+                    title.Result = TxtChartTitle.GetAttribute("value");
+                if (isShowTitleChecked != null)
+                    isShowTitleChecked.Result = ChbShowTitle.Selected;
                 if (typeOfPanel == "Indicator")
                 {
-                    stasticFieldName = GetSelectedItemOfCombobox("StatField");
-                    stasticFieldValue = GetSelectedItemOfCombobox("StatFieldValue");
-                    isPercentageChecked = ChbDataLabelsPercentage.Selected;
-                    from = TxtFrom.GetAttribute("value");
-                    color = LbColor.GetAttribute("style");
+                    if (statisticFieldName != null)
+                        statisticFieldName.Result = GetSelectedItemOfCombobox("StatField");
+                    if (statisticFieldValue != null)
+                        statisticFieldValue.Result = GetSelectedItemOfCombobox("StatFieldValue");
+                    if (isPercentageChecked != null)
+                        isPercentageChecked.Result = ChbDataLabelsPercentage.Selected;
+                    if (from != null)
+                        from.Result = TxtFrom.GetAttribute("value");
+                    if (color != null)
+                        color.Result = LbColor.GetAttribute("style");
                 }
                 else if (typeOfPanel == "Chart")
                 {
-                    chartType = GetSelectedItemOfCombobox("Chart Type");
-                    isCaptionNextToCategoryEnabled = TxtCaptionNextToCategory.Enabled;
-                    isCaptionNextToSeriesEnabled = TxtCaptionNextToSeries.Enabled;
-                    isCategoryInChartSettingsEnable = CmbCategory.Enabled;
-                    isDataLabelsSeriesEnables = ChbDataLabelsSeries.Enabled;
-                    isDataLabelsCategoriesEnabled = ChbDataLabelsCategories.Enabled;
-                    isDataLabelsValueEnabled = ChbDataLabelsValue.Enabled;
-                    isDataLabelsPercentageEnabled = ChbDataLabelsPercentage.Enabled;
-                    isShowTitleChecked = ChbShowTitle.Selected;
-                    seriesName = GetSelectedItemOfCombobox("Series");
-                    isLegendsNoneChecked = RbLegendsNone.Selected;
-                    isLegendsTopChecked = RbLegendsTop.Selected;
-                    isLegendsBottomChecked = RbLegendsBottom.Selected;
-                    isLegendsRightChecked = RbLegendsRight.Selected;
-                    isLegendsLeftChecked = RbLegendsLeft.Selected;
-                    isStyle2DChecked = RbStyle2D.Selected;
-                    isStyle3DChecked = RbStyle3D.Selected;
-                    if (chartType == "Single Bar")
+                    if (chartType != null)
+                        chartType.Result = GetSelectedItemOfCombobox("Chart Type");
+                    if (isCaptionNextToCategoryEnabled != null)
+                        isCaptionNextToCategoryEnabled.Result = TxtCaptionNextToCategory.Enabled;
+                    if (isCaptionNextToSeriesEnabled != null)
+                        isCaptionNextToSeriesEnabled.Result = TxtCaptionNextToSeries.Enabled;
+                    if (isCategoryInChartSettingsEnable != null)
+                        isCategoryInChartSettingsEnable.Result = CmbCategory.Enabled;
+                    if (isDataLabelsSeriesEnables != null)
+                        isDataLabelsSeriesEnables.Result = ChbDataLabelsSeries.Enabled;
+                    if (isDataLabelsSeriesChecked != null)
+                        isDataLabelsSeriesChecked.Result = ChbDataLabelsSeries.Selected;
+                    if (isDataLabelsCategoriesEnabled != null)
+                        isDataLabelsCategoriesEnabled.Result = ChbDataLabelsCategories.Enabled;
+                    if (isDataLabelsCategoriesChecked != null)
+                        isDataLabelsCategoriesChecked.Result = ChbDataLabelsCategories.Selected;
+                    if (isDataLabelsValueEnabled != null)
+                        isDataLabelsValueEnabled.Result = ChbDataLabelsValue.Enabled;
+                    if (isDataLabelsValueChecked != null)
+                        isDataLabelsValueChecked.Result = ChbDataLabelsValue.Selected;
+                    if (isDataLabelsPercentageEnabled != null)
+                        isDataLabelsPercentageEnabled.Result = ChbDataLabelsPercentage.Enabled;
+                    if (isDataLabelsPercentageChecked != null)
+                        isDataLabelsPercentageChecked.Result = ChbDataLabelsPercentage.Selected;
+                    if (isShowTitleChecked != null)
+                        isShowTitleChecked.Result = ChbShowTitle.Selected;
+                    if (seriesName != null)
+                        seriesName.Result = GetSelectedItemOfCombobox("Series");
+                    if (isLegendsNoneChecked != null)
+                        isLegendsNoneChecked.Result = RbLegendsNone.Selected;
+                    if (isLegendsTopChecked != null)
+                        isLegendsTopChecked.Result = RbLegendsTop.Selected;
+                    if (isLegendsBottomChecked != null)
+                        isLegendsBottomChecked.Result = RbLegendsBottom.Selected;
+                    if (isLegendsRightChecked != null)
+                        isLegendsRightChecked.Result = RbLegendsRight.Selected;
+                    if (isLegendsLeftChecked != null)
+                        isLegendsLeftChecked.Result = RbLegendsLeft.Selected;
+                    if (isStyle2DChecked != null)
+                        isStyle2DChecked.Result = RbStyle2D.Selected;
+                    if (isStyle3DChecked != null)
+                        isStyle3DChecked.Result = RbStyle3D.Selected;
+                    if (chartType.Result == "Single Bar")
                     {
-                        captionNexToCategory = TxtCaptionNextToCategory.GetAttribute("value");
-                        captionNextToSeries = TxtCaptionNextToSeries.GetAttribute("value");
+                        if (captionNexToCategory != null)
+                            captionNexToCategory.Result = TxtCaptionNextToCategory.GetAttribute("value");
+                        if (captionNextToSeries != null)
+                            captionNextToSeries.Result = TxtCaptionNextToSeries.GetAttribute("value");
                     }
-                    else if (chartType != "Pie" && chartType != "Single Bar")
+                    else if (chartType.Result != "Pie" && chartType.Result != "Single Bar")
                     {
-                        captionNexToCategory = TxtCaptionNextToCategory.GetAttribute("value");
-                        captionNextToSeries = TxtCaptionNextToSeries.GetAttribute("value");
-                        categoryName = GetSelectedItemOfCombobox("Category");
-                        if (chartType == "Line")
+                        if (captionNexToCategory != null)
+                            captionNexToCategory.Result = TxtCaptionNextToCategory.GetAttribute("value");
+                        if (captionNextToSeries != null)
+                            captionNextToSeries.Result = TxtCaptionNextToSeries.GetAttribute("value");
+                        if (categoryName != null)
+                            categoryName.Result = GetSelectedItemOfCombobox("Category");
+                        if (chartType.Result == "Line")
                         {
-                            stasticFieldName = GetSelectedItemOfCombobox("StatField");
-                            isStasticOnEnabled = CmbStatisticOn.Enabled;
+                            if (statisticFieldName != null)
+                                statisticFieldName.Result = GetSelectedItemOfCombobox("StatField");
+                            if (isStasticOnEnabled != null)
+                                isStasticOnEnabled.Result = CmbStatisticOn.Enabled;
                         }
                     }
                 }
                 else if (typeOfPanel == "Heat Map")
                 {
-                    categoryName = GetSelectedItemOfCombobox("Category");
-                    seriesName = GetSelectedItemOfCombobox("Series");
-                    seriesValue = GetSelectedItemOfCombobox("Series Value");
-                    isSetAsHeatValueChecked = RbSetAsHeatValue.Selected;
-                    color = LbColor.GetAttribute("style");
-                    isLegendsNoneChecked = RbLegendsNone.Selected;
-                    isLegendsTopChecked = RbLegendsTop.Selected;
-                    isLegendsBottomChecked = RbLegendsBottom.Selected;
-                    isLegendsRightChecked = RbLegendsRight.Selected;
-                    isLegendsLeftChecked = RbLegendsLeft.Selected;
+
+                    if (categoryName != null)
+                        categoryName.Result = GetSelectedItemOfCombobox("Category");
+                    if (seriesName != null)
+                        seriesName.Result = GetSelectedItemOfCombobox("Series");
+                    if (seriesValue != null)
+                        seriesValue.Result = GetSelectedItemOfCombobox("Series Value");
+                    if (isSetAsHeatValueChecked != null)
+                        isSetAsHeatValueChecked.Result = RbSetAsHeatValue.Selected;
+                    if (color != null)
+                        color.Result = LbColor.GetAttribute("style");
+                    if (isLegendsNoneChecked != null)
+                        isLegendsNoneChecked.Result = RbLegendsNone.Selected;
+                    if (isLegendsTopChecked != null)
+                        isLegendsTopChecked.Result = RbLegendsTop.Selected;
+                    if (isLegendsBottomChecked != null)
+                        isLegendsBottomChecked.Result = RbLegendsBottom.Selected;
+                    if (isLegendsRightChecked != null)
+                        isLegendsRightChecked.Result = RbLegendsRight.Selected;
+                    if (isLegendsLeftChecked != null)
+                        isLegendsLeftChecked.Result = RbLegendsLeft.Selected;
                 }
             }           
         }

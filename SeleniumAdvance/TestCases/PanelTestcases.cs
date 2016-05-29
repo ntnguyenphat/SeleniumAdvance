@@ -766,70 +766,52 @@ namespace SeleniumAdvance.TestCases
             string panelDisplayName = string.Concat("Panel Display ", CommonMethods.GetUniqueString());
             string title = string.Concat("Chart Title ", CommonMethods.GetUniqueString());
 
-            string typeOfPanel_before;
-            string typeOfPanel_after;
-            string dataProfileName_before;
-            string dataProfileName_after;
-            string panelDisplayName_before;
-            string panelDisplayName_after;
-            string title_before = "";
-            string title_after = "";
-            string chartType_before;
-            string chartType_after;
-            string stasticFieldName_before;
-            string stasticFieldName_after;
-            string stasticFieldValue_before;
-            string stasticFieldValue_after;
-            string from_before;
-            string from_after;
-            string color_before;
-            string color_after;
-            string captionNextToSeries_before;
-            string captionNextToSeries_after;
-            string captionNexToCategory_before;
-            string captionNexToCategory_after;
-            string categoryName_before;
-            string categoryName_after;
-            string seriesName_before;
-            string seriesName_after;
-            string seriesValue_before;
-            string seriesValue_after;
-            bool isLegendsTopChecked_before;
-            bool isLegendsTopChecked_after;
-            bool isLegendsNoneChecked_before;
-            bool isLegendsNoneChecked_after;
-            bool isLegendsRightChecked_before;
-            bool isLegendsRightChecked_after;
-            bool isCaptionNextToCategoryEnabled_before;
-            bool isCaptionNextToCategoryEnabled_after;
-            bool isCaptionNextToSeriesEnabled_before;
-            bool isCaptionNextToSeriesEnabled_after;
-            bool isLegendsBottomChecked_before;
-            bool isLegendsBottomChecked_after;
-            bool isLegendsLeftChecked_before;
-            bool isLegendsLeftChecked_after;
-            bool isCategoryInChartSettingsEnable_before;
-            bool isCategoryInChartSettingsEnable_after;
-            bool isDataLabelsSeriesEnables_before;
-            bool isDataLabelsSeriesEnables_after;
-            bool isDataLabelsCategoriesEnabled_before;
-            bool isDataLabelsCategoriesEnabled_after;
-            bool isDataLabelsValueEnabled_before;
-            bool isDataLabelsValueEnabled_after;
-            bool isDataLabelsPercentageEnabled_before;
-            bool isDataLabelsPercentageEnabled_after;
-            bool isShowTitleChecked_before;
-            bool isShowTitleChecked_after;
-            bool isStasticOnEnabled_before;
-            bool isStasticOnEnabled_after;
-            bool isStyle2DChecked_before;
-            bool isStyle2DChecked_after;
-            bool isStyle3DChecked_before;
-            bool isStyle3DChecked_after;
-            bool isPercentageChecked_before;
-            bool isPercentageChecked_after;
-            bool isSetAsHeatValueChecked_before;
-            bool isSetAsHeatValueChecked_after;
+            string typeOfPanel_one;
+            string typeOfPanel_two;
+            string dataProfileName_one;
+            string dataProfileName_two;
+            string panelDisplayName_one;
+            string panelDisplayName_two;
+            PanelPage.OptionalOut<string> title_one = new PanelPage.OptionalOut<string>();
+            PanelPage.OptionalOut<string> title_two = new PanelPage.OptionalOut<string>();
+            PanelPage.OptionalOut<string> chartType_one = new PanelPage.OptionalOut<string>();
+            PanelPage.OptionalOut<string> chartType_two = new PanelPage.OptionalOut<string>();
+            PanelPage.OptionalOut<bool> isShowTitleChecked_one = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isShowTitleChecked_two = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isStyle2DChecked_one = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isStyle2DChecked_two = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isStyle3DChecked_one = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isStyle3DChecked_two = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isCategoryInChartSettingsEnable_one = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isCategoryInChartSettingsEnable_two = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<string> category_one = new PanelPage.OptionalOut<string>();
+            PanelPage.OptionalOut<string> category_two = new PanelPage.OptionalOut<string>();
+            PanelPage.OptionalOut<string> series_one = new PanelPage.OptionalOut<string>();
+            PanelPage.OptionalOut<string> series_two = new PanelPage.OptionalOut<string>();
+            PanelPage.OptionalOut<bool> isCaptionNextToCategoryEnabled_one = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isCaptionNextToCategoryEnabled_two = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isCaptionNextToSeriesEnabled_one = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isCaptionNextToSeriesEnabled_two = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<string> captionNextToCategory_one = new PanelPage.OptionalOut<string>();
+            PanelPage.OptionalOut<string> captionNextToCategory_two = new PanelPage.OptionalOut<string>();
+            PanelPage.OptionalOut<string> captionNextToSeries_one = new PanelPage.OptionalOut<string>();
+            PanelPage.OptionalOut<string> captionNextToSeries_two = new PanelPage.OptionalOut<string>();
+            PanelPage.OptionalOut<bool> isDataLabelsSeriesEnabled_one = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isDataLabelsSeriesEnabled_two = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isDataLabelsSeriesChecked_one = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isDataLabelsSeriesChecked_two = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isDataLabelsCategoriesEnabled_one = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isDataLabelsCategoriesEnabled_two = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isDataLabelsCategoriesChecked_one = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isDataLabelsCategoriesChecked_two = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isDataLabelsValueEnabled_one = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isDataLabelsValueEnabled_two = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isDataLabelsValueChecked_one = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isDataLabelsValueChecked_two = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isDataLabelsPercentageEnabled_one = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isDataLabelsPercentageEnabled_two = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isDataLabelsPercentageChecked_one = new PanelPage.OptionalOut<bool>();
+            PanelPage.OptionalOut<bool> isDataLabelsPercentageChecked_two = new PanelPage.OptionalOut<bool>();
 
             //1. Navigate to Dashboard login page
             //2. Login with valid account
@@ -844,275 +826,392 @@ namespace SeleniumAdvance.TestCases
             mainPage.SelectMenuItem("Administer", "Panels");
             PanelPage panelPage = new PanelPage(driver);
             panelPage.LnkAddNew.Click();
-            
+
             panelPage.RbChart.Check();
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_before, out dataProfileName_before, out panelDisplayName_before, out title_before, out isShowTitleChecked_before,
-            out stasticFieldName_before, out stasticFieldValue_before, out isPercentageChecked_before, out from_before, out color_before, out chartType_before,
-            out isCaptionNextToCategoryEnabled_before, out isCaptionNextToSeriesEnabled_before, out isCategoryInChartSettingsEnable_before, out isDataLabelsSeriesEnables_before,
-            out isDataLabelsCategoriesEnabled_before, out isDataLabelsValueEnabled_before, out isDataLabelsPercentageEnabled_before, out seriesName_before, out isLegendsNoneChecked_before,
-            out isLegendsTopChecked_before, out isLegendsRightChecked_before, out isLegendsBottomChecked_before, out isLegendsLeftChecked_before,
-            out isStyle2DChecked_before, out isStyle3DChecked_before, out captionNexToCategory_before, out captionNextToSeries_before, out categoryName_before, out isStasticOnEnabled_before,
-            out seriesValue_before, out isSetAsHeatValueChecked_before);
+
+            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_one, out dataProfileName_one, out panelDisplayName_one, title: title_one, isShowTitleChecked: isShowTitleChecked_one, isStyle2DChecked: isStyle2DChecked_one,
+                isStyle3DChecked: isStyle3DChecked_one, chartType: chartType_one, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_one, categoryName: category_one, seriesName: series_one, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_one,
+                captionNexToCategory: captionNextToCategory_one, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_one, captionNextToSeries: captionNextToSeries_one, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_one,
+                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_one, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_one, isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_one, isDataLabelsValueEnabled: isDataLabelsValueEnabled_one,
+                isDataLabelsValueChecked: isDataLabelsValueChecked_one, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_one, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_one);
 
             panelPage.RbLegendsNone.Check();
 
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_after, out dataProfileName_after, out panelDisplayName_after, out title_after, out isShowTitleChecked_after,
-            out stasticFieldName_after, out stasticFieldValue_after, out isPercentageChecked_after, out from_after, out color_after, out chartType_after,
-            out isCaptionNextToCategoryEnabled_after, out isCaptionNextToSeriesEnabled_after, out isCategoryInChartSettingsEnable_after, out isDataLabelsSeriesEnables_after,
-            out isDataLabelsCategoriesEnabled_after, out isDataLabelsValueEnabled_after, out isDataLabelsPercentageEnabled_after, out seriesName_after, out isLegendsNoneChecked_after,
-            out isLegendsTopChecked_after, out isLegendsRightChecked_after, out isLegendsBottomChecked_after, out isLegendsLeftChecked_after,
-            out isStyle2DChecked_after, out isStyle3DChecked_after, out captionNexToCategory_after, out captionNextToSeries_after, out categoryName_after, out isStasticOnEnabled_after,
-            out seriesValue_after, out isSetAsHeatValueChecked_after);
+            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_two, out dataProfileName_two, out panelDisplayName_two, title: title_two, isShowTitleChecked: isShowTitleChecked_two, isStyle2DChecked: isStyle2DChecked_two,
+                isStyle3DChecked: isStyle3DChecked_two, chartType: chartType_two, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_two, categoryName: category_two, seriesName: series_two, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_two,
+                captionNexToCategory: captionNextToCategory_two, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_two, captionNextToSeries: captionNextToSeries_two, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_two,
+                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_two, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_two, isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_two, isDataLabelsValueEnabled: isDataLabelsValueEnabled_two,
+                isDataLabelsValueChecked: isDataLabelsValueChecked_two, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_two, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_two);
 
             //7. VP: All settings are unchange in Add New Panel dialog
-            
-            Assert.AreEqual(chartType_before,chartType_after, "Setting of Chart Type combobox has changed");
-            Assert.AreEqual(dataProfileName_before, dataProfileName_after, "Setting of Data Profile combobox has changed");
-            Assert.AreEqual(title_before, title_after, "Title has changed");
-            Assert.AreEqual(isShowTitleChecked_before, isShowTitleChecked_after, "Setting of Show Title has changed");
-            Assert.AreEqual(isStyle2DChecked_before, isStyle2DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isStyle3DChecked_before, isStyle3DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isCaptionNextToCategoryEnabled_before, isCaptionNextToCategoryEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isDataLabelsCategoriesEnabled_before, isDataLabelsCategoriesEnabled_after, "Setting of Data Label has changed");
+
+            Assert.AreEqual(typeOfPanel_one, typeOfPanel_two, "Setting of Panel Type has changed");
+            Assert.AreEqual(dataProfileName_one, dataProfileName_two, "Setting of Data Profile combobox has changed");
+            Assert.AreEqual(panelDisplayName_one, panelDisplayName_two, "Name of Panel has changed");
+            Assert.AreEqual(title_one.Result, title_two.Result, "Title has changed");
+            Assert.AreEqual(isShowTitleChecked_one.Result, isShowTitleChecked_two.Result, "Settings of Show Title checkbox has changed");
+            Assert.AreEqual(isStyle2DChecked_one.Result, isStyle2DChecked_two.Result, "Settings of Style has changed");
+            Assert.AreEqual(isStyle3DChecked_one.Result, isStyle3DChecked_two.Result, "Setting of Style has changed");
+            Assert.AreEqual(chartType_one.Result, chartType_two.Result, "Setting of Chart Type has changed");
+            Assert.AreEqual(isCategoryInChartSettingsEnable_one.Result, isCategoryInChartSettingsEnable_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(category_one.Result, category_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(series_one.Result, series_two.Result, "Setting of Series combox has changed");
+            Assert.AreEqual(isCaptionNextToCategoryEnabled_one.Result, isCaptionNextToCategoryEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToCategory_one.Result, captionNextToCategory_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isCaptionNextToSeriesEnabled_one.Result, isCaptionNextToSeriesEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToSeries_one.Result, captionNextToSeries_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isDataLabelsCategoriesEnabled_one.Result, isDataLabelsCategoriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsCategoriesChecked_one.Result, isDataLabelsCategoriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesChecked_one.Result, isDataLabelsSeriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueEnabled_one.Result, isDataLabelsValueEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueChecked_one.Result, isDataLabelsValueChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageEnabled_one.Result, isDataLabelsPercentageEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageChecked_one.Result, isDataLabelsPercentageChecked_two.Result, "Setting of Data Labels has changed");
 
             //8. Click Top radio button for Legend
 
             panelPage.RbLegendsTop.Check();
 
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_after, out dataProfileName_after, out panelDisplayName_after, out title_after, out isShowTitleChecked_after,
-            out stasticFieldName_after, out stasticFieldValue_after, out isPercentageChecked_after, out from_after, out color_after, out chartType_after,
-            out isCaptionNextToCategoryEnabled_after, out isCaptionNextToSeriesEnabled_after, out isCategoryInChartSettingsEnable_after, out isDataLabelsSeriesEnables_after,
-            out isDataLabelsCategoriesEnabled_after, out isDataLabelsValueEnabled_after, out isDataLabelsPercentageEnabled_after, out seriesName_after, out isLegendsNoneChecked_after,
-            out isLegendsTopChecked_after, out isLegendsRightChecked_after, out isLegendsBottomChecked_after, out isLegendsLeftChecked_after,
-            out isStyle2DChecked_after, out isStyle3DChecked_after, out captionNexToCategory_after, out captionNextToSeries_after, out categoryName_after, out isStasticOnEnabled_after,
-            out seriesValue_after, out isSetAsHeatValueChecked_after);
+            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_one, out dataProfileName_one, out panelDisplayName_one, title: title_one, isShowTitleChecked: isShowTitleChecked_one, isStyle2DChecked: isStyle2DChecked_one,
+               isStyle3DChecked: isStyle3DChecked_one, chartType: chartType_one, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_one, categoryName: category_one, seriesName: series_one, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_one,
+               captionNexToCategory: captionNextToCategory_one, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_one, captionNextToSeries: captionNextToSeries_one, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_one,
+               isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_one, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_one, isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_one, isDataLabelsValueEnabled: isDataLabelsValueEnabled_one,
+               isDataLabelsValueChecked: isDataLabelsValueChecked_one, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_one, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_one);
 
             //9. VP: All settings are unchange in Add New Panel dialoge
 
-            Assert.AreEqual(chartType_before, chartType_after, "Setting of Chart Type combobox has changed");
-            Assert.AreEqual(dataProfileName_before, dataProfileName_after, "Setting of Data Profile combobox has changed");
-            Assert.AreEqual(title_before, title_after, "Title has changed");
-            Assert.AreEqual(isShowTitleChecked_before, isShowTitleChecked_after, "Setting of Show Title has changed");
-            Assert.AreEqual(isStyle2DChecked_before, isStyle2DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isStyle3DChecked_before, isStyle3DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isCaptionNextToCategoryEnabled_before, isCaptionNextToCategoryEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isDataLabelsCategoriesEnabled_before, isDataLabelsCategoriesEnabled_after, "Setting of Data Label has changed");
+            Assert.AreEqual(typeOfPanel_one, typeOfPanel_two, "Setting of Panel Type has changed");
+            Assert.AreEqual(dataProfileName_one, dataProfileName_two, "Setting of Data Profile combobox has changed");
+            Assert.AreEqual(panelDisplayName_one, panelDisplayName_two, "Name of Panel has changed");
+            Assert.AreEqual(title_one.Result, title_two.Result, "Title has changed");
+            Assert.AreEqual(isShowTitleChecked_one.Result, isShowTitleChecked_two.Result, "Settings of Show Title checkbox has changed");
+            Assert.AreEqual(isStyle2DChecked_one.Result, isStyle2DChecked_two.Result, "Settings of Style has changed");
+            Assert.AreEqual(isStyle3DChecked_one.Result, isStyle3DChecked_two.Result, "Setting of Style has changed");
+            Assert.AreEqual(chartType_one.Result, chartType_two.Result, "Setting of Chart Type has changed");
+            Assert.AreEqual(isCategoryInChartSettingsEnable_one.Result, isCategoryInChartSettingsEnable_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(category_one.Result, category_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(series_one.Result, series_two.Result, "Setting of Series combox has changed");
+            Assert.AreEqual(isCaptionNextToCategoryEnabled_one.Result, isCaptionNextToCategoryEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToCategory_one.Result, captionNextToCategory_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isCaptionNextToSeriesEnabled_one.Result, isCaptionNextToSeriesEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToSeries_one.Result, captionNextToSeries_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isDataLabelsCategoriesEnabled_one.Result, isDataLabelsCategoriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsCategoriesChecked_one.Result, isDataLabelsCategoriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesChecked_one.Result, isDataLabelsSeriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueEnabled_one.Result, isDataLabelsValueEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueChecked_one.Result, isDataLabelsValueChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageEnabled_one.Result, isDataLabelsPercentageEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageChecked_one.Result, isDataLabelsPercentageChecked_two.Result, "Setting of Data Labels has changed");
 
             //10. Click Right radio button for Legend
 
             panelPage.RbLegendsRight.Check();
 
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_after, out dataProfileName_after, out panelDisplayName_after, out title_after, out isShowTitleChecked_after,
-            out stasticFieldName_after, out stasticFieldValue_after, out isPercentageChecked_after, out from_after, out color_after, out chartType_after,
-            out isCaptionNextToCategoryEnabled_after, out isCaptionNextToSeriesEnabled_after, out isCategoryInChartSettingsEnable_after, out isDataLabelsSeriesEnables_after,
-            out isDataLabelsCategoriesEnabled_after, out isDataLabelsValueEnabled_after, out isDataLabelsPercentageEnabled_after, out seriesName_after, out isLegendsNoneChecked_after,
-            out isLegendsTopChecked_after, out isLegendsRightChecked_after, out isLegendsBottomChecked_after, out isLegendsLeftChecked_after,
-            out isStyle2DChecked_after, out isStyle3DChecked_after, out captionNexToCategory_after, out captionNextToSeries_after, out categoryName_after, out isStasticOnEnabled_after,
-            out seriesValue_after, out isSetAsHeatValueChecked_after);
+            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_two, out dataProfileName_two, out panelDisplayName_two, title: title_two, isShowTitleChecked: isShowTitleChecked_two, isStyle2DChecked: isStyle2DChecked_two,
+                isStyle3DChecked: isStyle3DChecked_two, chartType: chartType_two, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_two, categoryName: category_two, seriesName: series_two, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_two,
+                captionNexToCategory: captionNextToCategory_two, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_two, captionNextToSeries: captionNextToSeries_two, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_two,
+                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_two, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_two, isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_two, isDataLabelsValueEnabled: isDataLabelsValueEnabled_two,
+                isDataLabelsValueChecked: isDataLabelsValueChecked_two, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_two, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_two);
 
             //11. VP: All settings are unchange in Add New Panel dialog
 
-            Assert.AreEqual(chartType_before, chartType_after, "Setting of Chart Type combobox has changed");
-            Assert.AreEqual(dataProfileName_before, dataProfileName_after, "Setting of Data Profile combobox has changed");
-            Assert.AreEqual(title_before, title_after, "Title has changed");
-            Assert.AreEqual(isShowTitleChecked_before, isShowTitleChecked_after, "Setting of Show Title has changed");
-            Assert.AreEqual(isStyle2DChecked_before, isStyle2DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isStyle3DChecked_before, isStyle3DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isCaptionNextToCategoryEnabled_before, isCaptionNextToCategoryEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isDataLabelsCategoriesEnabled_before, isDataLabelsCategoriesEnabled_after, "Setting of Data Label has changed");
+            Assert.AreEqual(typeOfPanel_one, typeOfPanel_two, "Setting of Panel Type has changed");
+            Assert.AreEqual(dataProfileName_one, dataProfileName_two, "Setting of Data Profile combobox has changed");
+            Assert.AreEqual(panelDisplayName_one, panelDisplayName_two, "Name of Panel has changed");
+            Assert.AreEqual(title_one.Result, title_two.Result, "Title has changed");
+            Assert.AreEqual(isShowTitleChecked_one.Result, isShowTitleChecked_two.Result, "Settings of Show Title checkbox has changed");
+            Assert.AreEqual(isStyle2DChecked_one.Result, isStyle2DChecked_two.Result, "Settings of Style has changed");
+            Assert.AreEqual(isStyle3DChecked_one.Result, isStyle3DChecked_two.Result, "Setting of Style has changed");
+            Assert.AreEqual(chartType_one.Result, chartType_two.Result, "Setting of Chart Type has changed");
+            Assert.AreEqual(isCategoryInChartSettingsEnable_one.Result, isCategoryInChartSettingsEnable_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(category_one.Result, category_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(series_one.Result, series_two.Result, "Setting of Series combox has changed");
+            Assert.AreEqual(isCaptionNextToCategoryEnabled_one.Result, isCaptionNextToCategoryEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToCategory_one.Result, captionNextToCategory_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isCaptionNextToSeriesEnabled_one.Result, isCaptionNextToSeriesEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToSeries_one.Result, captionNextToSeries_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isDataLabelsCategoriesEnabled_one.Result, isDataLabelsCategoriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsCategoriesChecked_one.Result, isDataLabelsCategoriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesChecked_one.Result, isDataLabelsSeriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueEnabled_one.Result, isDataLabelsValueEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueChecked_one.Result, isDataLabelsValueChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageEnabled_one.Result, isDataLabelsPercentageEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageChecked_one.Result, isDataLabelsPercentageChecked_two.Result, "Setting of Data Labels has changed");
 
             //12. Click Bottom radio button for Legend
 
             panelPage.RbLegendsBottom.Check();
 
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_after, out dataProfileName_after, out panelDisplayName_after, out title_after, out isShowTitleChecked_after,
-            out stasticFieldName_after, out stasticFieldValue_after, out isPercentageChecked_after, out from_after, out color_after, out chartType_after,
-            out isCaptionNextToCategoryEnabled_after, out isCaptionNextToSeriesEnabled_after, out isCategoryInChartSettingsEnable_after, out isDataLabelsSeriesEnables_after,
-            out isDataLabelsCategoriesEnabled_after, out isDataLabelsValueEnabled_after, out isDataLabelsPercentageEnabled_after, out seriesName_after, out isLegendsNoneChecked_after,
-            out isLegendsTopChecked_after, out isLegendsRightChecked_after, out isLegendsBottomChecked_after, out isLegendsLeftChecked_after,
-            out isStyle2DChecked_after, out isStyle3DChecked_after, out captionNexToCategory_after, out captionNextToSeries_after, out categoryName_after, out isStasticOnEnabled_after,
-            out seriesValue_after, out isSetAsHeatValueChecked_after);
+            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_one, out dataProfileName_one, out panelDisplayName_one, title: title_one, isShowTitleChecked: isShowTitleChecked_one, isStyle2DChecked: isStyle2DChecked_one,
+               isStyle3DChecked: isStyle3DChecked_one, chartType: chartType_one, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_one, categoryName: category_one, seriesName: series_one, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_one,
+               captionNexToCategory: captionNextToCategory_one, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_one, captionNextToSeries: captionNextToSeries_one, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_one,
+               isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_one, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_one, isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_one, isDataLabelsValueEnabled: isDataLabelsValueEnabled_one,
+               isDataLabelsValueChecked: isDataLabelsValueChecked_one, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_one, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_one);
 
             //13. VP: All settings are unchange in Add New Panel dialog
 
-            Assert.AreEqual(chartType_before, chartType_after, "Setting of Chart Type combobox has changed");
-            Assert.AreEqual(dataProfileName_before, dataProfileName_after, "Setting of Data Profile combobox has changed");
-            Assert.AreEqual(title_before, title_after, "Title has changed");
-            Assert.AreEqual(isShowTitleChecked_before, isShowTitleChecked_after, "Setting of Show Title has changed");
-            Assert.AreEqual(isStyle2DChecked_before, isStyle2DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isStyle3DChecked_before, isStyle3DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isCaptionNextToCategoryEnabled_before, isCaptionNextToCategoryEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isDataLabelsCategoriesEnabled_before, isDataLabelsCategoriesEnabled_after, "Setting of Data Label has changed");
+            Assert.AreEqual(typeOfPanel_one, typeOfPanel_two, "Setting of Panel Type has changed");
+            Assert.AreEqual(dataProfileName_one, dataProfileName_two, "Setting of Data Profile combobox has changed");
+            Assert.AreEqual(panelDisplayName_one, panelDisplayName_two, "Name of Panel has changed");
+            Assert.AreEqual(title_one.Result, title_two.Result, "Title has changed");
+            Assert.AreEqual(isShowTitleChecked_one.Result, isShowTitleChecked_two.Result, "Settings of Show Title checkbox has changed");
+            Assert.AreEqual(isStyle2DChecked_one.Result, isStyle2DChecked_two.Result, "Settings of Style has changed");
+            Assert.AreEqual(isStyle3DChecked_one.Result, isStyle3DChecked_two.Result, "Setting of Style has changed");
+            Assert.AreEqual(chartType_one.Result, chartType_two.Result, "Setting of Chart Type has changed");
+            Assert.AreEqual(isCategoryInChartSettingsEnable_one.Result, isCategoryInChartSettingsEnable_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(category_one.Result, category_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(series_one.Result, series_two.Result, "Setting of Series combox has changed");
+            Assert.AreEqual(isCaptionNextToCategoryEnabled_one.Result, isCaptionNextToCategoryEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToCategory_one.Result, captionNextToCategory_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isCaptionNextToSeriesEnabled_one.Result, isCaptionNextToSeriesEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToSeries_one.Result, captionNextToSeries_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isDataLabelsCategoriesEnabled_one.Result, isDataLabelsCategoriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsCategoriesChecked_one.Result, isDataLabelsCategoriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesChecked_one.Result, isDataLabelsSeriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueEnabled_one.Result, isDataLabelsValueEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueChecked_one.Result, isDataLabelsValueChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageEnabled_one.Result, isDataLabelsPercentageEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageChecked_one.Result, isDataLabelsPercentageChecked_two.Result, "Setting of Data Labels has changed");
 
             //14. Click Left radio button for Legend
 
             panelPage.RbLegendsLeft.Check();
 
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_after, out dataProfileName_after, out panelDisplayName_after, out title_after, out isShowTitleChecked_after,
-            out stasticFieldName_after, out stasticFieldValue_after, out isPercentageChecked_after, out from_after, out color_after, out chartType_after,
-            out isCaptionNextToCategoryEnabled_after, out isCaptionNextToSeriesEnabled_after, out isCategoryInChartSettingsEnable_after, out isDataLabelsSeriesEnables_after,
-            out isDataLabelsCategoriesEnabled_after, out isDataLabelsValueEnabled_after, out isDataLabelsPercentageEnabled_after, out seriesName_after, out isLegendsNoneChecked_after,
-            out isLegendsTopChecked_after, out isLegendsRightChecked_after, out isLegendsBottomChecked_after, out isLegendsLeftChecked_after,
-            out isStyle2DChecked_after, out isStyle3DChecked_after, out captionNexToCategory_after, out captionNextToSeries_after, out categoryName_after, out isStasticOnEnabled_after,
-            out seriesValue_after, out isSetAsHeatValueChecked_after);
+            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_two, out dataProfileName_two, out panelDisplayName_two, title: title_two, isShowTitleChecked: isShowTitleChecked_two, isStyle2DChecked: isStyle2DChecked_two,
+                isStyle3DChecked: isStyle3DChecked_two, chartType: chartType_two, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_two, categoryName: category_two, seriesName: series_two, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_two,
+                captionNexToCategory: captionNextToCategory_two, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_two, captionNextToSeries: captionNextToSeries_two, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_two,
+                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_two, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_two, isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_two, isDataLabelsValueEnabled: isDataLabelsValueEnabled_two,
+                isDataLabelsValueChecked: isDataLabelsValueChecked_two, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_two, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_two);
 
             //15. VP: All settings are unchange in Add New Panel dialog
 
-            Assert.AreEqual(chartType_before, chartType_after, "Setting of Chart Type combobox has changed");
-            Assert.AreEqual(dataProfileName_before, dataProfileName_after, "Setting of Data Profile combobox has changed");
-            Assert.AreEqual(title_before, title_after, "Title has changed");
-            Assert.AreEqual(isShowTitleChecked_before, isShowTitleChecked_after, "Setting of Show Title has changed");
-            Assert.AreEqual(isStyle2DChecked_before, isStyle2DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isStyle3DChecked_before, isStyle3DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isCaptionNextToCategoryEnabled_before, isCaptionNextToCategoryEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isDataLabelsCategoriesEnabled_before, isDataLabelsCategoriesEnabled_after, "Setting of Data Label has changed");
+            Assert.AreEqual(typeOfPanel_one, typeOfPanel_two, "Setting of Panel Type has changed");
+            Assert.AreEqual(dataProfileName_one, dataProfileName_two, "Setting of Data Profile combobox has changed");
+            Assert.AreEqual(panelDisplayName_one, panelDisplayName_two, "Name of Panel has changed");
+            Assert.AreEqual(title_one.Result, title_two.Result, "Title has changed");
+            Assert.AreEqual(isShowTitleChecked_one.Result, isShowTitleChecked_two.Result, "Settings of Show Title checkbox has changed");
+            Assert.AreEqual(isStyle2DChecked_one.Result, isStyle2DChecked_two.Result, "Settings of Style has changed");
+            Assert.AreEqual(isStyle3DChecked_one.Result, isStyle3DChecked_two.Result, "Setting of Style has changed");
+            Assert.AreEqual(chartType_one.Result, chartType_two.Result, "Setting of Chart Type has changed");
+            Assert.AreEqual(isCategoryInChartSettingsEnable_one.Result, isCategoryInChartSettingsEnable_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(category_one.Result, category_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(series_one.Result, series_two.Result, "Setting of Series combox has changed");
+            Assert.AreEqual(isCaptionNextToCategoryEnabled_one.Result, isCaptionNextToCategoryEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToCategory_one.Result, captionNextToCategory_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isCaptionNextToSeriesEnabled_one.Result, isCaptionNextToSeriesEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToSeries_one.Result, captionNextToSeries_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isDataLabelsCategoriesEnabled_one.Result, isDataLabelsCategoriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsCategoriesChecked_one.Result, isDataLabelsCategoriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesChecked_one.Result, isDataLabelsSeriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueEnabled_one.Result, isDataLabelsValueEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueChecked_one.Result, isDataLabelsValueChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageEnabled_one.Result, isDataLabelsPercentageEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageChecked_one.Result, isDataLabelsPercentageChecked_two.Result, "Setting of Data Labels has changed");
 
             //16. Create a new panel
 
-            panelPage.TxtDisplayName.SendKeys(panelDisplayName);
-            panelPage.TxtChartTitle.SendKeys(title);
-            panelPage.CmbSeries.SelectItem(item: "location", selectby: "Value");
+            panelPage.Panel(action: "Create", panelType: "Chart", panelDisplayName: panelDisplayName, title: title, chartType: "Pie", series: "location");
             panelPage.BtnOK.Click();
-
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.StalenessOf(panelPage.BtnOK));
+            panelPage.WaitForAddingPanel(panelDisplayName);
 
             //17. Click Edit Panel link
             //18. Click None radio button for Legend
 
             panelPage.ClickEditPanel(panelDisplayName);
+
+            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_one, out dataProfileName_one, out panelDisplayName_one, title: title_one, isShowTitleChecked: isShowTitleChecked_one, isStyle2DChecked: isStyle2DChecked_one,
+              isStyle3DChecked: isStyle3DChecked_one, chartType: chartType_one, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_one, categoryName: category_one, seriesName: series_one, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_one,
+              captionNexToCategory: captionNextToCategory_one, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_one, captionNextToSeries: captionNextToSeries_one, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_one,
+              isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_one, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_one, isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_one, isDataLabelsValueEnabled: isDataLabelsValueEnabled_one,
+              isDataLabelsValueChecked: isDataLabelsValueChecked_one, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_one, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_one);
+            
             panelPage.RbLegendsNone.Check();
 
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_after, out dataProfileName_after, out panelDisplayName_after, out title_after, out isShowTitleChecked_after,
-            out stasticFieldName_after, out stasticFieldValue_after, out isPercentageChecked_after, out from_after, out color_after, out chartType_after,
-            out isCaptionNextToCategoryEnabled_after, out isCaptionNextToSeriesEnabled_after, out isCategoryInChartSettingsEnable_after, out isDataLabelsSeriesEnables_after,
-            out isDataLabelsCategoriesEnabled_after, out isDataLabelsValueEnabled_after, out isDataLabelsPercentageEnabled_after, out seriesName_after, out isLegendsNoneChecked_after,
-            out isLegendsTopChecked_after, out isLegendsRightChecked_after, out isLegendsBottomChecked_after, out isLegendsLeftChecked_after,
-            out isStyle2DChecked_after, out isStyle3DChecked_after, out captionNexToCategory_after, out captionNextToSeries_after, out categoryName_after, out isStasticOnEnabled_after,
-            out seriesValue_after, out isSetAsHeatValueChecked_after);
+            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_two, out dataProfileName_two, out panelDisplayName_two, title: title_two, isShowTitleChecked: isShowTitleChecked_two, isStyle2DChecked: isStyle2DChecked_two,
+               isStyle3DChecked: isStyle3DChecked_two, chartType: chartType_two, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_two, categoryName: category_two, seriesName: series_two, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_two,
+               captionNexToCategory: captionNextToCategory_two, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_two, captionNextToSeries: captionNextToSeries_two, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_two,
+               isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_two, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_two, isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_two, isDataLabelsValueEnabled: isDataLabelsValueEnabled_two,
+               isDataLabelsValueChecked: isDataLabelsValueChecked_two, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_two, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_two);
 
             //19. VP: All settings are unchange in Add New Panel dialog
 
-            Assert.AreEqual(chartType_before, chartType_after, "Setting of Chart Type combobox has changed");
-            Assert.AreEqual(dataProfileName_before, dataProfileName_after, "Setting of Data Profile combobox has changed");
-            Assert.AreEqual(title, title_after, "Title has changed");
-            Assert.AreEqual(isShowTitleChecked_before, isShowTitleChecked_after, "Setting of Show Title has changed");
-            Assert.AreEqual(isStyle2DChecked_before, isStyle2DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isStyle3DChecked_before, isStyle3DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isCaptionNextToCategoryEnabled_before, isCaptionNextToCategoryEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isDataLabelsCategoriesEnabled_before, isDataLabelsCategoriesEnabled_after, "Setting of Data Label has changed");
+            Assert.AreEqual(typeOfPanel_one, typeOfPanel_two, "Setting of Panel Type has changed");
+            Assert.AreEqual(dataProfileName_one, dataProfileName_two, "Setting of Data Profile combobox has changed");
+            Assert.AreEqual(panelDisplayName_one, panelDisplayName_two, "Name of Panel has changed");
+            Assert.AreEqual(title_one.Result, title_two.Result, "Title has changed");
+            Assert.AreEqual(isShowTitleChecked_one.Result, isShowTitleChecked_two.Result, "Settings of Show Title checkbox has changed");
+            Assert.AreEqual(isStyle2DChecked_one.Result, isStyle2DChecked_two.Result, "Settings of Style has changed");
+            Assert.AreEqual(isStyle3DChecked_one.Result, isStyle3DChecked_two.Result, "Setting of Style has changed");
+            Assert.AreEqual(chartType_one.Result, chartType_two.Result, "Setting of Chart Type has changed");
+            Assert.AreEqual(isCategoryInChartSettingsEnable_one.Result, isCategoryInChartSettingsEnable_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(category_one.Result, category_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(series_one.Result, series_two.Result, "Setting of Series combox has changed");
+            Assert.AreEqual(isCaptionNextToCategoryEnabled_one.Result, isCaptionNextToCategoryEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToCategory_one.Result, captionNextToCategory_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isCaptionNextToSeriesEnabled_one.Result, isCaptionNextToSeriesEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToSeries_one.Result, captionNextToSeries_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isDataLabelsCategoriesEnabled_one.Result, isDataLabelsCategoriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsCategoriesChecked_one.Result, isDataLabelsCategoriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesChecked_one.Result, isDataLabelsSeriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueEnabled_one.Result, isDataLabelsValueEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueChecked_one.Result, isDataLabelsValueChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageEnabled_one.Result, isDataLabelsPercentageEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageChecked_one.Result, isDataLabelsPercentageChecked_two.Result, "Setting of Data Labels has changed");
 
             //20. Click Top radio button for Legend
 
             panelPage.RbLegendsTop.Check();
 
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_after, out dataProfileName_after, out panelDisplayName_after, out title_after, out isShowTitleChecked_after,
-            out stasticFieldName_after, out stasticFieldValue_after, out isPercentageChecked_after, out from_after, out color_after, out chartType_after,
-            out isCaptionNextToCategoryEnabled_after, out isCaptionNextToSeriesEnabled_after, out isCategoryInChartSettingsEnable_after, out isDataLabelsSeriesEnables_after,
-            out isDataLabelsCategoriesEnabled_after, out isDataLabelsValueEnabled_after, out isDataLabelsPercentageEnabled_after, out seriesName_after, out isLegendsNoneChecked_after,
-            out isLegendsTopChecked_after, out isLegendsRightChecked_after, out isLegendsBottomChecked_after, out isLegendsLeftChecked_after,
-            out isStyle2DChecked_after, out isStyle3DChecked_after, out captionNexToCategory_after, out captionNextToSeries_after, out categoryName_after, out isStasticOnEnabled_after,
-            out seriesValue_after, out isSetAsHeatValueChecked_after);
+            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_one, out dataProfileName_one, out panelDisplayName_one, title: title_one, isShowTitleChecked: isShowTitleChecked_one, isStyle2DChecked: isStyle2DChecked_one,
+                          isStyle3DChecked: isStyle3DChecked_one, chartType: chartType_one, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_one, categoryName: category_one, seriesName: series_one, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_one,
+                          captionNexToCategory: captionNextToCategory_one, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_one, captionNextToSeries: captionNextToSeries_one, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_one,
+                          isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_one, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_one, isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_one, isDataLabelsValueEnabled: isDataLabelsValueEnabled_one,
+                          isDataLabelsValueChecked: isDataLabelsValueChecked_one, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_one, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_one);
 
             //21. VP: All settings are unchange in Add New Panel dialog
 
-            Assert.AreEqual(chartType_before, chartType_after, "Setting of Chart Type combobox has changed");
-            Assert.AreEqual(dataProfileName_before, dataProfileName_after, "Setting of Data Profile combobox has changed");
-            Assert.AreEqual(title, title_after, "Title has changed");
-            Assert.AreEqual(isShowTitleChecked_before, isShowTitleChecked_after, "Setting of Show Title has changed");
-            Assert.AreEqual(isStyle2DChecked_before, isStyle2DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isStyle3DChecked_before, isStyle3DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isCaptionNextToCategoryEnabled_before, isCaptionNextToCategoryEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isDataLabelsCategoriesEnabled_before, isDataLabelsCategoriesEnabled_after, "Setting of Data Label has changed");
+            Assert.AreEqual(typeOfPanel_one, typeOfPanel_two, "Setting of Panel Type has changed");
+            Assert.AreEqual(dataProfileName_one, dataProfileName_two, "Setting of Data Profile combobox has changed");
+            Assert.AreEqual(panelDisplayName_one, panelDisplayName_two, "Name of Panel has changed");
+            Assert.AreEqual(title_one.Result, title_two.Result, "Title has changed");
+            Assert.AreEqual(isShowTitleChecked_one.Result, isShowTitleChecked_two.Result, "Settings of Show Title checkbox has changed");
+            Assert.AreEqual(isStyle2DChecked_one.Result, isStyle2DChecked_two.Result, "Settings of Style has changed");
+            Assert.AreEqual(isStyle3DChecked_one.Result, isStyle3DChecked_two.Result, "Setting of Style has changed");
+            Assert.AreEqual(chartType_one.Result, chartType_two.Result, "Setting of Chart Type has changed");
+            Assert.AreEqual(isCategoryInChartSettingsEnable_one.Result, isCategoryInChartSettingsEnable_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(category_one.Result, category_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(series_one.Result, series_two.Result, "Setting of Series combox has changed");
+            Assert.AreEqual(isCaptionNextToCategoryEnabled_one.Result, isCaptionNextToCategoryEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToCategory_one.Result, captionNextToCategory_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isCaptionNextToSeriesEnabled_one.Result, isCaptionNextToSeriesEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToSeries_one.Result, captionNextToSeries_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isDataLabelsCategoriesEnabled_one.Result, isDataLabelsCategoriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsCategoriesChecked_one.Result, isDataLabelsCategoriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesChecked_one.Result, isDataLabelsSeriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueEnabled_one.Result, isDataLabelsValueEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueChecked_one.Result, isDataLabelsValueChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageEnabled_one.Result, isDataLabelsPercentageEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageChecked_one.Result, isDataLabelsPercentageChecked_two.Result, "Setting of Data Labels has changed");
 
             //22. Click Right radio button for Legend
 
             panelPage.RbLegendsRight.Check();
 
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_after, out dataProfileName_after, out panelDisplayName_after, out title_after, out isShowTitleChecked_after,
-            out stasticFieldName_after, out stasticFieldValue_after, out isPercentageChecked_after, out from_after, out color_after, out chartType_after,
-            out isCaptionNextToCategoryEnabled_after, out isCaptionNextToSeriesEnabled_after, out isCategoryInChartSettingsEnable_after, out isDataLabelsSeriesEnables_after,
-            out isDataLabelsCategoriesEnabled_after, out isDataLabelsValueEnabled_after, out isDataLabelsPercentageEnabled_after, out seriesName_after, out isLegendsNoneChecked_after,
-            out isLegendsTopChecked_after, out isLegendsRightChecked_after, out isLegendsBottomChecked_after, out isLegendsLeftChecked_after,
-            out isStyle2DChecked_after, out isStyle3DChecked_after, out captionNexToCategory_after, out captionNextToSeries_after, out categoryName_after, out isStasticOnEnabled_after,
-            out seriesValue_after, out isSetAsHeatValueChecked_after);
+            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_two, out dataProfileName_two, out panelDisplayName_two, title: title_two, isShowTitleChecked: isShowTitleChecked_two, isStyle2DChecked: isStyle2DChecked_two,
+                isStyle3DChecked: isStyle3DChecked_two, chartType: chartType_two, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_two, categoryName: category_two, seriesName: series_two, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_two,
+                captionNexToCategory: captionNextToCategory_two, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_two, captionNextToSeries: captionNextToSeries_two, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_two,
+                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_two, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_two, isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_two, isDataLabelsValueEnabled: isDataLabelsValueEnabled_two,
+                isDataLabelsValueChecked: isDataLabelsValueChecked_two, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_two, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_two);
 
             //23. VP: All settings are unchange in Add New Panel dialog
 
-            Assert.AreEqual(chartType_before, chartType_after, "Setting of Chart Type combobox has changed");
-            Assert.AreEqual(dataProfileName_before, dataProfileName_after, "Setting of Data Profile combobox has changed");
-            Assert.AreEqual(title, title_after, "Title has changed");
-            Assert.AreEqual(isShowTitleChecked_before, isShowTitleChecked_after, "Setting of Show Title has changed");
-            Assert.AreEqual(isStyle2DChecked_before, isStyle2DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isStyle3DChecked_before, isStyle3DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isCaptionNextToCategoryEnabled_before, isCaptionNextToCategoryEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isDataLabelsCategoriesEnabled_before, isDataLabelsCategoriesEnabled_after, "Setting of Data Label has changed");
+            Assert.AreEqual(typeOfPanel_one, typeOfPanel_two, "Setting of Panel Type has changed");
+            Assert.AreEqual(dataProfileName_one, dataProfileName_two, "Setting of Data Profile combobox has changed");
+            Assert.AreEqual(panelDisplayName_one, panelDisplayName_two, "Name of Panel has changed");
+            Assert.AreEqual(title_one.Result, title_two.Result, "Title has changed");
+            Assert.AreEqual(isShowTitleChecked_one.Result, isShowTitleChecked_two.Result, "Settings of Show Title checkbox has changed");
+            Assert.AreEqual(isStyle2DChecked_one.Result, isStyle2DChecked_two.Result, "Settings of Style has changed");
+            Assert.AreEqual(isStyle3DChecked_one.Result, isStyle3DChecked_two.Result, "Setting of Style has changed");
+            Assert.AreEqual(chartType_one.Result, chartType_two.Result, "Setting of Chart Type has changed");
+            Assert.AreEqual(isCategoryInChartSettingsEnable_one.Result, isCategoryInChartSettingsEnable_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(category_one.Result, category_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(series_one.Result, series_two.Result, "Setting of Series combox has changed");
+            Assert.AreEqual(isCaptionNextToCategoryEnabled_one.Result, isCaptionNextToCategoryEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToCategory_one.Result, captionNextToCategory_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isCaptionNextToSeriesEnabled_one.Result, isCaptionNextToSeriesEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToSeries_one.Result, captionNextToSeries_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isDataLabelsCategoriesEnabled_one.Result, isDataLabelsCategoriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsCategoriesChecked_one.Result, isDataLabelsCategoriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesChecked_one.Result, isDataLabelsSeriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueEnabled_one.Result, isDataLabelsValueEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueChecked_one.Result, isDataLabelsValueChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageEnabled_one.Result, isDataLabelsPercentageEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageChecked_one.Result, isDataLabelsPercentageChecked_two.Result, "Setting of Data Labels has changed");
 
             //24. Click Bottom radio button for Legend
 
             panelPage.RbLegendsBottom.Check();
 
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_after, out dataProfileName_after, out panelDisplayName_after, out title_after, out isShowTitleChecked_after,
-            out stasticFieldName_after, out stasticFieldValue_after, out isPercentageChecked_after, out from_after, out color_after, out chartType_after,
-            out isCaptionNextToCategoryEnabled_after, out isCaptionNextToSeriesEnabled_after, out isCategoryInChartSettingsEnable_after, out isDataLabelsSeriesEnables_after,
-            out isDataLabelsCategoriesEnabled_after, out isDataLabelsValueEnabled_after, out isDataLabelsPercentageEnabled_after, out seriesName_after, out isLegendsNoneChecked_after,
-            out isLegendsTopChecked_after, out isLegendsRightChecked_after, out isLegendsBottomChecked_after, out isLegendsLeftChecked_after,
-            out isStyle2DChecked_after, out isStyle3DChecked_after, out captionNexToCategory_after, out captionNextToSeries_after, out categoryName_after, out isStasticOnEnabled_after,
-            out seriesValue_after, out isSetAsHeatValueChecked_after);
+            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_one, out dataProfileName_one, out panelDisplayName_one, title: title_one, isShowTitleChecked: isShowTitleChecked_one, isStyle2DChecked: isStyle2DChecked_one,
+               isStyle3DChecked: isStyle3DChecked_one, chartType: chartType_one, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_one, categoryName: category_one, seriesName: series_one, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_one,
+               captionNexToCategory: captionNextToCategory_one, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_one, captionNextToSeries: captionNextToSeries_one, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_one,
+               isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_one, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_one, isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_one, isDataLabelsValueEnabled: isDataLabelsValueEnabled_one,
+               isDataLabelsValueChecked: isDataLabelsValueChecked_one, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_one, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_one);
 
             //25. VP: All settings are unchange in Add New Panel dialog
 
-            Assert.AreEqual(chartType_before, chartType_after, "Setting of Chart Type combobox has changed");
-            Assert.AreEqual(dataProfileName_before, dataProfileName_after, "Setting of Data Profile combobox has changed");
-            Assert.AreEqual(title, title_after, "Title has changed");
-            Assert.AreEqual(isShowTitleChecked_before, isShowTitleChecked_after, "Setting of Show Title has changed");
-            Assert.AreEqual(isStyle2DChecked_before, isStyle2DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isStyle3DChecked_before, isStyle3DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isCaptionNextToCategoryEnabled_before, isCaptionNextToCategoryEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isDataLabelsCategoriesEnabled_before, isDataLabelsCategoriesEnabled_after, "Setting of Data Label has changed");
+            Assert.AreEqual(typeOfPanel_one, typeOfPanel_two, "Setting of Panel Type has changed");
+            Assert.AreEqual(dataProfileName_one, dataProfileName_two, "Setting of Data Profile combobox has changed");
+            Assert.AreEqual(panelDisplayName_one, panelDisplayName_two, "Name of Panel has changed");
+            Assert.AreEqual(title_one.Result, title_two.Result, "Title has changed");
+            Assert.AreEqual(isShowTitleChecked_one.Result, isShowTitleChecked_two.Result, "Settings of Show Title checkbox has changed");
+            Assert.AreEqual(isStyle2DChecked_one.Result, isStyle2DChecked_two.Result, "Settings of Style has changed");
+            Assert.AreEqual(isStyle3DChecked_one.Result, isStyle3DChecked_two.Result, "Setting of Style has changed");
+            Assert.AreEqual(chartType_one.Result, chartType_two.Result, "Setting of Chart Type has changed");
+            Assert.AreEqual(isCategoryInChartSettingsEnable_one.Result, isCategoryInChartSettingsEnable_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(category_one.Result, category_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(series_one.Result, series_two.Result, "Setting of Series combox has changed");
+            Assert.AreEqual(isCaptionNextToCategoryEnabled_one.Result, isCaptionNextToCategoryEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToCategory_one.Result, captionNextToCategory_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isCaptionNextToSeriesEnabled_one.Result, isCaptionNextToSeriesEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToSeries_one.Result, captionNextToSeries_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isDataLabelsCategoriesEnabled_one.Result, isDataLabelsCategoriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsCategoriesChecked_one.Result, isDataLabelsCategoriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesChecked_one.Result, isDataLabelsSeriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueEnabled_one.Result, isDataLabelsValueEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueChecked_one.Result, isDataLabelsValueChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageEnabled_one.Result, isDataLabelsPercentageEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageChecked_one.Result, isDataLabelsPercentageChecked_two.Result, "Setting of Data Labels has changed");
 
             //26. Click Left radio button for Legend
 
             panelPage.RbLegendsLeft.Check();
 
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_after, out dataProfileName_after, out panelDisplayName_after, out title_after, out isShowTitleChecked_after,
-            out stasticFieldName_after, out stasticFieldValue_after, out isPercentageChecked_after, out from_after, out color_after, out chartType_after,
-            out isCaptionNextToCategoryEnabled_after, out isCaptionNextToSeriesEnabled_after, out isCategoryInChartSettingsEnable_after, out isDataLabelsSeriesEnables_after,
-            out isDataLabelsCategoriesEnabled_after, out isDataLabelsValueEnabled_after, out isDataLabelsPercentageEnabled_after, out seriesName_after, out isLegendsNoneChecked_after,
-            out isLegendsTopChecked_after, out isLegendsRightChecked_after, out isLegendsBottomChecked_after, out isLegendsLeftChecked_after,
-            out isStyle2DChecked_after, out isStyle3DChecked_after, out captionNexToCategory_after, out captionNextToSeries_after, out categoryName_after, out isStasticOnEnabled_after,
-            out seriesValue_after, out isSetAsHeatValueChecked_after);
+            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_two, out dataProfileName_two, out panelDisplayName_two, title: title_two, isShowTitleChecked: isShowTitleChecked_two, isStyle2DChecked: isStyle2DChecked_two,
+                isStyle3DChecked: isStyle3DChecked_two, chartType: chartType_two, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_two, categoryName: category_two, seriesName: series_two, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_two,
+                captionNexToCategory: captionNextToCategory_two, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_two, captionNextToSeries: captionNextToSeries_two, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_two,
+                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_two, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_two, isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_two, isDataLabelsValueEnabled: isDataLabelsValueEnabled_two,
+                isDataLabelsValueChecked: isDataLabelsValueChecked_two, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_two, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_two);
 
             //27. VP: All settings are unchange in Add New Panel dialog
 
-            Assert.AreEqual(chartType_before, chartType_after, "Setting of Chart Type combobox has changed");
-            Assert.AreEqual(dataProfileName_before, dataProfileName_after, "Setting of Data Profile combobox has changed");
-            Assert.AreEqual(title, title_after, "Title has changed");
-            Assert.AreEqual(isShowTitleChecked_before, isShowTitleChecked_after, "Setting of Show Title has changed");
-            Assert.AreEqual(isStyle2DChecked_before, isStyle2DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isStyle3DChecked_before, isStyle3DChecked_after, "Settings of Style has changed");
-            Assert.AreEqual(isCaptionNextToCategoryEnabled_before, isCaptionNextToCategoryEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isCaptionNextToSeriesEnabled_before, isCaptionNextToSeriesEnabled_after, "Setting of Caption has changed");
-            Assert.AreEqual(isDataLabelsCategoriesEnabled_before, isDataLabelsCategoriesEnabled_after, "Setting of Data Label has changed");
+            Assert.AreEqual(typeOfPanel_one, typeOfPanel_two, "Setting of Panel Type has changed");
+            Assert.AreEqual(dataProfileName_one, dataProfileName_two, "Setting of Data Profile combobox has changed");
+            Assert.AreEqual(panelDisplayName_one, panelDisplayName_two, "Name of Panel has changed");
+            Assert.AreEqual(title_one.Result, title_two.Result, "Title has changed");
+            Assert.AreEqual(isShowTitleChecked_one.Result, isShowTitleChecked_two.Result, "Settings of Show Title checkbox has changed");
+            Assert.AreEqual(isStyle2DChecked_one.Result, isStyle2DChecked_two.Result, "Settings of Style has changed");
+            Assert.AreEqual(isStyle3DChecked_one.Result, isStyle3DChecked_two.Result, "Setting of Style has changed");
+            Assert.AreEqual(chartType_one.Result, chartType_two.Result, "Setting of Chart Type has changed");
+            Assert.AreEqual(isCategoryInChartSettingsEnable_one.Result, isCategoryInChartSettingsEnable_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(category_one.Result, category_two.Result, "Setting of Category combobox has changed");
+            Assert.AreEqual(series_one.Result, series_two.Result, "Setting of Series combox has changed");
+            Assert.AreEqual(isCaptionNextToCategoryEnabled_one.Result, isCaptionNextToCategoryEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToCategory_one.Result, captionNextToCategory_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isCaptionNextToSeriesEnabled_one.Result, isCaptionNextToSeriesEnabled_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(captionNextToSeries_one.Result, captionNextToSeries_two.Result, "Setting of Caption has changed");
+            Assert.AreEqual(isDataLabelsCategoriesEnabled_one.Result, isDataLabelsCategoriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsCategoriesChecked_one.Result, isDataLabelsCategoriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesChecked_one.Result, isDataLabelsSeriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueEnabled_one.Result, isDataLabelsValueEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsValueChecked_one.Result, isDataLabelsValueChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageEnabled_one.Result, isDataLabelsPercentageEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsPercentageChecked_one.Result, isDataLabelsPercentageChecked_two.Result, "Setting of Data Labels has changed");
+
+            //Post-condition: Deleted created panel
+
+            panelPage.BtnCancel.Click();
+            panelPage.DeletePanel(panelDisplayName);
         }
 
         /// <summary>Verify that all "Data Labels" check boxes are enabled and disabled correctly corresponding to each type of "Chart Type"			
@@ -1125,7 +1224,7 @@ namespace SeleniumAdvance.TestCases
             Console.WriteLine("DA_PANEL_TC040 - Verify that all \"Data Labels\" check boxes are enabled and disabled correctly corresponding to each type of \"Chart Type\"");
 
             string pageName = string.Concat("Page ", CommonMethods.GetUniqueString());
-        
+
             //1. Navigate to Dashboard login page
             //2. Select a specific repository 
             //3. Enter valid Username and Password
@@ -1155,7 +1254,7 @@ namespace SeleniumAdvance.TestCases
             //12. VP: Check that 'Categories' checkbox is disabled, 'Series' checkbox, 'Value' checkbox and 'Percentage' checkbox are enabled
 
             Assert.AreEqual(false, panelPage.ChbDataLabelsCategories.Enabled, "'Categories' checkbox is not disabled");
-            Assert.AreEqual(true,panelPage.ChbDataLabelsSeries.Enabled, "'Series' checkbox is not enabled");
+            Assert.AreEqual(true, panelPage.ChbDataLabelsSeries.Enabled, "'Series' checkbox is not enabled");
             Assert.AreEqual(true, panelPage.ChbDataLabelsValue.Enabled, "'Value' checkbox is not enabled");
             Assert.AreEqual(true, panelPage.ChbDataLabelsPercentage.Enabled, "'Percentage' checkbox is not enabled");
 
