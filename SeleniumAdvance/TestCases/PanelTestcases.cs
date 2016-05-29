@@ -1115,5 +1115,102 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(isDataLabelsCategoriesEnabled_before, isDataLabelsCategoriesEnabled_after, "Setting of Data Label has changed");
         }
 
+        /// <summary>Verify that all "Data Labels" check boxes are enabled and disabled correctly corresponding to each type of "Chart Type"			
+        /// </summary>
+        /// <Author>Long</Author>
+        /// <Startdate>29/05/2016</Startdate>
+        [TestMethod]
+        public void TC040()
+        {
+            Console.WriteLine("DA_PANEL_TC040 - Verify that all \"Data Labels\" check boxes are enabled and disabled correctly corresponding to each type of \"Chart Type\"");
+
+            string pageName = string.Concat("Page ", CommonMethods.GetUniqueString());
+        
+            //1. Navigate to Dashboard login page
+            //2. Select a specific repository 
+            //3. Enter valid Username and Password
+            //4. Click 'Login' button
+            //5. Click 'Add Page' button
+            //6. Enter Page Name
+            //7. Click 'OK' button
+
+            LoginPage loginPage = new LoginPage(driver);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+            mainPage.AddPage(pageName: pageName);
+
+            //8. Click 'Choose Panels' button 
+            //9. Click 'Create new panel' button
+
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            PanelPage panelPage = new PanelPage(driver);
+
+            panelPage.UnhideChoosePanelsPage();
+            panelPage.BtnCreateNewPanel.Click();
+
+            //10. Click 'Chart Type' drop-down menu
+            //11. Select 'Pie' Chart Type
+
+            panelPage.Panel(action: "Create", panelType: "Chart", chartType: "Pie");
+
+            //12. VP: Check that 'Categories' checkbox is disabled, 'Series' checkbox, 'Value' checkbox and 'Percentage' checkbox are enabled
+
+            Assert.AreEqual(false, panelPage.ChbDataLabelsCategories.Enabled, "'Categories' checkbox is not disabled");
+            Assert.AreEqual(true,panelPage.ChbDataLabelsSeries.Enabled, "'Series' checkbox is not enabled");
+            Assert.AreEqual(true, panelPage.ChbDataLabelsValue.Enabled, "'Value' checkbox is not enabled");
+            Assert.AreEqual(true, panelPage.ChbDataLabelsPercentage.Enabled, "'Percentage' checkbox is not enabled");
+
+            //13. Click 'Chart Type' drop-down menu
+            //14. Select 'Single Bar' Chart Type
+
+            panelPage.Panel(action: "Create", panelType: "Chart", chartType: "Single Bar");
+
+            //15. VP: Check that 'Categories' checkbox is disabled, 'Series' checkbox, 'Value' checkbox and 'Percentage' checkbox are enabled
+
+            Assert.AreEqual(false, panelPage.ChbDataLabelsCategories.Enabled, "'Categories' checkbox is not disabled");
+            Assert.AreEqual(true, panelPage.ChbDataLabelsSeries.Enabled, "'Series' checkbox is not enabled");
+            Assert.AreEqual(true, panelPage.ChbDataLabelsValue.Enabled, "'Value' checkbox is not enabled");
+            Assert.AreEqual(true, panelPage.ChbDataLabelsPercentage.Enabled, "'Percentage' checkbox is not enabled");
+
+            //16. Click 'Chart Type' drop-down menu
+            //17. Select 'Stacked Bar' Chart Type
+
+            panelPage.Panel(action: "Create", panelType: "Chart", chartType: "Stacked Bar");
+
+            //18. Check that 'Categories' checkbox, 'Series' checkbox, 'Value' checkbox and 'Percentage' checkbox are enabled
+
+            Assert.AreEqual(true, panelPage.ChbDataLabelsCategories.Enabled, "'Categories' checkbox is not enabled");
+            Assert.AreEqual(true, panelPage.ChbDataLabelsSeries.Enabled, "'Series' checkbox is not enabled");
+            Assert.AreEqual(true, panelPage.ChbDataLabelsValue.Enabled, "'Value' checkbox is not enabled");
+            Assert.AreEqual(true, panelPage.ChbDataLabelsPercentage.Enabled, "'Percentage' checkbox is not enabled");
+
+            //19. Click 'Chart Type' drop-down menu
+            //20. Select 'Group Bar' Chart Type
+
+            panelPage.Panel(action: "Create", panelType: "Chart", chartType: "Group Bar");
+
+            //21. VP: Check that 'Categories' checkbox, 'Series' checkbox, 'Value' checkbox and 'Percentage' checkbox are enabled
+
+            Assert.AreEqual(true, panelPage.ChbDataLabelsCategories.Enabled, "'Categories' checkbox is not enabled");
+            Assert.AreEqual(true, panelPage.ChbDataLabelsSeries.Enabled, "'Series' checkbox is not enabled");
+            Assert.AreEqual(true, panelPage.ChbDataLabelsValue.Enabled, "'Value' checkbox is not enabled");
+            Assert.AreEqual(true, panelPage.ChbDataLabelsPercentage.Enabled, "'Percentage' checkbox is not enabled");
+
+            //22. Click 'Chart Type' drop-down menu
+            //23. Select 'Line' Chart Type
+
+            panelPage.Panel(action: "Create", panelType: "Chart", chartType: "Line");
+
+            //24. VP: Check that 'Categories' checkbox, 'Series' checkbox, and 'Percentage' checkbox are disabled. 'Value' checkbox is enabled
+
+            Assert.AreEqual(false, panelPage.ChbDataLabelsCategories.Enabled, "'Categories' checkbox is not disabled");
+            Assert.AreEqual(false, panelPage.ChbDataLabelsSeries.Enabled, "'Series' checkbox is not disabled");
+            Assert.AreEqual(true, panelPage.ChbDataLabelsValue.Enabled, "'Value' checkbox is not enabled");
+            Assert.AreEqual(false, panelPage.ChbDataLabelsPercentage.Enabled, "'Percentage' checkbox is not disabled");
+
+            //Post-condition: Delete created page.
+
+            panelPage.BtnCancel.Click();
+            mainPage.DeletePage(pageName);
+        }
     }
 }

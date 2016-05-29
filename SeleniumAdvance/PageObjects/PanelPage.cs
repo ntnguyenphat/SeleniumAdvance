@@ -629,12 +629,14 @@ namespace SeleniumAdvance.PageObjects
             string statisticFied = null, string statisticFieldValue = null, string from = null, string color = null, string seriesValue = null,
             bool setAsHeatValue = false, string statisticFieldOn = null, string statisticOn = null)
         {
+            string currentPanelTypeSelect = GetTypeOfPanel();
             WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
             if (action == "Create")
             {
                 IWebElement RbSelectPanelType = _driverPanelPage.FindElement(By.XPath(string.Format(panelTypeToSelect, panelType)));
                 RbSelectPanelType.Check();
-                wait.Until(ExpectedConditions.StalenessOf(ChbShowTitle));
+                if (panelType != currentPanelTypeSelect)
+                    wait.Until(ExpectedConditions.StalenessOf(ChbShowTitle));
             }
             if (dataProfileName != null)
             {
@@ -648,7 +650,8 @@ namespace SeleniumAdvance.PageObjects
             }
             if (panelType != "Report")
             {
-                TxtChartTitle.SendKeys(title);
+                if (title != null)
+                    TxtChartTitle.SendKeys(title);
                 if (showTitle == true)
                     ChbShowTitle.Check();
                 else
@@ -689,7 +692,7 @@ namespace SeleniumAdvance.PageObjects
                         RbLegendsTop.Check();
                 }
             }
-            else if (panelType == "Chart")
+            if (panelType == "Chart")
             {
                 if (chartType != null)
                     CmbChartType.SelectItem(chartType, "Value");
