@@ -60,8 +60,11 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _lbColor = By.XPath("input[@id='txtColor'");
         static readonly By _cmbStatisticOn = By.XPath("//select[@id='cbbStatisticOn'");
         static readonly By _cmbSeriesValue = By.XPath("//select[@id='cbbSeriesValue'");
+        static readonly By _cmbStatisticField = By.XPath("//select[@id='cbbStatField'");
+        static readonly By _cmbStatisticFieldValue = By.XPath("//select[@id='cbbStatFieldValue'");
         static readonly By _rbSetAsHeatValue = By.XPath("//input[@id='radHeatValue_default']");
         static string panelType ="//table[@id='infoSettings']//td[.='Type']/following-sibling::td/descendant::input";
+        static string panelTypeToSelect = "//label[contains(.,'{0}')]/input[contains(@id,'radPanelType')]";
        
         //static string _lnkEdit = "a[.='{0}']/following::a[.='Edit']";
         //static string _lnkDelete = "a[.='{0}']/following::a[.='Delete']";
@@ -264,6 +267,16 @@ namespace SeleniumAdvance.PageObjects
         public IWebElement CmbSeriesValue
         {
             get { return _driverPanelPage.FindElement(_cmbSeriesValue); }
+        }
+
+        public IWebElement CmbStatisticField
+        {
+            get { return _driverPanelPage.FindElement(_cmbStatisticField); }
+        }
+
+        public IWebElement CmbStatisticFieldValue
+        {
+            get { return _driverPanelPage.FindElement(_cmbStatisticFieldValue); }
         }
 
         public IWebElement RbSetAsHeatValue
@@ -573,6 +586,159 @@ namespace SeleniumAdvance.PageObjects
             }           
         }
 
+        /// <summary>
+        /// Create or Edit a panel
+        /// </summary>
+        /// <param name="action">The action.</param>
+        /// <param name="panelType">Type of the panel.</param>
+        /// <param name="dataProfileName">Name of the data profile.</param>
+        /// <param name="panelDisplayName">Display name of the panel.</param>
+        /// <param name="title">The title.</param>
+        /// <param name="showTitle">if set to <c>true</c> [show title].</param>
+        /// <param name="chartType">Type of the chart.</param>
+        /// <param name="category">The category.</param>
+        /// <param name="style2D">if set to <c>true</c> [style2 d].</param>
+        /// <param name="style3d">if set to <c>true</c> [style3d].</param>
+        /// <param name="series">The series.</param>
+        /// <param name="captionNextToCategory">The caption next to category.</param>
+        /// <param name="captionNextToSeries">The caption next to series.</param>
+        /// <param name="legendsTop">if set to <c>true</c> [legends top].</param>
+        /// <param name="legendsNone">if set to <c>true</c> [legends none].</param>
+        /// <param name="legendsRight">if set to <c>true</c> [legends right].</param>
+        /// <param name="legendsBottom">if set to <c>true</c> [legends bottom].</param>
+        /// <param name="legendsLeft">if set to <c>true</c> [legends left].</param>
+        /// <param name="dataLabelsSeries">if set to <c>true</c> [data labels series].</param>
+        /// <param name="dataLabelsCategories">if set to <c>true</c> [data labels categories].</param>
+        /// <param name="dataLabelsValue">if set to <c>true</c> [data labels value].</param>
+        /// <param name="dataLabelsPercentage">if set to <c>true</c> [data labels percentage].</param>
+        /// <param name="statisticFied">The statistic fied.</param>
+        /// <param name="statisticFieldValue">The statistic field value.</param>
+        /// <param name="from">From.</param>
+        /// <param name="color">The color.</param>
+        /// <param name="seriesValue">The series value.</param>
+        /// <param name="setAsHeatValue">if set to <c>true</c> [set as heat value].</param>
+        /// <param name="statisticFieldOn">The statistic field on.</param>
+        /// <param name="statisticOn">The statistic on.</param>
+        /// <Author>Long</Author>
+        /// <Startdate>29/05/2016</Startdate>
+        /// <returns></returns>
+        public PanelPage Panel(string action, string panelType, string dataProfileName = null, string panelDisplayName = null, string title = null, bool showTitle = false, string chartType = null,
+            string category = null, bool style2D = false, bool style3d = false, string series = null, string captionNextToCategory = null, string captionNextToSeries = null,
+            bool legendsTop = false, bool legendsNone = false, bool legendsRight = false, bool legendsBottom = false, bool legendsLeft = false,
+            bool dataLabelsSeries = false, bool dataLabelsCategories = false, bool dataLabelsValue = false, bool dataLabelsPercentage = false,
+            string statisticFied = null, string statisticFieldValue = null, string from = null, string color = null, string seriesValue = null,
+            bool setAsHeatValue = false, string statisticFieldOn = null, string statisticOn = null)
+        {
+            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
+            if (action == "Create")
+            {
+                IWebElement RbSelectPanelType = _driverPanelPage.FindElement(By.XPath(string.Format(panelTypeToSelect, panelType)));
+                RbSelectPanelType.Check();
+                wait.Until(ExpectedConditions.StalenessOf(ChbShowTitle));
+            }
+            if (dataProfileName != null)
+            {
+                CmbDataProfile.SelectItem(dataProfileName);
+                wait.Until(ExpectedConditions.StalenessOf(ChbShowTitle));
+            }
+            if (panelDisplayName != null)
+            {
+                TxtDisplayName.Clear();
+                TxtDisplayName.SendKeys(panelDisplayName);
+            }
+            if (panelType != "Report")
+            {
+                TxtChartTitle.SendKeys(title);
+                if (showTitle == true)
+                    ChbShowTitle.Check();
+                else
+                    ChbShowTitle.UnCheck();
+                if (panelType == "Indicator")
+                {
+                    if (statisticFied != null)
+                        CmbStatisticField.SelectItem(statisticFied);
+                    if (statisticFieldValue != null)
+                        CmbStatisticFieldValue.SelectItem(statisticFieldValue);
+                    if (dataLabelsPercentage == true)
+                        ChbDataLabelsPercentage.Check();
+                    else
+                        ChbDataLabelsPercentage.UnCheck();
+                    if (from != null)
+                    {
+                        TxtFrom.Clear();
+                        TxtFrom.SendKeys(from);
+                    }
+                    if (color != null)
+                        LbColor.SelectItem(color);
+                }
+                else
+                {
+                    if (category != null)
+                        CmbCategory.SelectItem(category,"Value");
+                    if (series != null)
+                        CmbSeries.SelectItem(series,"Value");
+                    if (legendsBottom == true)
+                        RbLegendsBottom.Check();
+                    if (legendsLeft == true)
+                        RbLegendsLeft.Check();
+                    if (legendsNone == true)
+                        RbLegendsNone.Check();
+                    if (legendsRight == true)
+                        RbLegendsRight.Check();
+                    if (legendsTop == true)
+                        RbLegendsTop.Check();
+                }
+            }
+            else if (panelType == "Chart")
+            {
+                if (chartType != null)
+                    CmbChartType.SelectItem(chartType, "Value");
+                if (style2D == true)
+                    RbStyle2D.Check();
+                if (style3d == true)
+                    RbStyle3D.Check();
+                if (captionNextToCategory != null)
+                {
+                    TxtCaptionNextToCategory.Clear();
+                    TxtCaptionNextToCategory.SendKeys(captionNextToCategory);
+                }
+                if (captionNextToSeries != null)
+                {
+                    TxtCaptionNextToSeries.Clear();
+                    TxtCaptionNextToSeries.SendKeys(captionNextToSeries);
+                }
+                if (statisticFied != null)
+                    CmbStatisticField.SelectItem(statisticFied, "Value");
+                if (statisticFieldOn != null)
+                    CmbStatisticOn.SelectItem(statisticFieldOn, "Value");
+                if (dataLabelsCategories == true)
+                    ChbDataLabelsCategories.Check();
+                else
+                    ChbDataLabelsCategories.UnCheck();
+                if (dataLabelsPercentage == true)
+                    ChbDataLabelsPercentage.Check();
+                else
+                    ChbDataLabelsPercentage.UnCheck();
+                if (dataLabelsSeries == true)
+                    ChbDataLabelsSeries.Check();
+                else
+                    ChbDataLabelsSeries.UnCheck();
+                if (dataLabelsValue == true)
+                    ChbDataLabelsValue.Check();
+                else
+                    ChbDataLabelsValue.UnCheck();
+            }
+            else if (panelType == "Heat Map")
+            {
+                if (seriesValue != null)
+                    CmbSeriesValue.SelectItem(seriesValue, "Value");
+                if (setAsHeatValue == true)
+                    RbSetAsHeatValue.Check();
+                if (color != null)
+                    LbColor.SelectItem(color);
+            }
+            return this;
+        }
         #endregion
     }
 }

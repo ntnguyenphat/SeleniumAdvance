@@ -38,6 +38,7 @@ namespace SeleniumAdvance.Ultilities
             SelectElement selector = new SelectElement(element);
             if (selectby == "Value")
                 selector.SelectByValue(item);
+
             else
                 selector.SelectByText(item);
         }
