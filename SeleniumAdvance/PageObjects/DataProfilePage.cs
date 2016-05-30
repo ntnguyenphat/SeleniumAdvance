@@ -14,7 +14,7 @@ using System.Text.RegularExpressions;
 
 namespace SeleniumAdvance.PageObjects
 {
-    public class DataProfilePage:GeneralPage
+    public class DataProfilePage : GeneralPage
     {
         private IWebDriver _driverDataProfile;
 
