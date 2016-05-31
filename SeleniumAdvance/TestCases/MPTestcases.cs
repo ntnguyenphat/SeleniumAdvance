@@ -60,6 +60,7 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(true, isPageNextToPage, "\nThe new page isn't displayed besides \"Overview\" page");
 
             //Post-condition: Delete newly added page
+
             mainPage.DeletePage(pageName);
         }
 

@@ -131,5 +131,11 @@ namespace SeleniumAdvance.Ultilities
 
             Thread.Sleep(time);
         }
+
+        public static void InputText(this IWebElement element, string text)
+        {
+            element.Clear();
+            element.SendKeys(text);
+        }
     }
 }
