@@ -398,7 +398,7 @@ namespace SeleniumAdvance.PageObjects
             IAlert alert = _driverPanelPage.SwitchTo().Alert();
             alert.Accept();
             WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.StalenessOf(LnkAddNew));
+            wait.Until(ExpectedConditions.StalenessOf(MyFindElement(xpath)));
             return this;
         }
 

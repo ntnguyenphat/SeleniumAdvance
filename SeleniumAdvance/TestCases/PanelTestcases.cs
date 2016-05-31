@@ -128,7 +128,7 @@ namespace SeleniumAdvance.TestCases
             panelPage.BtnOK.Click();
 
             string actual = panelPage.GetAlertMessage();
-            string expected = "Display Name is required field";
+            string expected = "Display Name is a required field.";
 
             //VP: Warning message: "Display Name is required field" show up
 
@@ -167,7 +167,7 @@ namespace SeleniumAdvance.TestCases
             panelPage.BtnOK.Click();
 
             string actual = panelPage.GetAlertMessage(closeAlert: true);
-            string expected = "Invalid display name. The name can't contain high ASCII characters or any of following characters: /:*?<>|\"#{[]{};";
+            string expected = "Invalid display name. The name cannot contain high ASCII characters or any of the following characters: /:*?<>|\"#[]{}=%;";
 
             //VP: Warning message: "Display Name is required field" show up
 
@@ -279,7 +279,7 @@ namespace SeleniumAdvance.TestCases
             panelPage.BtnOK.Click();
 
             string actual = panelPage.GetAlertMessage(closeAlert: true);
-            string expected = panelName + " already exists. Please enter a different name";
+            string expected = panelName + " already exists. Please enter a different name.";
 
             //VP: Warning message: "Dupicated panel already exists. Please enter a different name" show up
 
@@ -287,6 +287,7 @@ namespace SeleniumAdvance.TestCases
 
             //Post-condtion: Delete created panel
 
+            panelPage.BtnCancel.Click();
             panelPage.DeletePanel(panelName);
         }
 
@@ -443,9 +444,9 @@ namespace SeleniumAdvance.TestCases
             panelPage.BtnOK.Click();
 
             string actual = panelPage.GetAlertMessage(closeAlert: true);
-            string expected = "Invalid display name. The name can't contain high ASCII characters or any of following characters: /:*?<>|\"#{[]{};";
+            string expected = "Invalid title name. The name cannot contain high ASCII characters or any of the following characters: /:*?<>|\"#[]{}=%;";
 
-            //VP: Message "Invalid display name. The name can't contain high ASCII characters or any of following characters: /:*?<>|"#{[]{};" is displayed
+            //VP: Message "Invalid title name. The name can't contain high ASCII characters or any of following characters: /:*?<>|"#{[]{};" is displayed
 
             Assert.AreEqual(expected, actual, "\nExpected: " + expected + "\nActual: " + actual);
 
@@ -1294,7 +1295,7 @@ namespace SeleniumAdvance.TestCases
 
             Assert.AreEqual(false, panelPage.ChbDataLabelsCategories.Enabled, "'Categories' checkbox is not disabled");
             Assert.AreEqual(false, panelPage.ChbDataLabelsSeries.Enabled, "'Series' checkbox is not disabled");
-            Assert.AreEqual(false, panelPage.ChbDataLabelsValue.Enabled, "'Value' checkbox is not enabled");
+            Assert.AreEqual(false, panelPage.ChbDataLabelsValue.Enabled, "'Value' checkbox is not disabled");
             Assert.AreEqual(false, panelPage.ChbDataLabelsPercentage.Enabled, "'Percentage' checkbox is not disabled");
 
             //Post-condition: Delete created page.
@@ -1390,18 +1391,18 @@ namespace SeleniumAdvance.TestCases
             panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_one, out dataProfileName_one, out panelDisplayName_one, title: title_one, isShowTitleChecked: isShowTitleChecked_one, isStyle2DChecked: isStyle2DChecked_one,
                 isStyle3DChecked: isStyle3DChecked_one, chartType: chartType_one, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_one, categoryName: category_one, seriesName: series_one, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_one,
                 captionNexToCategory: captionNextToCategory_one, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_one, captionNextToSeries: captionNextToSeries_one, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_one,
-                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_one, isDataLabelsValueEnabled: isDataLabelsValueEnabled_one, isLegendsNoneChecked: isLegendNoneChecked_one, isLegendsTopChecked: isLegendTopChecked_one,
+                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_one, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_one, isLegendsNoneChecked: isLegendNoneChecked_one, isLegendsTopChecked: isLegendTopChecked_one,
                 isLegendsRightChecked: isLegendRightChecked_one, isLegendsBottomChecked: isLegendBottomChecked_one, isLegendsLeftChecked: isLegendLeftChecked_one,
-                isDataLabelsValueChecked: isDataLabelsValueChecked_one, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_one, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_one);
+                isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_one, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_one, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_one);
 
             panelPage.ChbDataLabelsSeries.Check();
 
             panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_two, out dataProfileName_two, out panelDisplayName_two, title: title_two, isShowTitleChecked: isShowTitleChecked_two, isStyle2DChecked: isStyle2DChecked_two,
                 isStyle3DChecked: isStyle3DChecked_two, chartType: chartType_two, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_two, categoryName: category_two, seriesName: series_two, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_two,
                 captionNexToCategory: captionNextToCategory_two, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_two, captionNextToSeries: captionNextToSeries_two, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_two,
-                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_two, isDataLabelsValueEnabled: isDataLabelsValueEnabled_two, isLegendsNoneChecked: isLegendNoneChecked_two, isLegendsTopChecked: isLegendTopChecked_two,
+                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_two, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_two, isLegendsNoneChecked: isLegendNoneChecked_two, isLegendsTopChecked: isLegendTopChecked_two,
                 isLegendsRightChecked: isLegendRightChecked_two, isLegendsBottomChecked: isLegendBottomChecked_two, isLegendsLeftChecked: isLegendLeftChecked_two,
-                isDataLabelsValueChecked: isDataLabelsValueChecked_two, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_two, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_two);
+                isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_two, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_two, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_two);
 
             //VP: All settings are unchange in Add New Panel dialog
 
@@ -1436,14 +1437,6 @@ namespace SeleniumAdvance.TestCases
             //8. Check Value checkbox for Data Labels
 
             panelPage.ChbDataLabelsSeries.UnCheck();
-
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_one, out dataProfileName_one, out panelDisplayName_one, title: title_one, isShowTitleChecked: isShowTitleChecked_one, isStyle2DChecked: isStyle2DChecked_one,
-                isStyle3DChecked: isStyle3DChecked_one, chartType: chartType_one, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_one, categoryName: category_one, seriesName: series_one, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_one,
-                captionNexToCategory: captionNextToCategory_one, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_one, captionNextToSeries: captionNextToSeries_one, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_one,
-                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_one, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_one, isLegendsNoneChecked: isLegendNoneChecked_one, isLegendsTopChecked: isLegendTopChecked_one,
-                isLegendsRightChecked: isLegendRightChecked_one, isLegendsBottomChecked: isLegendBottomChecked_one, isLegendsLeftChecked: isLegendLeftChecked_one,
-                isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_one, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_one, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_one);
-
             panelPage.ChbDataLabelsValue.Check();
 
             panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_one, out dataProfileName_one, out panelDisplayName_one, title: title_one, isShowTitleChecked: isShowTitleChecked_one, isStyle2DChecked: isStyle2DChecked_one,
@@ -1472,8 +1465,8 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(captionNextToSeries_one.Result, captionNextToSeries_two.Result, "Setting of Caption has changed");
             Assert.AreEqual(isDataLabelsCategoriesEnabled_one.Result, isDataLabelsCategoriesEnabled_two.Result, "Setting of Data Labels has changed");
             Assert.AreEqual(isDataLabelsCategoriesChecked_one.Result, isDataLabelsCategoriesChecked_two.Result, "Setting of Data Labels has changed");
-            //Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
-            Assert.AreEqual(isDataLabelsSeriesChecked_one.Result, isDataLabelsSeriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesChecked_one.Result, false, "Setting of Data Labels has changed");
             Assert.AreEqual(isDataLabelsPercentageEnabled_one.Result, isDataLabelsPercentageEnabled_two.Result, "Setting of Data Labels has changed");
             Assert.AreEqual(isDataLabelsPercentageChecked_one.Result, isDataLabelsPercentageChecked_two.Result, "Setting of Data Labels has changed");
             Assert.AreEqual(isLegendNoneChecked_one.Result, isLegendNoneChecked_two.Result, "Setting of Legends has changed");
@@ -1485,23 +1478,15 @@ namespace SeleniumAdvance.TestCases
             //9. Uncheck Value checkbox
             //10. Check Percentage checbox for Data Labels
 
-            panelPage.ChbDataLabelsValue.UnCheck();
-
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_one, out dataProfileName_one, out panelDisplayName_one, title: title_one, isShowTitleChecked: isShowTitleChecked_one, isStyle2DChecked: isStyle2DChecked_one,
-                isStyle3DChecked: isStyle3DChecked_one, chartType: chartType_one, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_one, categoryName: category_one, seriesName: series_one, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_one,
-                captionNexToCategory: captionNextToCategory_one, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_one, captionNextToSeries: captionNextToSeries_one, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_one,
-                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_one, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_one, isLegendsNoneChecked: isLegendNoneChecked_one, isLegendsTopChecked: isLegendTopChecked_one,
-                isLegendsRightChecked: isLegendRightChecked_one, isLegendsBottomChecked: isLegendBottomChecked_one, isLegendsLeftChecked: isLegendLeftChecked_one,
-                isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_one, isDataLabelsValueEnabled: isDataLabelsValueEnabled_one, isDataLabelsValueChecked: isDataLabelsValueChecked_one);
-
+            panelPage.ChbDataLabelsValue.UnCheck(); 
             panelPage.ChbDataLabelsPercentage.Check();
 
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_one, out dataProfileName_one, out panelDisplayName_one, title: title_one, isShowTitleChecked: isShowTitleChecked_one, isStyle2DChecked: isStyle2DChecked_one,
-                isStyle3DChecked: isStyle3DChecked_one, chartType: chartType_one, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_one, categoryName: category_one, seriesName: series_one, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_one,
-                captionNexToCategory: captionNextToCategory_one, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_one, captionNextToSeries: captionNextToSeries_one, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_one,
-                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_one, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_one, isLegendsNoneChecked: isLegendNoneChecked_one, isLegendsTopChecked: isLegendTopChecked_one,
-                isLegendsRightChecked: isLegendRightChecked_one, isLegendsBottomChecked: isLegendBottomChecked_one, isLegendsLeftChecked: isLegendLeftChecked_one,
-                isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_one, isDataLabelsValueEnabled: isDataLabelsValueEnabled_one, isDataLabelsValueChecked: isDataLabelsValueChecked_one);
+            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_two, out dataProfileName_two, out panelDisplayName_two, title: title_two, isShowTitleChecked: isShowTitleChecked_two, isStyle2DChecked: isStyle2DChecked_two,
+                isStyle3DChecked: isStyle3DChecked_two, chartType: chartType_two, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_two, categoryName: category_two, seriesName: series_two, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_two,
+                captionNexToCategory: captionNextToCategory_two, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_two, captionNextToSeries: captionNextToSeries_two, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_two,
+                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_two, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_two, isLegendsNoneChecked: isLegendNoneChecked_two, isLegendsTopChecked: isLegendTopChecked_two,
+                isLegendsRightChecked: isLegendRightChecked_two, isLegendsBottomChecked: isLegendBottomChecked_two, isLegendsLeftChecked: isLegendLeftChecked_two,
+                isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_two, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_two, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_two);
 
             //VP: All settings are unchange in Add New Panel dialog
 
@@ -1522,10 +1507,10 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(captionNextToSeries_one.Result, captionNextToSeries_two.Result, "Setting of Caption has changed");
             Assert.AreEqual(isDataLabelsCategoriesEnabled_one.Result, isDataLabelsCategoriesEnabled_two.Result, "Setting of Data Labels has changed");
             Assert.AreEqual(isDataLabelsCategoriesChecked_one.Result, isDataLabelsCategoriesChecked_two.Result, "Setting of Data Labels has changed");
-            //Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
             Assert.AreEqual(isDataLabelsSeriesChecked_one.Result, isDataLabelsSeriesChecked_two.Result, "Setting of Data Labels has changed");
             Assert.AreEqual(isDataLabelsValueEnabled_one.Result, isDataLabelsValueEnabled_two.Result, "Setting of Data Labels has changed");
-            Assert.AreEqual(isDataLabelsValueChecked_one.Result, isDataLabelsValueChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(false, isDataLabelsValueChecked_two.Result, "Setting of Data Labels has changed");
             Assert.AreEqual(isLegendNoneChecked_one.Result, isLegendNoneChecked_two.Result, "Setting of Legends has changed");
             Assert.AreEqual(isLegendTopChecked_one.Result, isLegendTopChecked_two.Result, "Setting of Legends has changed");
             Assert.AreEqual(isLegendRightChecked_one.Result, isLegendRightChecked_two.Result, "Setting of Legends has changed");
@@ -1538,42 +1523,32 @@ namespace SeleniumAdvance.TestCases
             //14. Check Series checkbox for Data Labels
 
             panelPage.ChbDataLabelsPercentage.UnCheck();
-
             panelPage.Panel(action: "Create", panelType: "Chart", panelDisplayName: panelDisplayName, title: title, chartType: "Pie", series: "location");
             panelPage.BtnOK.Click();
             panelPage.WaitForAddingPanel(panelDisplayName);
-
             panelPage.ClickEditPanel(panelDisplayName);
-
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_one, out dataProfileName_one, out panelDisplayName_one, title: title_one, isShowTitleChecked: isShowTitleChecked_one, isStyle2DChecked: isStyle2DChecked_one,
-                isStyle3DChecked: isStyle3DChecked_one, chartType: chartType_one, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_one, categoryName: category_one, seriesName: series_one, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_one,
-                captionNexToCategory: captionNextToCategory_one, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_one, captionNextToSeries: captionNextToSeries_one, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_one,
-                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_one, isDataLabelsValueEnabled: isDataLabelsValueEnabled_one, isLegendsNoneChecked: isLegendNoneChecked_one, isLegendsTopChecked: isLegendTopChecked_one,
-                isLegendsRightChecked: isLegendRightChecked_one, isLegendsBottomChecked: isLegendBottomChecked_one, isLegendsLeftChecked: isLegendLeftChecked_one,
-                isDataLabelsValueChecked: isDataLabelsValueChecked_one, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_one, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_one);
-
             panelPage.ChbDataLabelsSeries.Check();
 
             panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_two, out dataProfileName_two, out panelDisplayName_two, title: title_two, isShowTitleChecked: isShowTitleChecked_two, isStyle2DChecked: isStyle2DChecked_two,
                 isStyle3DChecked: isStyle3DChecked_two, chartType: chartType_two, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_two, categoryName: category_two, seriesName: series_two, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_two,
                 captionNexToCategory: captionNextToCategory_two, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_two, captionNextToSeries: captionNextToSeries_two, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_two,
-                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_two, isDataLabelsValueEnabled: isDataLabelsValueEnabled_two, isLegendsNoneChecked: isLegendNoneChecked_two, isLegendsTopChecked: isLegendTopChecked_two,
+                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_two, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_two, isLegendsNoneChecked: isLegendNoneChecked_two, isLegendsTopChecked: isLegendTopChecked_two,
                 isLegendsRightChecked: isLegendRightChecked_two, isLegendsBottomChecked: isLegendBottomChecked_two, isLegendsLeftChecked: isLegendLeftChecked_two,
-                isDataLabelsValueChecked: isDataLabelsValueChecked_two, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_two, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_two);
+                isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_two, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_two, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_two);
 
             //VP: All settings are unchange in Add New Panel dialog
 
             Assert.AreEqual(typeOfPanel_one, typeOfPanel_two, "Setting of Panel Type has changed");
             Assert.AreEqual(dataProfileName_one, dataProfileName_two, "Setting of Data Profile combobox has changed");
-            Assert.AreEqual(panelDisplayName_one, panelDisplayName_two, "Name of Panel has changed");
-            Assert.AreEqual(title_one.Result, title_two.Result, "Title has changed");
+            Assert.AreEqual(panelDisplayName, panelDisplayName_two, "Name of Panel has changed");
+            Assert.AreEqual(title, title_two.Result, "Title has changed");
             Assert.AreEqual(isShowTitleChecked_one.Result, isShowTitleChecked_two.Result, "Settings of Show Title checkbox has changed");
             Assert.AreEqual(isStyle2DChecked_one.Result, isStyle2DChecked_two.Result, "Settings of Style has changed");
             Assert.AreEqual(isStyle3DChecked_one.Result, isStyle3DChecked_two.Result, "Setting of Style has changed");
-            Assert.AreEqual(chartType_one.Result, chartType_two.Result, "Setting of Chart Type has changed");
+            Assert.AreEqual("Pie", chartType_two.Result, "Setting of Chart Type has changed");
             Assert.AreEqual(isCategoryInChartSettingsEnable_one.Result, isCategoryInChartSettingsEnable_two.Result, "Setting of Category combobox has changed");
             Assert.AreEqual(category_one.Result, category_two.Result, "Setting of Category combobox has changed");
-            Assert.AreEqual(series_one.Result, series_two.Result, "Setting of Series combox has changed");
+            Assert.AreEqual("Location", series_two.Result, "Setting of Series combox has changed");
             Assert.AreEqual(isCaptionNextToCategoryEnabled_one.Result, isCaptionNextToCategoryEnabled_two.Result, "Setting of Caption has changed");
             Assert.AreEqual(captionNextToCategory_one.Result, captionNextToCategory_two.Result, "Setting of Caption has changed");
             Assert.AreEqual(isCaptionNextToSeriesEnabled_one.Result, isCaptionNextToSeriesEnabled_two.Result, "Setting of Caption has changed");
@@ -1583,7 +1558,7 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(isDataLabelsValueEnabled_one.Result, isDataLabelsValueEnabled_two.Result, "Setting of Data Labels has changed");
             Assert.AreEqual(isDataLabelsValueChecked_one.Result, isDataLabelsValueChecked_two.Result, "Setting of Data Labels has changed");
             Assert.AreEqual(isDataLabelsPercentageEnabled_one.Result, isDataLabelsPercentageEnabled_two.Result, "Setting of Data Labels has changed");
-            Assert.AreEqual(isDataLabelsPercentageChecked_one.Result, isDataLabelsPercentageChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(false, isDataLabelsPercentageChecked_two.Result, "Setting of Data Labels has changed");
             Assert.AreEqual(isLegendNoneChecked_one.Result, isLegendNoneChecked_two.Result, "Setting of Legends has changed");
             Assert.AreEqual(isLegendTopChecked_one.Result, isLegendTopChecked_two.Result, "Setting of Legends has changed");
             Assert.AreEqual(isLegendRightChecked_one.Result, isLegendRightChecked_two.Result, "Setting of Legends has changed");
@@ -1594,14 +1569,6 @@ namespace SeleniumAdvance.TestCases
             //16. Check Value checkbox for Data Labels
 
             panelPage.ChbDataLabelsSeries.UnCheck();
-
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_one, out dataProfileName_one, out panelDisplayName_one, title: title_one, isShowTitleChecked: isShowTitleChecked_one, isStyle2DChecked: isStyle2DChecked_one,
-                isStyle3DChecked: isStyle3DChecked_one, chartType: chartType_one, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_one, categoryName: category_one, seriesName: series_one, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_one,
-                captionNexToCategory: captionNextToCategory_one, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_one, captionNextToSeries: captionNextToSeries_one, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_one,
-                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_one, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_one, isLegendsNoneChecked: isLegendNoneChecked_one, isLegendsTopChecked: isLegendTopChecked_one,
-                isLegendsRightChecked: isLegendRightChecked_one, isLegendsBottomChecked: isLegendBottomChecked_one, isLegendsLeftChecked: isLegendLeftChecked_one,
-                isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_one, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_one, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_one);
-
             panelPage.ChbDataLabelsValue.Check();
 
             panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_one, out dataProfileName_one, out panelDisplayName_one, title: title_one, isShowTitleChecked: isShowTitleChecked_one, isStyle2DChecked: isStyle2DChecked_one,
@@ -1630,8 +1597,8 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(captionNextToSeries_one.Result, captionNextToSeries_two.Result, "Setting of Caption has changed");
             Assert.AreEqual(isDataLabelsCategoriesEnabled_one.Result, isDataLabelsCategoriesEnabled_two.Result, "Setting of Data Labels has changed");
             Assert.AreEqual(isDataLabelsCategoriesChecked_one.Result, isDataLabelsCategoriesChecked_two.Result, "Setting of Data Labels has changed");
-            //Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
-            Assert.AreEqual(isDataLabelsSeriesChecked_one.Result, isDataLabelsSeriesChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesChecked_one.Result, false, "Setting of Data Labels has changed");
             Assert.AreEqual(isDataLabelsPercentageEnabled_one.Result, isDataLabelsPercentageEnabled_two.Result, "Setting of Data Labels has changed");
             Assert.AreEqual(isDataLabelsPercentageChecked_one.Result, isDataLabelsPercentageChecked_two.Result, "Setting of Data Labels has changed");
             Assert.AreEqual(isLegendNoneChecked_one.Result, isLegendNoneChecked_two.Result, "Setting of Legends has changed");
@@ -1644,22 +1611,14 @@ namespace SeleniumAdvance.TestCases
             //18. Check Percentage checbox for Data Labels
 
             panelPage.ChbDataLabelsValue.UnCheck();
-
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_one, out dataProfileName_one, out panelDisplayName_one, title: title_one, isShowTitleChecked: isShowTitleChecked_one, isStyle2DChecked: isStyle2DChecked_one,
-                isStyle3DChecked: isStyle3DChecked_one, chartType: chartType_one, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_one, categoryName: category_one, seriesName: series_one, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_one,
-                captionNexToCategory: captionNextToCategory_one, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_one, captionNextToSeries: captionNextToSeries_one, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_one,
-                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_one, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_one, isLegendsNoneChecked: isLegendNoneChecked_one, isLegendsTopChecked: isLegendTopChecked_one,
-                isLegendsRightChecked: isLegendRightChecked_one, isLegendsBottomChecked: isLegendBottomChecked_one, isLegendsLeftChecked: isLegendLeftChecked_one,
-                isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_one, isDataLabelsValueEnabled: isDataLabelsValueEnabled_one, isDataLabelsValueChecked: isDataLabelsValueChecked_one);
-
             panelPage.ChbDataLabelsPercentage.Check();
 
-            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_one, out dataProfileName_one, out panelDisplayName_one, title: title_one, isShowTitleChecked: isShowTitleChecked_one, isStyle2DChecked: isStyle2DChecked_one,
-                isStyle3DChecked: isStyle3DChecked_one, chartType: chartType_one, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_one, categoryName: category_one, seriesName: series_one, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_one,
-                captionNexToCategory: captionNextToCategory_one, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_one, captionNextToSeries: captionNextToSeries_one, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_one,
-                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_one, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_one, isLegendsNoneChecked: isLegendNoneChecked_one, isLegendsTopChecked: isLegendTopChecked_one,
-                isLegendsRightChecked: isLegendRightChecked_one, isLegendsBottomChecked: isLegendBottomChecked_one, isLegendsLeftChecked: isLegendLeftChecked_one,
-                isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_one, isDataLabelsValueEnabled: isDataLabelsValueEnabled_one, isDataLabelsValueChecked: isDataLabelsValueChecked_one);
+            panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_two, out dataProfileName_two, out panelDisplayName_two, title: title_two, isShowTitleChecked: isShowTitleChecked_two, isStyle2DChecked: isStyle2DChecked_two,
+                isStyle3DChecked: isStyle3DChecked_two, chartType: chartType_two, isCategoryInChartSettingsEnable: isCategoryInChartSettingsEnable_two, categoryName: category_two, seriesName: series_two, isCaptionNextToCategoryEnabled: isCaptionNextToCategoryEnabled_two,
+                captionNexToCategory: captionNextToCategory_two, isCaptionNextToSeriesEnabled: isCaptionNextToSeriesEnabled_two, captionNextToSeries: captionNextToSeries_two, isDataLabelsCategoriesEnabled: isDataLabelsCategoriesEnabled_two,
+                isDataLabelsCategoriesChecked: isDataLabelsCategoriesChecked_two, isDataLabelsSeriesEnables: isDataLabelsSeriesEnabled_two, isLegendsNoneChecked: isLegendNoneChecked_two, isLegendsTopChecked: isLegendTopChecked_two,
+                isLegendsRightChecked: isLegendRightChecked_two, isLegendsBottomChecked: isLegendBottomChecked_two, isLegendsLeftChecked: isLegendLeftChecked_two,
+                isDataLabelsSeriesChecked: isDataLabelsSeriesChecked_two, isDataLabelsPercentageEnabled: isDataLabelsPercentageEnabled_two, isDataLabelsPercentageChecked: isDataLabelsPercentageChecked_two);
 
             //VP: All settings are unchange in Add New Panel dialog
 
@@ -1680,10 +1639,10 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(captionNextToSeries_one.Result, captionNextToSeries_two.Result, "Setting of Caption has changed");
             Assert.AreEqual(isDataLabelsCategoriesEnabled_one.Result, isDataLabelsCategoriesEnabled_two.Result, "Setting of Data Labels has changed");
             Assert.AreEqual(isDataLabelsCategoriesChecked_one.Result, isDataLabelsCategoriesChecked_two.Result, "Setting of Data Labels has changed");
-            //Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(isDataLabelsSeriesEnabled_one.Result, isDataLabelsSeriesEnabled_two.Result, "Setting of Data Labels has changed");
             Assert.AreEqual(isDataLabelsSeriesChecked_one.Result, isDataLabelsSeriesChecked_two.Result, "Setting of Data Labels has changed");
             Assert.AreEqual(isDataLabelsValueEnabled_one.Result, isDataLabelsValueEnabled_two.Result, "Setting of Data Labels has changed");
-            Assert.AreEqual(isDataLabelsValueChecked_one.Result, isDataLabelsValueChecked_two.Result, "Setting of Data Labels has changed");
+            Assert.AreEqual(false, isDataLabelsValueChecked_two.Result, "Setting of Data Labels has changed");
             Assert.AreEqual(isLegendNoneChecked_one.Result, isLegendNoneChecked_two.Result, "Setting of Legends has changed");
             Assert.AreEqual(isLegendTopChecked_one.Result, isLegendTopChecked_two.Result, "Setting of Legends has changed");
             Assert.AreEqual(isLegendRightChecked_one.Result, isLegendRightChecked_two.Result, "Setting of Legends has changed");
@@ -1884,7 +1843,7 @@ namespace SeleniumAdvance.TestCases
             panelConfig.BtnOk.Click();
 
             string observedMessage = panelConfig.GetAlertMessage(closeAlert: true);
-            string expectedMessage = "Panel height is required field";
+            string expectedMessage = "Panel height is a required field.";
 
             //VP: ''Panel height is required field' message display
 

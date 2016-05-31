@@ -211,7 +211,7 @@ namespace SeleniumAdvance.PageObjects
                 {
                     alert.Accept();
                     WebDriverWait wait = new WebDriverWait(_driverGeneralPage, TimeSpan.FromSeconds(5));
-                    wait.Until(ExpectedConditions.ElementToBeClickable(_lnkAccount));
+                    wait.Until(ExpectedConditions.ElementExists(_lnkAccount));
                 }
                 return alertMessage;
             }

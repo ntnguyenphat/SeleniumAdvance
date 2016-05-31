@@ -178,8 +178,9 @@ namespace SeleniumAdvance.PageObjects
             this.SelectGeneralSetting("Delete");
             IAlert alert = _driverMainPage.SwitchTo().Alert();
             alert.Accept();
+            string[] pages = Regex.Split(pageLink, "->");
             WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(string.Format(_lnkPage, "Overview"))));
+            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//a[.='" + pages[(pages.Length - 1)].Replace(" ", "\u00A0") + "']")));
             return this;
         }
 
