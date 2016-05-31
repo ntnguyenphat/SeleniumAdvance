@@ -32,23 +32,23 @@ namespace SeleniumAdvance.PageObjects
 
         public IWebElement LnkAddNew
         {
-            get { return _driverDataProfile.FindElement(_lnkAddNew); }
+            get { return MyFindElement(_lnkAddNew); }
         }
         public IWebElement TxtName
         {
-            get { return _driverDataProfile.FindElement(_txtName); }
+            get { return MyFindElement(_txtName); }
         }
         public IWebElement BtnNext
         {
-            get { return _driverDataProfile.FindElement(_btnNext); }
+            get { return MyFindElement(_btnNext); }
         }
         public IWebElement BtnFinish
         {
-            get { return _driverDataProfile.FindElement(_btnFinish); }
+            get { return MyFindElement(_btnFinish); }
         }
         public IWebElement BtnCancel
         {
-            get { return _driverDataProfile.FindElement(_btnCancel); }
+            get { return MyFindElement(_btnCancel); }
         }
 
         #endregion
@@ -87,7 +87,7 @@ namespace SeleniumAdvance.PageObjects
         public DataProfilePage ClickEditProfile(string profileName)
         {
             By xpath = By.XPath("//a[.='" + profileName + "']/ancestor::tr//a[.='Edit']");
-            _driverDataProfile.FindElement(xpath).Click();
+            MyFindElement(xpath).Click();
             WebDriverWait wait = new WebDriverWait(_driverDataProfile, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(_txtName));
             return this;
@@ -104,7 +104,7 @@ namespace SeleniumAdvance.PageObjects
         public void ClickDeleteProfile(string profileName)
         {
             By xpath = By.XPath("//a[.='" + profileName + "']/ancestor::tr//a[.='Delete']");
-            _driverDataProfile.FindElement(xpath).Click();
+            MyFindElement(xpath).Click();
             WebDriverWait wait = new WebDriverWait(_driverDataProfile, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.AlertIsPresent());
         }

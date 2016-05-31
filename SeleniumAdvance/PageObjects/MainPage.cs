@@ -36,42 +36,42 @@ namespace SeleniumAdvance.PageObjects
 
         public IWebElement TxtNewPagePageName
         {
-            get { return _driverMainPage.FindElement(_txtNewPagePageName); }
+            get { return MyFindElement(_txtNewPagePageName); }
         }
 
         public IWebElement BtnPageOK
         {
-            get { return _driverMainPage.FindElement(_btnPageOK); }
+            get { return MyFindElement(_btnPageOK); }
         }
 
         public IWebElement BtnPageCancel
         {
-            get { return _driverMainPage.FindElement(_btnPageCancel); }
+            get { return MyFindElement(_btnPageCancel); }
         }
 
         public IWebElement CmbNewPageDisplayAfter
         {
-            get { return _driverMainPage.FindElement(_cmbPageDisplayAfter); }
+            get { return MyFindElement(_cmbPageDisplayAfter); }
         }
 
         public IWebElement CmbParentPage
         {
-            get { return _driverMainPage.FindElement(_cmbParentPage); }
+            get { return MyFindElement(_cmbParentPage); }
         }
 
         public IWebElement CmbNumberOfColumns
         {
-            get { return _driverMainPage.FindElement(_cbmNumberOfColumns); }
+            get { return MyFindElement(_cbmNumberOfColumns); }
         }
 
         public IWebElement ChbPublic
         {
-            get { return _driverMainPage.FindElement(_chbPublic); }
+            get { return MyFindElement(_chbPublic); }
         }
 
         public IWebElement DlgPopupHeader
         {
-            get { return _driverMainPage.FindElement(_dlgPopupHeader); }
+            get { return MyFindElement(_dlgPopupHeader); }
         }
 
         #endregion
@@ -142,7 +142,7 @@ namespace SeleniumAdvance.PageObjects
             if (pages.Length == 1)
             {
                 By page = By.XPath("//a[.='" + pages[0].Replace(" ", "\u00A0") + "']");
-                IWebElement lnkPage = _driverMainPage.FindElement(page);
+                IWebElement lnkPage = MyFindElement(page);
                 lnkPage.Click();
             }
             else
@@ -151,11 +151,11 @@ namespace SeleniumAdvance.PageObjects
                 while (pageIndex + 1 < pages.Length)
                 {
                     By page = By.XPath("//a[.='" + pages[pageIndex].Replace(" ", "\u00A0") + "']");
-                    IWebElement lnkParent = _driverMainPage.FindElement(page);
+                    IWebElement lnkParent = MyFindElement(page);
                     lnkParent.MouseTo(_driverMainPage);
                     pageIndex = pageIndex + 1;
                     page = By.XPath("//a[.='" + pages[pageIndex].Replace(" ", "\u00A0") + "']");
-                    IWebElement lnkPage = _driverMainPage.FindElement(page);
+                    IWebElement lnkPage = MyFindElement(page);
                     if(pageIndex + 1 == pages.Length)
                     {
                           lnkPage.Click();
@@ -267,7 +267,7 @@ namespace SeleniumAdvance.PageObjects
         {
             bool isPageNextToPage = false;
             By current = By.XPath("//a[.='" + nextPage + "']/parent::*/preceding-sibling::*/a[.='" + currentPage + "']");
-            if (_driverMainPage.FindElement(current).Text == currentPage)
+            if (MyFindElement(current).Text == currentPage)
             {
                 isPageNextToPage = true;
             }
@@ -298,7 +298,7 @@ namespace SeleniumAdvance.PageObjects
                 while (pageIndex + 1 < pages.Length)
                 {
                     By page = By.XPath("//a[.='" + pages[pageIndex].Replace(" ", "\u00A0") + "']");
-                    IWebElement lnkParent = _driverMainPage.FindElement(page);
+                    IWebElement lnkParent = MyFindElement(page);
                     lnkParent.MouseTo(_driverMainPage);
                     pageIndex = pageIndex + 1;
                     page = By.XPath("//a[.='" + pages[pageIndex].Replace(" ", "\u00A0") + "']");

@@ -63,7 +63,8 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _cmbStatisticField = By.XPath("//select[@id='cbbStatField'");
         static readonly By _cmbStatisticFieldValue = By.XPath("//select[@id='cbbStatFieldValue'");
         static readonly By _rbSetAsHeatValue = By.XPath("//input[@id='radHeatValue_default']");
-        static string panelType ="//table[@id='infoSettings']//td[.='Type']/following-sibling::td/descendant::input";
+        static string panelTypeInAddNewDialog ="//table[@id='infoSettings']//td[.='Type']/following-sibling::td/descendant::input";
+        static string panelTypeInEditDialog = "//table[@id='infoSettings']//td[.='Type']/following-sibling::td/label[@class='panel_setting_paneltype']";
         static string panelTypeToSelect = "//label[contains(.,'{0}')]/input[contains(@id,'radPanelType')]";
        
         //static string _lnkEdit = "a[.='{0}']/following::a[.='Edit']";
@@ -76,212 +77,212 @@ namespace SeleniumAdvance.PageObjects
         #region Elements
         public IWebElement TabDisplaySetting
         {
-            get { return _driverPanelPage.FindElement(_tabDisplaySetting); }
+            get { return MyFindElement(_tabDisplaySetting); }
         }
 
         public IWebElement TabFilter
         {
-            get { return _driverPanelPage.FindElement(_tabFilter); }
+            get { return MyFindElement(_tabFilter); }
         }
 
         public IWebElement RbChart
         {
-            get { return _driverPanelPage.FindElement(_rbChart); }
+            get { return MyFindElement(_rbChart); }
         }
 
         public IWebElement RbIndicator
         {
-            get { return _driverPanelPage.FindElement(_rbIndicator); }
+            get { return MyFindElement(_rbIndicator); }
         }
 
         public IWebElement RbReport
         {
-            get { return _driverPanelPage.FindElement(_rbReport); }
+            get { return MyFindElement(_rbReport); }
         }
 
         public IWebElement RbHeatMap
         {
-            get { return _driverPanelPage.FindElement(_rbHeatMap); }
+            get { return MyFindElement(_rbHeatMap); }
         }
 
         public IWebElement CmbDataProfile
         {
-            get { return _driverPanelPage.FindElement(_cmbDataProfile); }
+            get { return MyFindElement(_cmbDataProfile); }
         }
 
         public IWebElement TxtDisplayName
         {
-            get { return _driverPanelPage.FindElement(_txtDisplayName); }
+            get { return MyFindElement(_txtDisplayName); }
         }
 
         public IWebElement BtnOK
         {
-            get { return _driverPanelPage.FindElement(_btnOK); }
+            get { return MyFindElement(_btnOK); }
         }
 
         public IWebElement BtnCancel
         {
-            get { return _driverPanelPage.FindElement(_btnCancel); }
+            get { return MyFindElement(_btnCancel); }
         }
 
         public IWebElement LnkAddNew
         {
-            get { return _driverPanelPage.FindElement(_lnkAddNew); }
+            get { return MyFindElement(_lnkAddNew); }
         }
 
         public IWebElement LblSettingHeader
         {
-            get { return _driverPanelPage.FindElement(_lblSettingHeader); }
+            get { return MyFindElement(_lblSettingHeader); }
         }
 
         public IWebElement TxtChartTitle
         {
-            get { return _driverPanelPage.FindElement(_txtChartTitle); }
+            get { return MyFindElement(_txtChartTitle); }
         }
 
         public IWebElement BtnCreateNewPanel
         {
-            get { return _driverPanelPage.FindElement(_btnCreateNewPanel); }
+            get { return MyFindElement(_btnCreateNewPanel); }
         }
 
         public IWebElement CmbChartType
         {
-            get { return _driverPanelPage.FindElement(_cmbChartType); }
+            get { return MyFindElement(_cmbChartType); }
         }
 
         public IWebElement CmbCategory
         {
-            get { return _driverPanelPage.FindElement(_cmbCategory); }
+            get { return MyFindElement(_cmbCategory); }
         }
 
         public IWebElement TxtCaptionNextToCategory
         {
-            get { return _driverPanelPage.FindElement(_txtCaptionNextToCategory); }
+            get { return MyFindElement(_txtCaptionNextToCategory); }
         }
 
         public IWebElement CmbSeries
         {
-            get { return _driverPanelPage.FindElement(_cmbSeries); }
+            get { return MyFindElement(_cmbSeries); }
         }
 
         public IWebElement TxtCaptionNextToSeries
         {
-            get { return _driverPanelPage.FindElement(_txtCaptionNextToSeries); }
+            get { return MyFindElement(_txtCaptionNextToSeries); }
         }
 
         public IWebElement ChbShowTitle
         {
-            get { return _driverPanelPage.FindElement(_chbShowTitle); }
+            get { return MyFindElement(_chbShowTitle); }
         }
 
         public IWebElement RbLegendsNone
         {
-            get { return _driverPanelPage.FindElement(_rbLegendsNone); }
+            get { return MyFindElement(_rbLegendsNone); }
         }
 
         public IWebElement RbLegendsTop
         {
-            get { return _driverPanelPage.FindElement(_rbLegendsTop); }
+            get { return MyFindElement(_rbLegendsTop); }
         }
 
         public IWebElement RbLegendsRight
         {
-            get { return _driverPanelPage.FindElement(_rbLegendsRight); }
+            get { return MyFindElement(_rbLegendsRight); }
         }
 
         public IWebElement RbLegendsBottom
         {
-            get { return _driverPanelPage.FindElement(_rbLegendsBottom); }
+            get { return MyFindElement(_rbLegendsBottom); }
         }
 
         public IWebElement RbLegendsLeft
         {
-            get { return _driverPanelPage.FindElement(_rbLegendsLeft); }
+            get { return MyFindElement(_rbLegendsLeft); }
         }
 
         public IWebElement RbStyle2D
         {
-            get { return _driverPanelPage.FindElement(_rbStyle2D); }
+            get { return MyFindElement(_rbStyle2D); }
         }
 
         public IWebElement RbStyle3D
         {
-            get { return _driverPanelPage.FindElement(_rbStyle3D); }
+            get { return MyFindElement(_rbStyle3D); }
         }
 
         public IWebElement CmbSelectPage
         {
-            get { return _driverPanelPage.FindElement(_cmbSelectPage); }
+            get { return MyFindElement(_cmbSelectPage); }
         }
 
         public IWebElement TxtHeight
         {
-            get { return _driverPanelPage.FindElement(_txtHeight); }
+            get { return MyFindElement(_txtHeight); }
         }
 
         public IWebElement TxtFolder
         {
-            get { return _driverPanelPage.FindElement(_txtFolder); }
+            get { return MyFindElement(_txtFolder); }
         }
 
         public IWebElement ChbDataLabelsSeries
         {
-            get { return _driverPanelPage.FindElement(_chbDataLabelsSeries); }
+            get { return MyFindElement(_chbDataLabelsSeries); }
         }
 
         public IWebElement ChbDataLabelsCategories
         {
-            get { return _driverPanelPage.FindElement(_chbDataLabelsCategories); }
+            get { return MyFindElement(_chbDataLabelsCategories); }
         }
 
         public IWebElement ChbDataLabelsValue
         {
-            get { return _driverPanelPage.FindElement(_chbDataLabelsValue); }
+            get { return MyFindElement(_chbDataLabelsValue); }
         }
 
         public IWebElement ChbDataLabelsPercentage
         {
-            get { return _driverPanelPage.FindElement(_chbDataLabelsPercentage); }
+            get { return MyFindElement(_chbDataLabelsPercentage); }
         }
 
         public IWebElement LblPanelDialog
         {
-            get { return _driverPanelPage.FindElement(_lblPanelDialog); }
+            get { return MyFindElement(_lblPanelDialog); }
         }
 
         public IWebElement TxtFrom
         {
-            get { return _driverPanelPage.FindElement(_txtFrom); }
+            get { return MyFindElement(_txtFrom); }
         }
 
         public IWebElement LbColor
         {
-            get { return _driverPanelPage.FindElement(_lbColor); }
+            get { return MyFindElement(_lbColor); }
         }
 
         public IWebElement CmbStatisticOn
         {
-            get { return _driverPanelPage.FindElement(_cmbStatisticOn); }
+            get { return MyFindElement(_cmbStatisticOn); }
         }
 
         public IWebElement CmbSeriesValue
         {
-            get { return _driverPanelPage.FindElement(_cmbSeriesValue); }
+            get { return MyFindElement(_cmbSeriesValue); }
         }
 
         public IWebElement CmbStatisticField
         {
-            get { return _driverPanelPage.FindElement(_cmbStatisticField); }
+            get { return MyFindElement(_cmbStatisticField); }
         }
 
         public IWebElement CmbStatisticFieldValue
         {
-            get { return _driverPanelPage.FindElement(_cmbStatisticFieldValue); }
+            get { return MyFindElement(_cmbStatisticFieldValue); }
         }
 
         public IWebElement RbSetAsHeatValue
         {
-            get { return _driverPanelPage.FindElement(_rbSetAsHeatValue); }
+            get { return MyFindElement(_rbSetAsHeatValue); }
         }
 
         #endregion
@@ -357,7 +358,7 @@ namespace SeleniumAdvance.PageObjects
         public PanelPage ClickEditPanel(string panelName)
         {
             By xpath = By.XPath("//a[.='" + panelName + "']/ancestor::tr//a[.='Edit']");
-            _driverPanelPage.FindElement(xpath).Click();
+            MyFindElement(xpath).Click();
             WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(_txtDisplayName));
             return this;
@@ -373,7 +374,7 @@ namespace SeleniumAdvance.PageObjects
         public void ClickDeletePanel(string panelName)
         {
             By xpath = By.XPath("//a[.='" + panelName + "']/ancestor::tr//a[.='Delete']");
-            _driverPanelPage.FindElement(xpath).Click();
+            MyFindElement(xpath).Click();
             WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.AlertIsPresent());
         }
@@ -397,7 +398,7 @@ namespace SeleniumAdvance.PageObjects
             IAlert alert = _driverPanelPage.SwitchTo().Alert();
             alert.Accept();
             WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.StalenessOf(_driverPanelPage.FindElement(xpath)));
+            wait.Until(ExpectedConditions.StalenessOf(MyFindElement(xpath)));
             return this;
         }
 
@@ -412,7 +413,7 @@ namespace SeleniumAdvance.PageObjects
             string typeOfPanel = "";
             if (LblPanelDialog.Text == "Add New Panel")
             {
-                ReadOnlyCollection<IWebElement> RadioButtonGroup = _driverPanelPage.FindElements(By.XPath(panelType));
+                ReadOnlyCollection<IWebElement> RadioButtonGroup = _driverPanelPage.FindElements(By.XPath(panelTypeInAddNewDialog));
                 foreach (IWebElement RadioButton in RadioButtonGroup)
                 {
                     if (RadioButton.Selected == true)
@@ -431,16 +432,8 @@ namespace SeleniumAdvance.PageObjects
             }
             else
             {
-                IWebElement RadioButton = _driverPanelPage.FindElement(By.XPath(panelType));
-                string index = RadioButton.GetAttribute("value");
-                    if (index == "1")
-                        typeOfPanel = "Chart";
-                    else if (index == "2")
-                        typeOfPanel = "Indicator";
-                    else if (index == "3")
-                        typeOfPanel = "Report";
-                    else if (index == "4")
-                        typeOfPanel = "Heat Map";
+                IWebElement LabelPanelType = MyFindElement(By.XPath(panelTypeInEditDialog));
+                typeOfPanel = LabelPanelType.Text;
             }
             return typeOfPanel;      
         }
@@ -665,7 +658,7 @@ namespace SeleniumAdvance.PageObjects
             WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
             if (action == "Create")
             {
-                IWebElement RbSelectPanelType = _driverPanelPage.FindElement(By.XPath(string.Format(panelTypeToSelect, panelType)));
+                IWebElement RbSelectPanelType = MyFindElement(By.XPath(string.Format(panelTypeToSelect, panelType)));
                 RbSelectPanelType.Check();
                 if (panelType != currentPanelTypeSelect)
                     wait.Until(ExpectedConditions.StalenessOf(ChbShowTitle));

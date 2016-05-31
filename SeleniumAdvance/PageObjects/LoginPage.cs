@@ -27,22 +27,22 @@ namespace SeleniumAdvance.PageObjects
         #region Elements
         public IWebElement TxtUsername
         {
-            get { return _driverLoginPage.FindElement(_txtUsername); }
+            get { return MyFindElement(_txtUsername); }
         }
 
         public IWebElement TxtPassword
         {
-            get { return _driverLoginPage.FindElement(_txtPassword); }
+            get { return MyFindElement(_txtPassword); }
         }
 
         public IWebElement BtnLogin
         {
-            get { return _driverLoginPage.FindElement(_btnLogin); }
+            get { return MyFindElement(_btnLogin); }
         }
 
         public IWebElement CmbRepo
         {
-            get { return _driverLoginPage.FindElement(_cmbRepo); }
+            get { return MyFindElement(_cmbRepo); }
         }
 
         #endregion
@@ -71,7 +71,7 @@ namespace SeleniumAdvance.PageObjects
             TxtUsername.SendKeys(username);
             TxtPassword.SendKeys(password);
             BtnLogin.Click();
-            return new MainPage(_driver);
+            return new MainPage(_driverGeneralPage);
         }
 
         /// <summary>

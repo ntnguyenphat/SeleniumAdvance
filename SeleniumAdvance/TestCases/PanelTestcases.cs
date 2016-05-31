@@ -652,23 +652,16 @@ namespace SeleniumAdvance.TestCases
             //15. Select 'Legends' radio button - Top
             //16. Select 'Style' radio button - 3D
 
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             PanelPage panelPage = new PanelPage(driver);
 
             panelPage.UnhideChoosePanelsPage();
             panelPage.BtnCreateNewPanel.Click();
+            panelPage.CmbDataProfile.SelectItem(item: "Test Case Execution", selectby: "Text");
             panelPage.TxtDisplayName.SendKeys(panelDisplayName);
             panelPage.TxtChartTitle.SendKeys(chartTitle);
-            panelPage.CmbDataProfile.SelectItem(item: "Test Case Execution", selectby: "Text");
-
-            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//input[@id='chkShowTitle']")));
-
             panelPage.ChbShowTitle.Check();
             panelPage.RbLegendsTop.Check();
             panelPage.CmbChartType.SelectItem(item: "Stacked Bar", selectby: "Value");
-
-            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//select[@id='cbbSeriesField']")));
-
             panelPage.CmbCategory.SelectItem(item: "name", selectby: "Value");
             panelPage.CmbSeries.SelectItem(item: "location", selectby: "Value");
             panelPage.RbStyle3D.Check();
@@ -711,8 +704,6 @@ namespace SeleniumAdvance.TestCases
             panelPage.TxtFolder.Clear();
             panelPage.TxtFolder.SendKeys("/Car Rental/Tests");
             panelPage.BtnOK.Click();
-
-            wait.Until(ExpectedConditions.StalenessOf(panelPage.BtnOK));
 
             //24. Click 'Edit Panel' button of the created panel
             //25. Select 'Style' radio button - 3D
@@ -1299,11 +1290,11 @@ namespace SeleniumAdvance.TestCases
 
             panelPage.Panel(action: "Create", panelType: "Chart", chartType: "Line");
 
-            //24. VP: Check that 'Categories' checkbox, 'Series' checkbox, and 'Percentage' checkbox are disabled. 'Value' checkbox is enabled
+            //24. VP: ''Categories' checkbox, 'Series' checkbox, 'Value' checkbox and 'Percentage' checkbox are disabled
 
             Assert.AreEqual(false, panelPage.ChbDataLabelsCategories.Enabled, "'Categories' checkbox is not disabled");
             Assert.AreEqual(false, panelPage.ChbDataLabelsSeries.Enabled, "'Series' checkbox is not disabled");
-            Assert.AreEqual(true, panelPage.ChbDataLabelsValue.Enabled, "'Value' checkbox is not enabled");
+            Assert.AreEqual(false, panelPage.ChbDataLabelsValue.Enabled, "'Value' checkbox is not enabled");
             Assert.AreEqual(false, panelPage.ChbDataLabelsPercentage.Enabled, "'Percentage' checkbox is not disabled");
 
             //Post-condition: Delete created page.
