@@ -33,7 +33,7 @@ namespace SeleniumAdvance.PageObjects
                 try
                 {
                     WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
-                    //wait.Until(ExpectedConditions.ElementIsVisible(by));
+                    wait.Until(ExpectedConditions.ElementExists(by));
                     wait.Until(driver => _driver.FindElement(by).Displayed);
                     Ele = _driver.FindElement(by);
                     break;
@@ -49,6 +49,11 @@ namespace SeleniumAdvance.PageObjects
                     MyFindElement(by, timeout);
                 }
                 catch(WebDriverTimeoutException)
+                {
+                    timeout = timeout - stopwatch.Elapsed.Ticks;
+                    MyFindElement(by, timeout);
+                }
+                catch(ArgumentException)
                 {
                     timeout = timeout - stopwatch.Elapsed.Ticks;
                     MyFindElement(by, timeout);

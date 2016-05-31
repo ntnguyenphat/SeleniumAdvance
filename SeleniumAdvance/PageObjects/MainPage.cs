@@ -121,7 +121,6 @@ namespace SeleniumAdvance.PageObjects
                 ChbPublic.Check();
             }
 
-            Thread.Sleep(1000);
             BtnPageOK.Click();
 
             WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(10));
@@ -179,8 +178,8 @@ namespace SeleniumAdvance.PageObjects
             this.SelectGeneralSetting("Delete");
             IAlert alert = _driverMainPage.SwitchTo().Alert();
             alert.Accept();
-            //WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(10));
-            //wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
+            WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(string.Format(_lnkPage, "Overview"))));
             return this;
         }
 
