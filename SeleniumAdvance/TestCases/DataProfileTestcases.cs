@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SeleniumAdvance.PageObjects;
 using SeleniumAdvance.Common;
+using SeleniumAdvance.DataObjects;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 
@@ -33,7 +34,10 @@ namespace SeleniumAdvance.TestCases
             dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
 
             //6. VP: Check Pre-set Data Profile are populated correctly in profiles page
-            //To do : Create data table to work on
+            DataProfiles dataProfiles = new DataProfiles();
+            dataProfiles.DataProfileInfo("Action Implementation By Status", "Action", "");
+            bool doesActionImplementationByStatusProfileExist = dataProfilePage.DoesPresetDataProfileExist(dataProfiles);
+            Assert.AreEqual(true, doesActionImplementationByStatusProfileExist, "Action Implementation By Status profile doesn't exist");
         }
     }
 }

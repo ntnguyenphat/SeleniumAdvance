@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using SeleniumAdvance.Common;
+using SeleniumAdvance.DataObjects;
 using SeleniumAdvance.PageObjects;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using OpenQA.Selenium.Support.UI;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
 using System.Text.RegularExpressions;
+using System.Collections.ObjectModel;
 
 namespace SeleniumAdvance.PageObjects
 {
@@ -130,6 +132,36 @@ namespace SeleniumAdvance.PageObjects
             return this;
         }
 
+        public bool DoesPresetDataProfileExist(DataProfiles dataProfiles)
+        {
+            bool DoesPresetDataProfileExist = false;
+            ReadOnlyCollection<IWebElement> RowCollection = _driverDataProfile.FindElements(By.XPath("//table[@class = 'GridView']/tbody/tr"));
+            for (int i_RowNum = 2; i_RowNum <= RowCollection.Count; i_RowNum++)
+            {
+                //IWebElement RowElement  = _driverDataProfile.FindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]",i_RowNum)));
+                ReadOnlyCollection<IWebElement> ColCollection = _driverDataProfile.FindElements(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td", i_RowNum)));
+                for (int i_ColNum = 1; i_ColNum <= ColCollection.Count; i_ColNum++ )
+                {
+                    IWebElement ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr/td[{0}]",i_ColNum))); 
+                    if (dataProfiles.DataProfileName == ColElement.Text)
+                    {
+                        ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr/td[{0}]", i_ColNum + 1))); 
+                        if (dataProfiles.ItemType == ColElement.Text)
+                        {
+                            ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr/td[{0}]", i_ColNum + 2))); 
+                            if (dataProfiles.RelatedData == ColElement.Text)
+                            {
+                                DoesPresetDataProfileExist = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (DoesPresetDataProfileExist == true)
+                    break;
+            }
+            return DoesPresetDataProfileExist;
+        }
         #endregion
     }
 }
