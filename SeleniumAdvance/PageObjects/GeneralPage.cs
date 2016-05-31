@@ -286,9 +286,6 @@ namespace SeleniumAdvance.PageObjects
             }
             return isItemPresentInCombobox;
         }
-
-        #endregion
-
         /// <summary>
         /// Get the number of items in ComboBox.
         /// </summary>
@@ -318,5 +315,25 @@ namespace SeleniumAdvance.PageObjects
             string selectedItem = ListBox.SelectedOption.Text.Trim();
             return selectedItem;
         }
+
+        /// <summary>
+        /// Clicks the text link.
+        /// </summary>
+        /// <param name="linkText">The link text.</param>
+        /// <param name="exactly">if set to <c>true</c> [exactly].</param>
+        /// <Author>Phat</Author>
+        /// <Startdate>31/05/2016</Startdate>
+        public void ClickTextLink(string linkText, bool exactly = true)
+        {
+            By xpath;
+            if (exactly == true)
+                xpath = By.XPath("//a[.='" + linkText + "']");
+            else
+                xpath = By.XPath("//a[contains(.,'" + linkText + "')]");
+
+            _driver.FindElement(xpath).Click();
+        }
+
+        #endregion 
     }
 }

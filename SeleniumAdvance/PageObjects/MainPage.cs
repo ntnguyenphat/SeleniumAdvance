@@ -16,7 +16,7 @@ namespace SeleniumAdvance.PageObjects
 {
     public class MainPage : GeneralPage
     {
-        private IWebDriver _driverManagePagePage;
+        private IWebDriver _driverMainPage;
 
         #region Locators
 
@@ -36,42 +36,42 @@ namespace SeleniumAdvance.PageObjects
 
         public IWebElement TxtNewPagePageName
         {
-            get { return _driverManagePagePage.FindElement(_txtNewPagePageName); }
+            get { return _driverMainPage.FindElement(_txtNewPagePageName); }
         }
 
         public IWebElement BtnPageOK
         {
-            get { return _driverManagePagePage.FindElement(_btnPageOK); }
+            get { return _driverMainPage.FindElement(_btnPageOK); }
         }
 
         public IWebElement BtnPageCancel
         {
-            get { return _driverManagePagePage.FindElement(_btnPageCancel); }
+            get { return _driverMainPage.FindElement(_btnPageCancel); }
         }
 
         public IWebElement CmbNewPageDisplayAfter
         {
-            get { return _driverManagePagePage.FindElement(_cmbPageDisplayAfter); }
+            get { return _driverMainPage.FindElement(_cmbPageDisplayAfter); }
         }
 
         public IWebElement CmbParentPage
         {
-            get { return _driverManagePagePage.FindElement(_cmbParentPage); }
+            get { return _driverMainPage.FindElement(_cmbParentPage); }
         }
 
         public IWebElement CmbNumberOfColumns
         {
-            get { return _driverManagePagePage.FindElement(_cbmNumberOfColumns); }
+            get { return _driverMainPage.FindElement(_cbmNumberOfColumns); }
         }
 
         public IWebElement ChbPublic
         {
-            get { return _driverManagePagePage.FindElement(_chbPublic); }
+            get { return _driverMainPage.FindElement(_chbPublic); }
         }
 
         public IWebElement DlgPopupHeader
         {
-            get { return _driverManagePagePage.FindElement(_dlgPopupHeader); }
+            get { return _driverMainPage.FindElement(_dlgPopupHeader); }
         }
 
         #endregion
@@ -81,7 +81,7 @@ namespace SeleniumAdvance.PageObjects
         public MainPage(IWebDriver driver)
             : base(driver)
         {
-            this._driverManagePagePage = driver;
+            this._driverMainPage = driver;
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace SeleniumAdvance.PageObjects
             Thread.Sleep(1000);
             BtnPageOK.Click();
 
-            WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, pageName).Replace(" ", "\u00A0"))));
             return this;
         }
@@ -142,7 +142,7 @@ namespace SeleniumAdvance.PageObjects
             if (pages.Length == 1)
             {
                 By page = By.XPath("//a[.='" + pages[0].Replace(" ", "\u00A0") + "']");
-                IWebElement lnkPage = _driverManagePagePage.FindElement(page);
+                IWebElement lnkPage = _driverMainPage.FindElement(page);
                 lnkPage.Click();
             }
             else
@@ -151,11 +151,11 @@ namespace SeleniumAdvance.PageObjects
                 while (pageIndex + 1 < pages.Length)
                 {
                     By page = By.XPath("//a[.='" + pages[pageIndex].Replace(" ", "\u00A0") + "']");
-                    IWebElement lnkParent = _driverManagePagePage.FindElement(page);
-                    lnkParent.MouseTo(_driverManagePagePage);
+                    IWebElement lnkParent = _driverMainPage.FindElement(page);
+                    lnkParent.MouseTo(_driverMainPage);
                     pageIndex = pageIndex + 1;
                     page = By.XPath("//a[.='" + pages[pageIndex].Replace(" ", "\u00A0") + "']");
-                    IWebElement lnkPage = _driverManagePagePage.FindElement(page);
+                    IWebElement lnkPage = _driverMainPage.FindElement(page);
                     if(pageIndex + 1 == pages.Length)
                     {
                           lnkPage.Click();
@@ -177,10 +177,10 @@ namespace SeleniumAdvance.PageObjects
         {
             GotoPage(pageLink);
             this.SelectGeneralSetting("Delete");
-            IAlert alert = _driverManagePagePage.SwitchTo().Alert();
+            IAlert alert = _driverMainPage.SwitchTo().Alert();
             alert.Accept();
-            WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
+            //WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(10));
+            //wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
             return this;
         }
 
@@ -193,10 +193,10 @@ namespace SeleniumAdvance.PageObjects
         public bool IsPageNavigated(string pageName)
         {
             bool isPageNavigated = false;
-            WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
-            string actualTitle = _driverManagePagePage.Title.Substring(_driverManagePagePage.Title.IndexOf("-") + 1,
-                    _driverManagePagePage.Title.Length - _driverManagePagePage.Title.IndexOf("-") - 1).Trim();
+            string actualTitle = _driverMainPage.Title.Substring(_driverMainPage.Title.IndexOf("-") + 1,
+                    _driverMainPage.Title.Length - _driverMainPage.Title.IndexOf("-") - 1).Trim();
             if (actualTitle == pageName)
             {
                 isPageNavigated = true;
@@ -249,7 +249,7 @@ namespace SeleniumAdvance.PageObjects
 
             BtnPageOK.Click();
 
-            WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
 
             return this;
@@ -267,7 +267,7 @@ namespace SeleniumAdvance.PageObjects
         {
             bool isPageNextToPage = false;
             By current = By.XPath("//a[.='" + nextPage + "']/parent::*/preceding-sibling::*/a[.='" + currentPage + "']");
-            if (_driverManagePagePage.FindElement(current).Text == currentPage)
+            if (_driverMainPage.FindElement(current).Text == currentPage)
             {
                 isPageNextToPage = true;
             }
@@ -283,7 +283,7 @@ namespace SeleniumAdvance.PageObjects
         /// <returns></returns>
         public bool DoesPageExist(string pageLink)
         {
-            WebDriverWait wait = new WebDriverWait(_driverManagePagePage, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
             bool doesPageExist = false;
             string[] pages = Regex.Split(pageLink, "->");     
@@ -298,8 +298,8 @@ namespace SeleniumAdvance.PageObjects
                 while (pageIndex + 1 < pages.Length)
                 {
                     By page = By.XPath("//a[.='" + pages[pageIndex].Replace(" ", "\u00A0") + "']");
-                    IWebElement lnkParent = _driverManagePagePage.FindElement(page);
-                    lnkParent.MouseTo(_driverManagePagePage);
+                    IWebElement lnkParent = _driverMainPage.FindElement(page);
+                    lnkParent.MouseTo(_driverMainPage);
                     pageIndex = pageIndex + 1;
                     page = By.XPath("//a[.='" + pages[pageIndex].Replace(" ", "\u00A0") + "']");
                     doesPageExist = this.IsElementExist(page);
