@@ -132,23 +132,29 @@ namespace SeleniumAdvance.PageObjects
             return this;
         }
 
+        /// <summary>
+        /// Determine if a data profile exist.
+        /// </summary>
+        /// <param name="dataProfiles"></param>
+        /// <Author>Long</Author>
+        /// <Startdate>02/06/2016</Startdate>
+        /// <returns></returns>
         public bool DoesPresetDataProfileExist(DataProfiles dataProfiles)
         {
             bool DoesPresetDataProfileExist = false;
             ReadOnlyCollection<IWebElement> RowCollection = _driverDataProfile.FindElements(By.XPath("//table[@class = 'GridView']/tbody/tr"));
             for (int i_RowNum = 2; i_RowNum <= RowCollection.Count; i_RowNum++)
             {
-                //IWebElement RowElement  = _driverDataProfile.FindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]",i_RowNum)));
                 ReadOnlyCollection<IWebElement> ColCollection = _driverDataProfile.FindElements(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td", i_RowNum)));
                 for (int i_ColNum = 1; i_ColNum <= ColCollection.Count; i_ColNum++ )
                 {
-                    IWebElement ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr/td[{0}]",i_ColNum))); 
+                    IWebElement ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", i_RowNum, i_ColNum))); 
                     if (dataProfiles.DataProfileName == ColElement.Text)
                     {
-                        ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr/td[{0}]", i_ColNum + 1))); 
+                        ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", i_RowNum, i_ColNum + 1))); 
                         if (dataProfiles.ItemType == ColElement.Text)
                         {
-                            ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr/td[{0}]", i_ColNum + 2))); 
+                            ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", i_RowNum, i_ColNum + 2))); 
                             if (dataProfiles.RelatedData == ColElement.Text)
                             {
                                 DoesPresetDataProfileExist = true;
