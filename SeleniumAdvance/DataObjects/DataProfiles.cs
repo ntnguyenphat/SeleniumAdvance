@@ -11,6 +11,9 @@ namespace SeleniumAdvance.DataObjects
         private string _dataProfileName;
         private string _itemType;
         private string _relatedData;
+        private string _createdBy;
+        private string _creationDate;
+        private string _action;
 
         public string DataProfileName
         {
@@ -32,13 +35,33 @@ namespace SeleniumAdvance.DataObjects
             set { _relatedData = value; }
         }
 
+        public string CreatedBy
+        {
+            get { return _createdBy; }
+            set { _createdBy = value; }
+        }
+
+        public string CreationDate
+        {
+            get { return _creationDate; }
+            set { _creationDate = value; }
+        }
+
+        public string Action
+        {
+            get { return _action; }
+            set { _action = value; }
+        }
         public DataProfiles() { }
 
-        public void DataProfileInfo(string dataProfileName, string itemType, string relatedData)
+        public void DataProfileInfo(string dataProfileName = null, string itemType = null, string relatedData = null, string createdBy = null, string creationDate = null, string action = null)
         {
             this.DataProfileName = dataProfileName;
             this.ItemType = itemType;
             this.RelatedData = relatedData;
+            this.CreatedBy = createdBy;
+            this.CreationDate = CreationDate;
+            this.Action = action;
         }
     }
 }

@@ -132,10 +132,33 @@ namespace SeleniumAdvance.Ultilities
             Thread.Sleep(time);
         }
 
+        /// <summary>
+        /// Inputs the text.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="text">The text.</param>
+        /// <Author>Phat</Author>
+        /// <Startdate>30/05/2016</Startdate>
         public static void InputText(this IWebElement element, string text)
         {
             element.Clear();
             element.SendKeys(text);
+        }
+
+        /// <summary>
+        /// Determines whether the element is a link.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="webDriver">The web driver.</param>
+        /// <returns></returns>
+        /// <Author>Long</Author>
+        /// <Startdate>02/06/2016</Startdate>
+        public static bool IsLink(this IWebElement element, IWebDriver webDriver)
+        {
+           if (element.GetAttribute("href") != null)
+                return true;
+            else
+                return false;      
         }
     }
 }

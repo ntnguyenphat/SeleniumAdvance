@@ -132,6 +132,7 @@ namespace SeleniumAdvance.PageObjects
             return this;
         }
 
+
         /// <summary>
         /// Determine if a data profile exist.
         /// </summary>
@@ -141,7 +142,7 @@ namespace SeleniumAdvance.PageObjects
         /// <returns></returns>
         public bool DoesPresetDataProfileExist(DataProfiles dataProfiles)
         {
-            bool DoesPresetDataProfileExist = false;
+            bool doesPresetDataProfileExist = false;
             ReadOnlyCollection<IWebElement> RowCollection = _driverDataProfile.FindElements(By.XPath("//table[@class = 'GridView']/tbody/tr"));
             for (int i_RowNum = 2; i_RowNum <= RowCollection.Count; i_RowNum++)
             {
@@ -151,22 +152,110 @@ namespace SeleniumAdvance.PageObjects
                     IWebElement ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", i_RowNum, i_ColNum))); 
                     if (dataProfiles.DataProfileName == ColElement.Text)
                     {
-                        ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", i_RowNum, i_ColNum + 1))); 
-                        if (dataProfiles.ItemType == ColElement.Text)
-                        {
-                            ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", i_RowNum, i_ColNum + 2))); 
-                            if (dataProfiles.RelatedData == ColElement.Text)
+                        doesPresetDataProfileExist = true;
+                        if (dataProfiles.ItemType == null)
+                            break;
+                        else
+                        { 
+                            ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", i_RowNum, i_ColNum + 1)));
+                            if (dataProfiles.ItemType == ColElement.Text)
                             {
-                                DoesPresetDataProfileExist = true;
-                                break;
+                                doesPresetDataProfileExist = true;
+                                if (dataProfiles.RelatedData == null)
+                                    break;
+                                else
+                                {
+                                    ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", i_RowNum, i_ColNum + 2)));
+                                    if (dataProfiles.RelatedData == ColElement.Text)
+                                    {
+                                        doesPresetDataProfileExist = true;
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
                 }
-                if (DoesPresetDataProfileExist == true)
+                if (doesPresetDataProfileExist == true)
                     break;
             }
-            return DoesPresetDataProfileExist;
+            return doesPresetDataProfileExist;
+        }
+
+        /// <summary>
+        /// Gets the table cell value in Data Profile table
+        /// </summary>
+        /// <param name="row_number">The row_number.</param>
+        /// <param name="column_number">The column_number.</param>
+        /// <returns></returns>
+        /// <Author>Long</Author>
+        /// <Startdate>02/06/2016</Startdate>
+        public string GetTableCellValue(int row_number, int column_number)
+        {
+            string cellValue = "";
+            ReadOnlyCollection<IWebElement> RowCollection = _driverDataProfile.FindElements(By.XPath("//table[@class = 'GridView']/tbody/tr"));
+            ReadOnlyCollection<IWebElement> ColCollection = _driverDataProfile.FindElements(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td", row_number)));
+            IWebElement ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", row_number, column_number)));
+            cellValue = ColElement.Text;
+            return cellValue;                                      
+        }
+
+        /// <summary>
+        /// Gets the index of table cell value in Data Profile table
+        /// </summary>
+        /// <param name="cellValue">The value of one cell.</param>
+        /// <param name="row_number">The row_number.</param>
+        /// <param name="column_number">The column_number.</param>
+        /// <Author>Long</Author>
+        /// <Startdate>02/06/2016</Startdate>
+        public void GetIndexOfTableCellValue(string cellValue, out int row_number, out int column_number)
+        {
+            row_number = column_number = -1;
+            ReadOnlyCollection<IWebElement> RowCollection = _driverDataProfile.FindElements(By.XPath("//table[@class = 'GridView']/tbody/tr"));
+            for (int i_RowNum = 2; i_RowNum <= RowCollection.Count; i_RowNum++)
+            {
+                ReadOnlyCollection<IWebElement> ColCollection = _driverDataProfile.FindElements(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td", i_RowNum)));
+                for (int i_ColNum = 1; i_ColNum <= ColCollection.Count; i_ColNum++)
+                {
+                    IWebElement ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", i_RowNum, i_ColNum)));
+                    if (cellValue == ColElement.Text)
+                    {
+                        row_number = i_RowNum;
+                        column_number = i_ColNum;
+                        break;
+                    }
+                }
+                if (row_number != -1 && column_number != -1)
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Determines if data profile is a link.
+        /// </summary>
+        /// <param name="dataProfile">The data profile.</param>
+        /// <returns></returns>
+        /// <Author>Long</Author>
+        /// <Startdate>02/06/2016</Startdate>
+        public bool IsDataProfileLink(string dataProfile)
+        {
+            bool isDataProfileLink;
+            int row_number, column_number;
+            GetIndexOfTableCellValue(dataProfile, out row_number, out column_number);
+            IWebElement ProfileName = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", row_number, column_number)));
+            isDataProfileLink = ProfileName.IsLink(_driverDataProfile);
+            return isDataProfileLink;
+        }
+
+        public bool DoesCheckboxAppearInTheLeftOfDataProfile(string dataProfile)
+        {
+            int row_number, column_number;
+            GetIndexOfTableCellValue(dataProfile, out row_number, out column_number);
+            IWebElement TheLeftOfProfileName = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", row_number, column_number - 1)));
+            if (TheLeftOfProfileName.GetAttribute("class") == "box")
+                return true;
+            else
+                return false;
         }
         #endregion
     }
