@@ -250,5 +250,32 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(false, dataProfilePage.DoesCheckboxAppearInTheLeftOfDataProfile("Test Module Status per Assigned Users"), "Checkbox appears in the left of Test Module Status per Assigned Users profile");
             Assert.AreEqual(false, dataProfilePage.DoesCheckboxAppearInTheLeftOfDataProfile("Test Objective Execution"), "Checkbox appears in the left of Test Objective Execution profile");
         }
+
+        /// <summary>Verify that Data Profiles are listed alphabetically
+        /// </summary>
+        /// <author>Long</author>
+        /// <startdate>04/06/2016</startdate>
+        [TestMethod]
+        public void TC067()
+        {
+            Console.WriteLine("DA_LOGIN_TC067 - Verify that Data Profiles are listed alphabetically");
+
+            //1. Navigate to Dashboard login page
+            //2. Select a specific repository 
+            //3. Enter valid Username and Password
+            //4. Click Login
+            //5. Click Administer->Data Profiles
+
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password);
+
+            DataProfilePage dataProfilePage = new DataProfilePage(driver);
+            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
+
+            //6. VP: Check Data Profiles are listed alphabetically
+
+            bool areDataProfileListedAlphabetically = dataProfilePage.AreDataProfilesListedAlphabetically();
+            Assert.AreEqual(true, areDataProfileListedAlphabetically, "Data profiles are not listed alphabetically");
+        }
     }
 }

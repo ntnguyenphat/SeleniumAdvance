@@ -443,7 +443,7 @@ namespace SeleniumAdvance.PageObjects
         /// </summary>
         /// <typeparam name="Type">The type : String, int, bool....</typeparam>
         /// <Author>Long</Author>
-        /// <Startdate>Long</Startdate>
+        /// <Startdate>30/05/2016</Startdate>
         public class OptionalOut<Type>
         {
             public Type Result { get; set; }

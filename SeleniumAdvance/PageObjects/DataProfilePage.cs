@@ -247,6 +247,13 @@ namespace SeleniumAdvance.PageObjects
             return isDataProfileLink;
         }
 
+        /// <summary>
+        /// Determine if the checkbox appear in the left of data profile.
+        /// </summary>
+        /// <param name="dataProfile">The data profile.</param>
+        /// <returns></returns>
+        /// <author>Long</author>
+        /// <startdate>04/06/2016</startdate>
         public bool DoesCheckboxAppearInTheLeftOfDataProfile(string dataProfile)
         {
             int row_number, column_number;
@@ -257,6 +264,30 @@ namespace SeleniumAdvance.PageObjects
             else
                 return false;
         }
+
+        /// <summary>
+        /// Determine if data profiles are listed alphabetically.
+        /// </summary>
+        /// <returns></returns>
+        /// <author>Long</author>
+        /// <startdate>04/06/2016</startdate>
+        public bool AreDataProfilesListedAlphabetically()
+        {
+            bool areDataProfilesListedAlphabetically = true;
+            ReadOnlyCollection<IWebElement> RowCollection = _driverDataProfile.FindElements(By.XPath("//table[@class = 'GridView']/tbody/tr"));
+            for (int i_RowNum = 2; i_RowNum < RowCollection.Count - 2; i_RowNum++)
+            {
+                IWebElement ColElement1 = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[2]", i_RowNum)));
+                IWebElement ColElement2 = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[2]", i_RowNum + 1)));
+                if (string.Compare(ColElement1.Text, ColElement2.Text) > 0)
+                {
+                    areDataProfilesListedAlphabetically = false;
+                    break;
+                }
+            }
+            return areDataProfilesListedAlphabetically;
+        }
+
         #endregion
     }
 }
