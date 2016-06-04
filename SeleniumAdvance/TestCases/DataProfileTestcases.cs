@@ -353,6 +353,36 @@ namespace SeleniumAdvance.TestCases
             actualDialogMessage = dataProfilePage.GetAlertMessage(closeAlert: true);
             expectedDialogMessage = "Please input profile name.";
             Assert.AreEqual(expectedDialogMessage, actualDialogMessage, "Please input profile name message doesn't appear");
+        }
+
+        /// <summary>Verify that special characters ' /:*?<>|"#[ ]{}=%; 'is not allowed for input to "Name *" field
+        /// </summary>
+        /// <author>Long</author>
+        /// <startdate>04/06/2016</startdate>
+        [TestMethod]
+        public void TC070()
+        {
+            Console.WriteLine("DA_LOGIN_TC070 - Verify that special characters ' /:*?<>|\"#[ ]{}=%; 'is not allowed for input to \"Name *\" field");
+
+            //1. Log in Dashboard
+            //2. Navigate to Data Profiles page
+            //3. Click on "Add New"
+            //4. Input special character
+
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password);
+
+            DataProfilePage dataProfilePage = new DataProfilePage(driver);
+            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
+            dataProfilePage.LnkAddNew.Click();
+            dataProfilePage.CreateDataProfile("/:*?<>", "test cases", "None");
+
+            //5. VP: Check dialog message indicates invalid characters: /:*?<>|"#[ ]{}=%; is not allowed as input for name field appears
+
+
+            string actualDialogMessage = dataProfilePage.GetAlertMessage(closeAlert: true);
+            string expectedDialogMessage = "Invalid name. The name cannot contain high ASCII characters or any of the following characters: /:*?<>|\"#[]{}=%;";
+            Assert.AreEqual(expectedDialogMessage, actualDialogMessage, "Invalid name message doesn't appear");
 
         }
     }
