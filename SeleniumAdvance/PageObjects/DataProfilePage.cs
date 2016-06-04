@@ -317,6 +317,19 @@ namespace SeleniumAdvance.PageObjects
         }
 
 
+        /// <summary>
+        /// Create the data profile.
+        /// </summary>
+        /// <param name="profileName">Name of the profile.</param>
+        /// <param name="itemType">Type of the item.</param>
+        /// <param name="relatedData">The related data.</param>
+        /// <param name="displayFields">The display fields.</param>
+        /// <param name="sortFields">The sort fields.</param>
+        /// <param name="filterFields">The filter fields.</param>
+        /// <param name="statisticFields">The statistic fields.</param>
+        /// <returns></returns>
+        /// <author>Long</author>
+        /// <startdate>04/06/2016</startdate>
         public DataProfilePage CreateDataProfile(string profileName, string itemType, string relatedData, string displayFields = null, string sortFields = null, string filterFields = null, string statisticFields = null)
         {
             LnkAddNew.Click();
@@ -328,6 +341,13 @@ namespace SeleniumAdvance.PageObjects
             return this;
         }
 
+        /// <summary>
+        /// Delete the data profile.
+        /// </summary>
+        /// <param name="profileName">Name of the profile.</param>
+        /// <returns></returns>
+        /// <author>Long</author>
+        /// <startdate>04/06/2016</startdate>
         public DataProfilePage DeleteDataProfile(string profileName)
         {
             int row_number, column_number;
