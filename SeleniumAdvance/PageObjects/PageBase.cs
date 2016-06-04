@@ -31,6 +31,7 @@ namespace SeleniumAdvance.PageObjects
         /// <returns></returns>
         /// <author>Long</author>
         /// <startdate>31/05/2016</startdate>
+        /// <Modified>Phat - 04/06/2016: Add NoSuchElementException. Wait for element clickable if element is a button</Modified>
         public IWebElement MyFindElement(By by, long timeout = 30)
         {
             IWebElement Ele = null;
@@ -41,8 +42,11 @@ namespace SeleniumAdvance.PageObjects
                 try
                 {
                     WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
-                    wait.Until(ExpectedConditions.ElementExists(by));
                     wait.Until(driver => _driver.FindElement(by).Displayed);
+                    //if (by.ToString().Contains("input"))
+                    //{
+                    //    wait.Until(ExpectedConditions.ElementToBeClickable(by));
+                    //}
                     Ele = _driver.FindElement(by);
                     break;
                 }
@@ -66,6 +70,11 @@ namespace SeleniumAdvance.PageObjects
                     timeout = timeout - stopwatch.Elapsed.Ticks;
                     MyFindElement(by, timeout);
                 }
+                catch (NoSuchElementException)
+                {
+                    timeout = timeout - stopwatch.Elapsed.Ticks;
+                    MyFindElement(by, timeout);
+                }
             }
             stopwatch.Stop();
             return Ele;
@@ -79,6 +88,7 @@ namespace SeleniumAdvance.PageObjects
         /// <returns></returns>
         /// <author>Long</author>
         /// <startdate>31/05/2016</startdate>
+        /// <Modified>Phat - 04/06/2016: Add NoSuchElementException</Modified>
         public ReadOnlyCollection<IWebElement> MyFindElements(By by, long timeout = 30)
         {
             ReadOnlyCollection<IWebElement> Eles = null;
@@ -109,6 +119,11 @@ namespace SeleniumAdvance.PageObjects
                     MyFindElements(by, timeout);
                 }
                 catch (ArgumentNullException)
+                {
+                    timeout = timeout - stopwatch.Elapsed.Ticks;
+                    MyFindElements(by, timeout);
+                }
+                catch(NoSuchElementException)
                 {
                     timeout = timeout - stopwatch.Elapsed.Ticks;
                     MyFindElements(by, timeout);

@@ -182,7 +182,7 @@ namespace SeleniumAdvance.TestCases
             panelPage.CmbSeries.SelectItem(panelSeries, "Value");
             panelPage.BtnOK.Click();
 
-            bool actualCreated = panelPage.IsPanelCreated(panelTrue);
+            bool actualCreated = panelPage.IsPanelCreatedInPanelPage(panelTrue);
 
             //VP: The new panel is created
 
@@ -460,7 +460,7 @@ namespace SeleniumAdvance.TestCases
             panelPage.BtnOK.Click();
             panelPage.WaitForAddingPanel(panelName);
 
-            bool actualCreated = panelPage.IsPanelCreated(panelName);
+            bool actualCreated = panelPage.IsPanelCreatedInPanelPage(panelName);
 
             //VP: The new panel is created
 
@@ -1478,7 +1478,7 @@ namespace SeleniumAdvance.TestCases
             //9. Uncheck Value checkbox
             //10. Check Percentage checbox for Data Labels
 
-            panelPage.ChbDataLabelsValue.UnCheck(); 
+            panelPage.ChbDataLabelsValue.UnCheck();
             panelPage.ChbDataLabelsPercentage.Check();
 
             panelPage.GetCurrentSettingsInPanelDialog(out typeOfPanel_two, out dataProfileName_two, out panelDisplayName_two, title: title_two, isShowTitleChecked: isShowTitleChecked_two, isStyle2DChecked: isStyle2DChecked_two,
@@ -1692,8 +1692,8 @@ namespace SeleniumAdvance.TestCases
             //16. Click 'Select Page*' drop-down menu
 
             mainPage.BtnChoosePanels.Click();
-            PanelConfigurationPage panelConfig = new PanelConfigurationPage(driver);
-            panelConfig.ChoosePanel("Action Implementation By Status");
+            PanelPage panelPage = new PanelPage(driver);
+            PanelConfigurationDialog panelConfig = panelPage.ChoosePanel("Action Implementation By Status");
 
             bool isPageName1Exist = panelConfig.CmbSelectpage.IsItemExist(pageName1);
             bool isPageName2Exist = panelConfig.CmbSelectpage.IsItemExist(pageName2);
@@ -1738,10 +1738,10 @@ namespace SeleniumAdvance.TestCases
 
             LoginPage loginPage = new LoginPage(driver);
             MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
-            //mainPage.AddPage(pageName: pageName);
+            mainPage.AddPage(pageName: pageName);
             mainPage.BtnChoosePanels.Click();
-            PanelConfigurationPage panelConfig = new PanelConfigurationPage(driver);
-            panelConfig.ChoosePanel("Action Implementation By Status");
+            PanelPage panelPage = new PanelPage(driver);
+            PanelConfigurationDialog panelConfig = panelPage.ChoosePanel("Action Implementation By Status");
             panelConfig.TxtHeight.InputText("299");
             panelConfig.BtnOk.Click();
 
@@ -1805,7 +1805,7 @@ namespace SeleniumAdvance.TestCases
             //Post condition:
 
             panelConfig.BtnCancel.Click();
-            //mainPage.DeletePage(pageName);
+            mainPage.DeletePage(pageName);
         }
 
         /// <summary>
@@ -1835,10 +1835,10 @@ namespace SeleniumAdvance.TestCases
 
             LoginPage loginPage = new LoginPage(driver);
             MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
-            //mainPage.AddPage(pageName: pageName);
+            mainPage.AddPage(pageName: pageName);
             mainPage.BtnChoosePanels.Click();
-            PanelConfigurationPage panelConfig = new PanelConfigurationPage(driver);
-            panelConfig.ChoosePanel("Action Implementation By Status");
+            PanelPage panelPage = new PanelPage(driver);
+            PanelConfigurationDialog panelConfig = panelPage.ChoosePanel("Action Implementation By Status");
             panelConfig.TxtHeight.Clear();
             panelConfig.BtnOk.Click();
 
@@ -1852,7 +1852,7 @@ namespace SeleniumAdvance.TestCases
             //Post condition:
 
             panelConfig.BtnCancel.Click();
-            //mainPage.DeletePage(pageName);
+            mainPage.DeletePage(pageName);
         }
 
         /// <summary>
@@ -1882,10 +1882,10 @@ namespace SeleniumAdvance.TestCases
 
             LoginPage loginPage = new LoginPage(driver);
             MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
-            //mainPage.AddPage(pageName: pageName);
+            mainPage.AddPage(pageName: pageName);
             mainPage.BtnChoosePanels.Click();
-            PanelConfigurationPage panelConfig = new PanelConfigurationPage(driver);
-            panelConfig.ChoosePanel("Action Implementation By Status");
+            PanelPage panelPage = new PanelPage(driver);
+            PanelConfigurationDialog panelConfig = panelPage.ChoosePanel("Action Implementation By Status");
             panelConfig.TxtFolder.Clear();
             panelConfig.BtnOk.Click();
 
@@ -1899,7 +1899,269 @@ namespace SeleniumAdvance.TestCases
             //Post condition:
 
             panelConfig.BtnCancel.Click();
-            //mainPage.DeletePage(pageName);
+            mainPage.DeletePage(pageName);
+        }
+
+        /// <summary>
+        /// Verify that only valid folder path of corresponding item type ( e.g. Actions, Test Modules) are allowed to be entered into \"Folder\" field
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Startdate>04/06/2016</Startdate>
+        [TestMethod]
+        public void TC046()
+        {
+            Console.WriteLine("DA_PANEL_TC046 - Verify that only valid folder path of corresponding item type ( e.g. Actions, Test Modules) are allowed to be entered into \"Folder\" field");
+
+            string pageName = string.Concat("Page ", CommonMethods.GetUniqueString());
+            string panelName = string.Concat("Panel ", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Create a new page
+            //4. Click Choose Panel button
+            //5. Click Create New Panel button
+            //6. Enter all required fields on Add New Panel page
+            //7. Click Ok button
+            //8. Enter invalid folder path
+            //9. Click Ok button on Panel Configuration dialog
+
+            LoginPage loginPage = new LoginPage(driver);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            mainPage.AddPage(pageName: pageName);
+            mainPage.BtnChoosePanels.Click();
+
+            PanelPage panelPage = new PanelPage(driver);
+            panelPage.BtnCreateNewPanel.Click();
+
+            panelPage.TxtDisplayName.SendKeys(panelName);
+            panelPage.CmbSeries.SelectItem("location", selectby: "Value");
+            panelPage.BtnOK.Click();
+
+            PanelConfigurationDialog configDialog = new PanelConfigurationDialog(driver);
+            configDialog.TxtFolder.InputText("abc");
+            configDialog.BtnOk.Click();
+            string observedMessage = configDialog.GetAlertMessage(closeAlert: true);
+            string expectedMessage = "Panel folder is incorrect";
+
+            //VP: There is message "Panel folder is incorrect"
+
+            Assert.AreEqual(expectedMessage, observedMessage, "\nActual: " + observedMessage + "\nExpected: " + expectedMessage);
+
+            //10. Enter valid folder path
+            //11. Click Ok button on Panel Configuration dialog
+
+            configDialog.TxtFolder.InputText("/Car Rental/Actions");
+            configDialog.BtnOk.Click();
+
+            bool observed = mainPage.IsPanelCreatedInMainPage(panelName);
+
+            //VP: The new panel is created
+
+            Assert.AreEqual(true, observed, "Panel is not created!");
+
+            //Postconditions:
+
+            mainPage.DeletePage(pageName);
+        }
+
+        /// <summary>
+        /// Verify that user is able to navigate properly to folders with "Select Folder" form
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Startdate>04/06/2016</Startdate>
+        [TestMethod]
+        public void TC047()
+        {
+            Console.WriteLine("DA_PANEL_TC047 - Verify that user is able to navigate properly to folders with \"Select Folder\" form");
+
+            string pageName = string.Concat("Page ", CommonMethods.GetUniqueString());
+            string panelName = string.Concat("Panel ", CommonMethods.GetUniqueString());
+            string folderLink = "Car Rental/Actions/Car";
+
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Create a new page
+            //4. Click Choose Panel button
+            //5. Click Create New Panel button
+            //6. Enter all required fields on Add New Panel page
+            //7. Click Ok button
+            //8. Click Select Folder button on Panel Configuration dialog
+            //9. Choose folder name in Folder Form
+            //9. Click Ok button on Panel Configuration dialog
+
+            LoginPage loginPage = new LoginPage(driver);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            mainPage.AddPage(pageName: pageName);
+            mainPage.BtnChoosePanels.Click();
+
+            PanelPage panelPage = new PanelPage(driver);
+            panelPage.BtnCreateNewPanel.Click();
+
+            panelPage.TxtDisplayName.SendKeys(panelName);
+            panelPage.CmbSeries.SelectItem("location", selectby: "Value");
+            panelPage.BtnOK.Click();
+
+            PanelConfigurationDialog configDialog = new PanelConfigurationDialog(driver);
+            configDialog.SelectFolderInTree(folderLink);
+
+            bool actual = configDialog.IsFolderSelected(folderLink);
+
+            //VP: User is able to select properly folder with Select Folder form
+
+            Assert.AreEqual(true, actual, "\nFolder is not selected!");
+
+            //Postconditions:
+
+            panelPage.BtnCancel.Click();
+            mainPage.DeletePage(pageName);
+        }
+
+        /// <summary>
+        /// Verify that population of corresponding item type ( e.g. Actions, Test Modules) folders is correct in Select Folder form
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Startdate>04/06/2016</Startdate>
+        [TestMethod]
+
+        public void TC048()
+        {
+            Console.WriteLine("DA_PANEL_TC048 - Verify that population of corresponding item type ( e.g. Actions, Test Modules) folders is correct in Select Folder form");
+
+            string pageName = string.Concat("Page ", CommonMethods.GetUniqueString());
+            string panelName = string.Concat("Panel ", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Create a new page
+            //4. Click Choose Panel button
+            //5. Click Create New Panel button
+            //6. Enter all required fields on Add New Panel page
+            //7. Click Ok button
+            //8. Click Select Folder button on Panel Configuration dialog
+
+            LoginPage loginPage = new LoginPage(driver);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            mainPage.AddPage(pageName: pageName);
+            mainPage.BtnChoosePanels.Click();
+
+            PanelPage panelPage = new PanelPage(driver);
+            panelPage.BtnCreateNewPanel.Click();
+
+            panelPage.TxtDisplayName.SendKeys(panelName);
+            panelPage.CmbSeries.SelectItem("location", selectby: "Value");
+            panelPage.BtnOK.Click();
+
+            PanelConfigurationDialog configDialog = new PanelConfigurationDialog(driver);
+            configDialog.BtnSelectFolder.Click();
+
+            //VP: TODO - Population of corresponding item type ( e.g. Actions, Test Modules) folders is correct in "Select Folder form
+
+            //Cannot understand this VP
+
+            //Postconditions:
+
+            configDialog.BtnOk.Click();
+            panelPage.BtnCancel.Click();
+            mainPage.DeletePage(pageName);
+        }
+
+        /// <summary>
+        /// Verify that all folder paths of corresponding item type ( e.g. Actions, Test Modules) are correct in "Select Folder" form
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Startdate>04/06/2016</Startdate>
+        [TestMethod]
+        public void TC049()
+        {
+            Console.WriteLine("DA_PANEL_TC049 - Verify that all folder paths of corresponding item type ( e.g. Actions, Test Modules) are correct in \"Select Folder\" form");
+
+            string pageName = string.Concat("Page ", CommonMethods.GetUniqueString());
+            string panelName = string.Concat("Panel ", CommonMethods.GetUniqueString());
+            string folderLink = "Car Rental/Actions/Car";
+
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Create a new page
+            //4. Click Choose Panel button
+            //5. Click Create New Panel button
+            //6. Enter all required fields on Add New Panel page
+            //7. Click Ok button
+            //8. Click Select Folder button on Panel Configuration dialog
+            //9. Choose folder name in Folder Form
+            //9. Click Ok button on Panel Configuration dialog
+
+            LoginPage loginPage = new LoginPage(driver);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            mainPage.AddPage(pageName: pageName);
+            mainPage.BtnChoosePanels.Click();
+
+            PanelPage panelPage = new PanelPage(driver);
+            panelPage.BtnCreateNewPanel.Click();
+
+            panelPage.TxtDisplayName.SendKeys(panelName);
+            panelPage.CmbSeries.SelectItem("location", selectby: "Value");
+            panelPage.BtnOK.Click();
+
+            PanelConfigurationDialog configDialog = new PanelConfigurationDialog(driver);
+            configDialog.SelectFolderInTree(folderLink);
+
+            bool actual = configDialog.IsFolderSelected(folderLink);
+
+            //VP: Folder path is displayed correctly after selecting folder in Select Folder form
+
+            Assert.AreEqual(true, actual, "\nFolder path is not displayed correctly");
+
+            //Postconditions:
+
+            panelPage.BtnCancel.Click();
+            mainPage.DeletePage(pageName);
+        }
+
+        /// <summary>
+        /// Verify that user is able to successfully edit "Display Name" of any Panel providing that the name is not duplicated with existing Panels' name
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Startdate>04/06/2016</Startdate>
+        [TestMethod]
+
+        public void TC050()
+        {
+            Console.WriteLine("DA_PANEL_TC050 - Verify that user is able to successfully edit \"Display Name\" of any Panel providing that the name is not duplicated with existing Panels' name");
+
+            string panelName = string.Concat("Panel ", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Click Administer link
+            //4. Click Panel link
+            //5. Click Add New link
+            //6. Enter a valid name into Display Name field
+            //7. Click on OK button
+
+            LoginPage loginPage = new LoginPage(driver);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            mainPage.SelectMenuItem("Administer", "Panel");
+            PanelPage panelPage = new PanelPage(driver);
+            panelPage.LnkAddNew.Click();
+            panelPage.TxtDisplayName.SendKeys(panelName);
+            panelPage.CmbSeries.SelectItem("name", "Value");
+            panelPage.BtnOK.Click();
+            panelPage.WaitForAddingPanel(panelName);
+
+            bool actual = panelPage.IsPanelCreatedInPanelPage(panelName);
+
+            //VP: The new panel is created successfully
+
+            Assert.AreEqual(true, actual, "\nPanel is not created successfully");
+
+            //Postconditions:
+
+            panelPage.DeletePanel(panelName);
         }
     }
 }

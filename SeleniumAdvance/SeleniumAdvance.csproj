@@ -68,7 +68,7 @@
     <Compile Include="PageObjects\LoginPage.cs" />
     <Compile Include="PageObjects\MainPage.cs" />
     <Compile Include="PageObjects\PageBase.cs" />
-    <Compile Include="PageObjects\PanelConfigurationPage.cs" />
+    <Compile Include="PageObjects\PanelConfigurationDialog.cs" />
     <Compile Include="PageObjects\PanelPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestCases\DataProfileTestcases.cs" />

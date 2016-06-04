@@ -155,11 +155,11 @@ namespace SeleniumAdvance.PageObjects
                     pageIndex = pageIndex + 1;
                     page = By.XPath("//a[.='" + pages[pageIndex].Replace(" ", "\u00A0") + "']");
                     IWebElement lnkPage = MyFindElement(page);
-                    if(pageIndex + 1 == pages.Length)
+                    if (pageIndex + 1 == pages.Length)
                     {
-                          lnkPage.Click();
+                        lnkPage.Click();
                     }
-                }                            
+                }
             }
             return this;
         }
@@ -272,7 +272,7 @@ namespace SeleniumAdvance.PageObjects
                 isPageNextToPage = true;
             }
 
-                return isPageNextToPage; 
+            return isPageNextToPage;
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace SeleniumAdvance.PageObjects
             WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
             bool doesPageExist = false;
-            string[] pages = Regex.Split(pageLink, "->");     
+            string[] pages = Regex.Split(pageLink, "->");
             if (pages.Length == 1)
             {
                 By page = By.XPath("//a[.='" + pages[0].Replace(" ", "\u00A0") + "']");
@@ -325,7 +325,21 @@ namespace SeleniumAdvance.PageObjects
             }
             return doesPopupExist;
         }
-        
+
+        /// <summary>
+        /// Determines whether Panel is created in page.
+        /// </summary>
+        /// <param name="panelName">Name of the panel.</param>
+        /// <returns></returns>
+        /// <Author>Phat</Author>
+        /// <Startdate>04/06/2016</Startdate>
+        public bool IsPanelCreatedInMainPage(string panelName)
+        {
+            panelName = panelName.Replace(" ", "\u00A0");
+            By xpath = By.XPath("//div[contains(@id,'widget_head_panel')]//div[.='" + panelName + "']");
+            return this.IsElementExist(xpath);
+        }
+
         #endregion
     }
 }

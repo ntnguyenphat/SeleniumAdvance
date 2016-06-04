@@ -30,7 +30,7 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _cmbDataProfile = By.XPath("//select[@id='cbbProfile']");
         static readonly By _txtDisplayName = By.XPath("//input[@id='txtDisplayName']");
         static readonly By _btnOK = By.XPath("//div[@class='ui-dialog editpanelDlg' and contains(@style,'display: block')]//input[@id='OK']");
-        static readonly By _btnCancel = By.XPath("//input[@id='Cancel']");
+        static readonly By _btnCancel = By.XPath("//div[@class='ui-dialog editpanelDlg' and contains(@style,'display: block')]//input[@id='Cancel']");
         static readonly By _lnkAddNew = By.XPath("//a[contains(@href,'openAddPanel')]");
         static readonly By _lblSettingHeader = By.XPath("//fieldset[@id='fdSettings']/legend");
         static readonly By _txtChartTitle = By.XPath("//input[@id='txtChartTitle']");
@@ -311,8 +311,9 @@ namespace SeleniumAdvance.PageObjects
         /// </summary>
         /// <param name="panelName">Name of the panel.</param>
         /// <Author>Phat</Author>
+        /// <Modified>Phat - 05/06/2016: Move from MainPage to PanelPage</Modified>
         /// <returns></returns>
-        public bool IsPanelCreated(string panelName)
+        public bool IsPanelCreatedInPanelPage(string panelName)
         {
             By panel = By.XPath("//a[.='" + panelName + "']");
             return this.IsElementExist(panel);
@@ -322,7 +323,7 @@ namespace SeleniumAdvance.PageObjects
         /// Get header of the setting
         /// </summary>
         /// <Author>Phat</Author>
-        /// <<Startdate>>23/05/2016</<Startdate>>
+        /// <Startdate>23/05/2016</Startdate>
         /// <returns></returns>
         public string GetSettingHeader()
         {
@@ -767,6 +768,17 @@ namespace SeleniumAdvance.PageObjects
             }
             return this;
         }
+        public PanelConfigurationDialog ChoosePanel(string panelName)
+        {
+            this.ClickTextLink(panelName.Replace(" ", "\u00A0"));
+
+            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists(_txtHeight));
+
+            //Thread.Sleep(2000);
+            return new PanelConfigurationDialog(_driverPanelPage);
+        }
+
         #endregion
     }
 }
