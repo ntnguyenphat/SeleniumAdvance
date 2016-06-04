@@ -23,6 +23,14 @@ namespace SeleniumAdvance.PageObjects
             this._driver = driver;
         }
 
+        /// <summary>
+        /// Override FindElement
+        /// </summary>
+        /// <param name="by">The by.</param>
+        /// <param name="timeout">The timeout.</param>
+        /// <returns></returns>
+        /// <author>Long</author>
+        /// <startdate>31/05/2016</startdate>
         public IWebElement MyFindElement(By by, long timeout = 30)
         {
             IWebElement Ele = null;
@@ -53,7 +61,7 @@ namespace SeleniumAdvance.PageObjects
                     timeout = timeout - stopwatch.Elapsed.Ticks;
                     MyFindElement(by, timeout);
                 }
-                catch(ArgumentException)
+                catch(ArgumentNullException)
                 {
                     timeout = timeout - stopwatch.Elapsed.Ticks;
                     MyFindElement(by, timeout);
@@ -61,6 +69,53 @@ namespace SeleniumAdvance.PageObjects
             }
             stopwatch.Stop();
             return Ele;
+        }
+
+        /// <summary>
+        /// Override FindElements
+        /// </summary>
+        /// <param name="by">The by.</param>
+        /// <param name="timeout">The timeout.</param>
+        /// <returns></returns>
+        /// <author>Long</author>
+        /// <startdate>31/05/2016</startdate>
+        public ReadOnlyCollection<IWebElement> MyFindElements(By by, long timeout = 30)
+        {
+            ReadOnlyCollection<IWebElement> Eles = null;
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            while (timeout >= 0)
+            {
+                try
+                {
+                    WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+                    wait.Until(ExpectedConditions.ElementExists(by));
+                    Eles = _driver.FindElements(by);
+                    break;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    timeout = timeout - stopwatch.Elapsed.Ticks;
+                    MyFindElements(by, timeout);
+                }
+                catch (NullReferenceException)
+                {
+                    timeout = timeout - stopwatch.Elapsed.Ticks;
+                    MyFindElements(by, timeout);
+                }
+                catch (WebDriverTimeoutException)
+                {
+                    timeout = timeout - stopwatch.Elapsed.Ticks;
+                    MyFindElements(by, timeout);
+                }
+                catch (ArgumentNullException)
+                {
+                    timeout = timeout - stopwatch.Elapsed.Ticks;
+                    MyFindElements(by, timeout);
+                }
+            }
+            stopwatch.Stop();
+            return Eles;
         }
     }
 

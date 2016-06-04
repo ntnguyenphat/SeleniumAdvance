@@ -24,9 +24,12 @@ namespace SeleniumAdvance.PageObjects
 
         static readonly By _lnkAddNew = By.XPath("//a[.='Add New']");
         static readonly By _txtName = By.XPath("//input[@id='txtProfileName']");
+        static readonly By _cmbItemType = By.XPath("//select[@id ='cbbEntityType']");
+        static readonly By _cmbRelatedData = By.XPath("//select[@id ='cbbSubReport']");
         static readonly By _btnNext = By.XPath("//input[@value='Next']");
         static readonly By _btnFinish = By.XPath("//input[@value='Finish']");
         static readonly By _btnCancel = By.XPath("//input[@value='Cancel']");
+        static readonly By _lnkDelete = By.XPath("//a[.='Delete']");
 
         #endregion
 
@@ -36,21 +39,40 @@ namespace SeleniumAdvance.PageObjects
         {
             get { return MyFindElement(_lnkAddNew); }
         }
+
         public IWebElement TxtName
         {
             get { return MyFindElement(_txtName); }
         }
+
+        public IWebElement CmbItemType
+        {
+            get { return MyFindElement(_cmbItemType); }
+        }
+
+        public IWebElement CmbRelatedData
+        {
+            get { return MyFindElement(_cmbRelatedData); }
+        }
+
         public IWebElement BtnNext
         {
             get { return MyFindElement(_btnNext); }
         }
+
         public IWebElement BtnFinish
         {
             get { return MyFindElement(_btnFinish); }
         }
+
         public IWebElement BtnCancel
         {
             get { return MyFindElement(_btnCancel); }
+        }
+
+        public IWebElement LnkDelete
+        {
+            get { return MyFindElement(_lnkDelete); }
         }
 
         #endregion
@@ -113,7 +135,7 @@ namespace SeleniumAdvance.PageObjects
 
 
         /// <summary>
-        /// Deletes a profile.
+        /// Delete a profile.
         /// </summary>
         /// <param name="profileName">Name of the profile.</param>
         /// <Author>Phat</Author>
@@ -132,7 +154,6 @@ namespace SeleniumAdvance.PageObjects
             return this;
         }
 
-
         /// <summary>
         /// Determine if a data profile exist.
         /// </summary>
@@ -143,10 +164,10 @@ namespace SeleniumAdvance.PageObjects
         public bool DoesPresetDataProfileExist(DataProfiles dataProfiles)
         {
             bool doesPresetDataProfileExist = false;
-            ReadOnlyCollection<IWebElement> RowCollection = _driverDataProfile.FindElements(By.XPath("//table[@class = 'GridView']/tbody/tr"));
+            ReadOnlyCollection<IWebElement> RowCollection = MyFindElements(By.XPath("//table[@class = 'GridView']/tbody/tr"));
             for (int i_RowNum = 2; i_RowNum <= RowCollection.Count; i_RowNum++)
             {
-                ReadOnlyCollection<IWebElement> ColCollection = _driverDataProfile.FindElements(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td", i_RowNum)));
+                ReadOnlyCollection<IWebElement> ColCollection = MyFindElements(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td", i_RowNum)));
                 for (int i_ColNum = 1; i_ColNum <= ColCollection.Count; i_ColNum++ )
                 {
                     IWebElement ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", i_RowNum, i_ColNum))); 
@@ -193,8 +214,8 @@ namespace SeleniumAdvance.PageObjects
         public string GetTableCellValue(int row_number, int column_number)
         {
             string cellValue = "";
-            ReadOnlyCollection<IWebElement> RowCollection = _driverDataProfile.FindElements(By.XPath("//table[@class = 'GridView']/tbody/tr"));
-            ReadOnlyCollection<IWebElement> ColCollection = _driverDataProfile.FindElements(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td", row_number)));
+            ReadOnlyCollection<IWebElement> RowCollection = MyFindElements(By.XPath("//table[@class = 'GridView']/tbody/tr"));
+            ReadOnlyCollection<IWebElement> ColCollection = MyFindElements(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td", row_number)));
             IWebElement ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", row_number, column_number)));
             cellValue = ColElement.Text;
             return cellValue;                                      
@@ -211,10 +232,10 @@ namespace SeleniumAdvance.PageObjects
         public void GetIndexOfTableCellValue(string cellValue, out int row_number, out int column_number)
         {
             row_number = column_number = -1;
-            ReadOnlyCollection<IWebElement> RowCollection = _driverDataProfile.FindElements(By.XPath("//table[@class = 'GridView']/tbody/tr"));
+            ReadOnlyCollection<IWebElement> RowCollection = MyFindElements(By.XPath("//table[@class = 'GridView']/tbody/tr"));
             for (int i_RowNum = 2; i_RowNum <= RowCollection.Count; i_RowNum++)
             {
-                ReadOnlyCollection<IWebElement> ColCollection = _driverDataProfile.FindElements(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td", i_RowNum)));
+                ReadOnlyCollection<IWebElement> ColCollection = MyFindElements(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td", i_RowNum)));
                 for (int i_ColNum = 1; i_ColNum <= ColCollection.Count; i_ColNum++)
                 {
                     IWebElement ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", i_RowNum, i_ColNum)));
@@ -258,11 +279,18 @@ namespace SeleniumAdvance.PageObjects
         {
             int row_number, column_number;
             GetIndexOfTableCellValue(dataProfile, out row_number, out column_number);
-            IWebElement TheLeftOfProfileName = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", row_number, column_number - 1)));
-            if (TheLeftOfProfileName.GetAttribute("class") == "box")
-                return true;
-            else
+            try
+            {
+                IWebElement TheLeftOfProfileName = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]/input", row_number, column_number - 1)));
+                if (TheLeftOfProfileName.GetAttribute("type") == "checkbox")
+                    return true;
+                else
+                    return false;
+            }
+            catch (NullReferenceException)
+            {
                 return false;
+            }
         }
 
         /// <summary>
@@ -274,7 +302,7 @@ namespace SeleniumAdvance.PageObjects
         public bool AreDataProfilesListedAlphabetically()
         {
             bool areDataProfilesListedAlphabetically = true;
-            ReadOnlyCollection<IWebElement> RowCollection = _driverDataProfile.FindElements(By.XPath("//table[@class = 'GridView']/tbody/tr"));
+            ReadOnlyCollection<IWebElement> RowCollection = MyFindElements(By.XPath("//table[@class = 'GridView']/tbody/tr"));
             for (int i_RowNum = 2; i_RowNum < RowCollection.Count - 2; i_RowNum++)
             {
                 IWebElement ColElement1 = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[2]", i_RowNum)));
@@ -288,6 +316,31 @@ namespace SeleniumAdvance.PageObjects
             return areDataProfilesListedAlphabetically;
         }
 
+
+        public DataProfilePage CreateDataProfile(string profileName, string itemType, string relatedData, string displayFields = null, string sortFields = null, string filterFields = null, string statisticFields = null)
+        {
+            LnkAddNew.Click();
+            TxtName.InputText(profileName);
+            CmbItemType.SelectItem(itemType);
+            CmbRelatedData.SelectItem(relatedData);
+            if (displayFields == null)
+                BtnFinish.Click();
+            return this;
+        }
+
+        public DataProfilePage DeleteDataProfile(string profileName)
+        {
+            int row_number, column_number;
+            GetIndexOfTableCellValue(profileName, out row_number, out column_number);
+            IWebElement TheLeftOfProfileName = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]/input", row_number, column_number - 1)));
+            TheLeftOfProfileName.Check();
+            LnkDelete.Click();
+            IAlert alert = _driverDataProfile.SwitchTo().Alert();
+            alert.Accept();
+            WebDriverWait wait = new WebDriverWait(_driverGeneralPage, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.StalenessOf(TheLeftOfProfileName));
+            return this;
+        }
         #endregion
     }
 }

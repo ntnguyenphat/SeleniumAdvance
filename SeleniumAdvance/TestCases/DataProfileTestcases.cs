@@ -277,5 +277,42 @@ namespace SeleniumAdvance.TestCases
             bool areDataProfileListedAlphabetically = dataProfilePage.AreDataProfilesListedAlphabetically();
             Assert.AreEqual(true, areDataProfileListedAlphabetically, "Data profiles are not listed alphabetically");
         }
+
+        /// <summary>Verify that Check Boxes are only present for non-preset Data Profiles
+        /// </summary>
+        /// <author>Long</author>
+        /// <startdate>04/06/2016</startdate>
+        [TestMethod]
+        public void TC068()
+        {
+            Console.WriteLine("DA_LOGIN_TC068 - Verify that Check Boxes are only present for non-preset Data Profiles.");
+
+            string profileName = string.Concat("Profile ", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page
+            //2. Select a specific repository 
+            //3. Enter valid Username and Password
+            //4. Click Login
+            //5. Click Administer->Data Profiles
+
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password);
+
+            DataProfilePage dataProfilePage = new DataProfilePage(driver);
+            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
+
+            //6. Create a new Data Profile
+
+            dataProfilePage.CreateDataProfile(profileName, "test cases", "None");
+
+            //7. Back to Data Profiles page
+            //8. VP: Check Check Boxes are only present for non-preset Data Profiles.
+
+            Assert.AreEqual(true, dataProfilePage.DoesCheckboxAppearInTheLeftOfDataProfile(profileName), "Checkbox appears in the left of " + dataProfilePage + " profile");
+
+            //Post-condition: Delete created profile
+
+            dataProfilePage.DeleteDataProfile(profileName);
+        }
     }
 }
