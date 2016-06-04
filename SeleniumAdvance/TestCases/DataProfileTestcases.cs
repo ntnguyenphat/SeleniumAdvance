@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SeleniumAdvance.PageObjects;
 using SeleniumAdvance.Common;
 using SeleniumAdvance.DataObjects;
+using SeleniumAdvance.Ultilities;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 
@@ -336,7 +337,7 @@ namespace SeleniumAdvance.TestCases
             DataProfilePage dataProfilePage = new DataProfilePage(driver);
             dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
             dataProfilePage.LnkAddNew.Click();
-            dataProfilePage.CreateDataProfile("", "test cases", "None","");
+            dataProfilePage.CreateDataProfile("", "test cases", "None", displayFields: true);
 
             //5. VP: Check dialog message "Please input profile name" appears
 
@@ -379,11 +380,207 @@ namespace SeleniumAdvance.TestCases
 
             //5. VP: Check dialog message indicates invalid characters: /:*?<>|"#[ ]{}=%; is not allowed as input for name field appears
 
-
             string actualDialogMessage = dataProfilePage.GetAlertMessage(closeAlert: true);
             string expectedDialogMessage = "Invalid name. The name cannot contain high ASCII characters or any of the following characters: /:*?<>|\"#[]{}=%;";
             Assert.AreEqual(expectedDialogMessage, actualDialogMessage, "Invalid name message doesn't appear");
-
         }
+
+        /// <summary>Verify that Data Profile names are not case sensitive
+        /// </summary>
+        /// <author>Long</author>
+        /// <startdate>04/06/2016</startdate>
+        [TestMethod]
+        public void TC071()
+        {
+            Console.WriteLine("DA_LOGIN_TC070 - Verify that Data Profile names are not case sensitive");
+
+            //1. Log in Dashboard
+            //2. Navigate to Data Profiles page
+            //3. Click on "Add New"
+            //4. Input name of a pre-set profile into "Name *" field with lower case
+            //5. Click "Next" button 
+
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password);
+
+            DataProfilePage dataProfilePage = new DataProfilePage(driver);
+            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
+            dataProfilePage.LnkAddNew.Click();
+            dataProfilePage.CreateDataProfile("action implementation by status", "test cases", "None", displayFields: true);
+
+            //6. VP: Check dialog message "Data Profile name already exists"
+
+            string actualDialogMessage = dataProfilePage.GetAlertMessage(closeAlert: true);
+            string expectedDialogMessage = "Data profile name already exists.";
+            Assert.AreEqual(expectedDialogMessage, actualDialogMessage, "Data Profile names are case sensitive");
+        }
+
+        /// <summary>Verify that all data profile types are listed under "Item Type" dropped down menu
+        /// </summary>
+        /// <author>Long</author>
+        /// <startdate>04/06/2016</startdate>
+        [TestMethod]
+        public void TC072()
+        {
+            Console.WriteLine("DA_LOGIN_TC072 - Verify that all data profile types are listed under \"Item Type\" dropped down menu");
+
+            //1. Navigate to Dashboard login page
+            //2. Select a specific repository 
+            //3. Enter valid Username and Password
+            //4. Click Login
+            //5. Click Administer->Data Profiles
+            //6. Click 'Add New' link
+
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password);
+
+            DataProfilePage dataProfilePage = new DataProfilePage(driver);
+            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
+            dataProfilePage.LnkAddNew.Click();
+
+            //7. "Check all data profile types are listed under ""Item Type"" dropped down menu in create profile page"
+
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Item Type", "Test Modules", attribute: "text"), "Test Modules type isn't listed under dropped down menu");
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Item Type", "Test Cases", attribute: "text"), "Test Cases type isn't listed under dropped down menu");
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Item Type", "Test Objectives", attribute: "text"), "Test Objectives type isn't listed under dropped down menu");
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Item Type", "Data Sets", attribute: "text"), "Data Sets type isn't listed under dropped down menu");
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Item Type", "Actions", attribute: "text"), "Actions type isn't listed under dropped down menu");
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Item Type", "Interface Entities", attribute: "text"), "Interface Entities type isn't listed under dropped down menu");
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Item Type", "Test Results", attribute: "text"), "Test Results type isn't listed under dropped down menu");
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Item Type", "Test Case Results", attribute: "text"), "Test Case Results type isn't listed under dropped down menu");
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Item Type", "Test Suites", attribute: "text"), "Test Suites type isn't listed under dropped down menu");
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Item Type", "Bugs", attribute: "text"), "Bugs type isn't listed under dropped down menu");
+        }
+
+        /// <summary>Verify that all data profile types are listed in priority order under "Item Type" dropped down menu
+        /// </summary>
+        /// <author>Long</author>
+        /// <startdate>04/06/2016</startdate>
+        [TestMethod]
+        public void TC073()
+        {
+            Console.WriteLine("DA_LOGIN_TC073 - Verify that all data profile types are listed in priority order under \"Item Type\" dropped down menu");
+
+            //1. Log in Dashboard
+            //2. Navigate to Data Profiles page
+            //3. Click on "Add New"
+
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password);
+
+            DataProfilePage dataProfilePage = new DataProfilePage(driver);
+            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
+            dataProfilePage.LnkAddNew.Click();
+
+            //4. Click on "Item Type" dropped down menu
+            //5. VP: Check "Item Type" items are listed in priority order
+
+            int position1 = dataProfilePage.GetItemPositionInCombobox("Item Type", "Test Modules");
+            int position2 = dataProfilePage.GetItemPositionInCombobox("Item Type", "Test Cases");
+            int position3 = dataProfilePage.GetItemPositionInCombobox("Item Type", "Test Objectives");
+            int position4 = dataProfilePage.GetItemPositionInCombobox("Item Type", "Data Sets");
+            int position5 = dataProfilePage.GetItemPositionInCombobox("Item Type", "Actions");
+            int position6 = dataProfilePage.GetItemPositionInCombobox("Item Type", "Interface Entities");
+            int position7 = dataProfilePage.GetItemPositionInCombobox("Item Type", "Test Results");
+            int position8 = dataProfilePage.GetItemPositionInCombobox("Item Type", "Test Case Results");
+            int position9 = dataProfilePage.GetItemPositionInCombobox("Item Type", "Test Suites");
+            int position10 = dataProfilePage.GetItemPositionInCombobox("Item Type", "Bugs");
+            Assert.AreEqual(true, position1 < position2 && position2 < position3 && position3 < position4 && position4 < position5 &&
+                position5 < position6 && position6 < position7 && position7 < position8 && position8 < position9 &&
+                position9 < position10, "Item Type items are not listed in priority order");
+        }
+
+        /// <summary>Verify that appropriate "Related Data" items are listed correctly corresponding to the "Item Type" items.			
+        /// </summary>
+        /// <author>Long</author>
+        /// <startdate>04/06/2016</startdate>
+        [TestMethod]
+        public void TC074()
+        {
+            Console.WriteLine("DA_LOGIN_TC074 - Verify that appropriate \"Related Data\" items are listed correctly corresponding to the \"Item Type\" items.");
+
+            //1. Navigate to Dashboard login page
+            //2. Select a specific repository 
+            //3. Enter valid Username and Password
+            //4. Click Login
+            //5. Click Administer->Data Profiles
+            //6. Click Add new link
+
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password);
+
+            DataProfilePage dataProfilePage = new DataProfilePage(driver);
+            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
+            dataProfilePage.LnkAddNew.Click();
+
+            //7. Select 'Test Modules' in 'Item Type' drop down list
+
+            dataProfilePage.CmbItemType.SelectItem("test modules");
+
+            //8. VP: Check 'Related Data' items listed correctly - Related Test Results and Related Test Cases
+
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Related Test Results", attribute: "text"), "Related Test Results isn't listed under dropped down menu");
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Related Test Cases", attribute: "text"), "Related Test Cases isn't listed under dropped down menu");
+
+            //9. Select 'Test Cases' in 'Item Type' drop down list 
+
+            dataProfilePage.CmbItemType.SelectItem("test cases");
+
+            //10. VP: Check 'Related Data' items listed correctly - Related Run Results and Related Objectives
+
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Related Run Results", attribute: "text"), "Related Run Results isn't listed under dropped down menu");
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Related Objectives", attribute: "text"), "Related Objectives isn't listed under dropped down menu");
+
+            //11. Select 'Test Objectives' in 'Item Type' drop down list
+
+            dataProfilePage.CmbItemType.SelectItem("test objectives");
+
+            //12. Check 'Related Data' items listed correctly - Related Run Results and Related Test Cases
+  
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Related Run Results", attribute: "text"), "Related Run Results isn't listed under dropped down menu");
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Related Test Cases", attribute: "text"), "Related Test Cases isn't listed under dropped down menu");
+
+            //13. Select 'Data Sets' in 'Item Type' drop down list
+
+            dataProfilePage.CmbItemType.SelectItem("data sets");
+
+            //14. VP: Check 'Related Data' items listed correctly - No related data appears
+
+            Assert.AreEqual(1, dataProfilePage.GetNumberOfItemsInCombobox("Related Data"), "There is(are) item(s) listed");
+
+            //15. Select 'Actions' in 'Item Type' drop down list
+
+            dataProfilePage.CmbItemType.SelectItem("actions");
+
+            //16. VP: Check 'Related Data' items listed correctly - Action Arguments
+
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Action Arguments", attribute: "text"), "Action Arguments isn't listed under dropped down menu");
+
+            //17. Select 'Interface Entities' in 'Item Type' drop down list
+
+            dataProfilePage.CmbItemType.SelectItem("interface entities");
+
+            //18. VP: Check 'Related Data' items listed correctly - Interface Elements
+
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Interface Elements", attribute: "text"), "Interface Elements isn't listed under dropped down menu");
+
+            //19. Select 'Test Results' in 'Item Type' drop down list
+
+            dataProfilePage.CmbItemType.SelectItem("test results");
+
+            //20. VP: Check 'Related Data' items listed correctly - Related Test Modules and Related Test Cases
+
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Related Test Modules", attribute: "text"), "Related Test Modules isn't listed under dropped down menu");
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Related Test Cases", attribute: "text"), "Related Test Cases isn't listed under dropped down menu");
+
+            //21. Select 'Test Case Results' in 'Item Type' drop down list
+
+            dataProfilePage.CmbItemType.SelectItem("test case results");
+
+            //22. VP: Check 'Related Data' items listed correctly - No related data appears
+
+            Assert.AreEqual(1, dataProfilePage.GetNumberOfItemsInCombobox("Related Data"), "There is(are) item(s) listed");
+        }
+
     }
 }

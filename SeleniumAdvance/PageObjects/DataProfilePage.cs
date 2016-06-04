@@ -100,7 +100,6 @@ namespace SeleniumAdvance.PageObjects
             wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//a[@href='#Administer']")));
         }
 
-
         /// <summary>
         /// Click Edit Profile link
         /// </summary>
@@ -330,12 +329,12 @@ namespace SeleniumAdvance.PageObjects
         /// <returns></returns>
         /// <author>Long</author>
         /// <startdate>04/06/2016</startdate>
-        public DataProfilePage CreateDataProfile(string profileName, string itemType, string relatedData, string displayFields = null, string sortFields = null, string filterFields = null, string statisticFields = null)
+        public DataProfilePage CreateDataProfile(string profileName, string itemType, string relatedData, bool displayFields = false, bool sortFields = false, string filterFields = null, bool statisticFields = false)
         {
             TxtName.InputText(profileName);
             CmbItemType.SelectItem(itemType);
             CmbRelatedData.SelectItem(relatedData);
-            if (displayFields == null)
+            if (displayFields == false)
                 BtnFinish.Click();
             else
                 BtnNext.Click();

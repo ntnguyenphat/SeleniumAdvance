@@ -54,21 +54,31 @@ namespace SeleniumAdvance.PageObjects
                 {
                     timeout = timeout - stopwatch.Elapsed.Ticks;
                     MyFindElement(by, timeout);
+                    stopwatch.Stop();
                 }
                 catch(NullReferenceException)
                 {
                     timeout = timeout - stopwatch.Elapsed.Ticks;
                     MyFindElement(by, timeout);
+                    stopwatch.Stop();
                 }
                 catch(WebDriverTimeoutException)
                 {
                     timeout = timeout - stopwatch.Elapsed.Ticks;
                     MyFindElement(by, timeout);
+                    stopwatch.Stop();
                 }
                 catch(ArgumentNullException)
                 {
                     timeout = timeout - stopwatch.Elapsed.Ticks;
                     MyFindElement(by, timeout);
+                    stopwatch.Stop();
+                }
+                catch (WebDriverException)
+                {
+                    timeout = timeout - stopwatch.Elapsed.Ticks;
+                    MyFindElement(by, timeout);
+                    stopwatch.Stop();
                 }
                 catch (NoSuchElementException)
                 {
@@ -107,21 +117,31 @@ namespace SeleniumAdvance.PageObjects
                 {
                     timeout = timeout - stopwatch.Elapsed.Ticks;
                     MyFindElements(by, timeout);
+                    stopwatch.Stop();
                 }
                 catch (NullReferenceException)
                 {
                     timeout = timeout - stopwatch.Elapsed.Ticks;
                     MyFindElements(by, timeout);
+                    stopwatch.Stop();
                 }
                 catch (WebDriverTimeoutException)
                 {
                     timeout = timeout - stopwatch.Elapsed.Ticks;
                     MyFindElements(by, timeout);
+                    stopwatch.Stop();
+                }
+                catch (WebDriverException)
+                {
+                    timeout = timeout - stopwatch.Elapsed.Ticks;
+                    MyFindElements(by, timeout);
+                    stopwatch.Stop();
                 }
                 catch (ArgumentNullException)
                 {
                     timeout = timeout - stopwatch.Elapsed.Ticks;
                     MyFindElements(by, timeout);
+                    stopwatch.Stop();
                 }
                 catch(NoSuchElementException)
                 {
