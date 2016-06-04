@@ -303,6 +303,7 @@ namespace SeleniumAdvance.TestCases
 
             //6. Create a new Data Profile
 
+            dataProfilePage.LnkAddNew.Click();
             dataProfilePage.CreateDataProfile(profileName, "test cases", "None");
 
             //7. Back to Data Profiles page
@@ -313,6 +314,46 @@ namespace SeleniumAdvance.TestCases
             //Post-condition: Delete created profile
 
             dataProfilePage.DeleteDataProfile(profileName);
+        }
+
+        /// <summary>Verify that user is unable to proceed to next step or finish creating data profile if  "Name *" field is left empty
+        /// </summary>
+        /// <author>Long</author>
+        /// <startdate>04/06/2016</startdate>
+        [TestMethod]
+        public void TC069()
+        {
+            Console.WriteLine("DA_LOGIN_TC069 - Verify that user is unable to proceed to next step or finish creating data profile if  \"Name *\" field is left empty");
+
+            //1. Log in Dashboard
+            //2. Navigate to Data Profiles page
+            //3. Click on "Add New"
+            //4. Click on "Next Button"
+
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password);
+
+            DataProfilePage dataProfilePage = new DataProfilePage(driver);
+            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
+            dataProfilePage.LnkAddNew.Click();
+            dataProfilePage.CreateDataProfile("", "test cases", "None","");
+
+            //5. VP: Check dialog message "Please input profile name" appears
+
+            string actualDialogMessage = dataProfilePage.GetAlertMessage(closeAlert: true);
+            string expectedDialogMessage = "Please input profile name.";
+            Assert.AreEqual(expectedDialogMessage, actualDialogMessage, "Please input profile name message doesn't appear");
+
+            //6. Click on "Finish Button"
+
+            dataProfilePage.CreateDataProfile("", "test cases", "None");
+
+            //7. VP: Check dialog message "Please input profile name" appears
+
+            actualDialogMessage = dataProfilePage.GetAlertMessage(closeAlert: true);
+            expectedDialogMessage = "Please input profile name.";
+            Assert.AreEqual(expectedDialogMessage, actualDialogMessage, "Please input profile name message doesn't appear");
+
         }
     }
 }

@@ -332,12 +332,13 @@ namespace SeleniumAdvance.PageObjects
         /// <startdate>04/06/2016</startdate>
         public DataProfilePage CreateDataProfile(string profileName, string itemType, string relatedData, string displayFields = null, string sortFields = null, string filterFields = null, string statisticFields = null)
         {
-            LnkAddNew.Click();
             TxtName.InputText(profileName);
             CmbItemType.SelectItem(itemType);
             CmbRelatedData.SelectItem(relatedData);
             if (displayFields == null)
                 BtnFinish.Click();
+            else
+                BtnNext.Click();
             return this;
         }
 
