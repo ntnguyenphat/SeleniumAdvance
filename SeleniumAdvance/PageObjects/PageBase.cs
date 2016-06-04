@@ -80,11 +80,6 @@ namespace SeleniumAdvance.PageObjects
                     MyFindElement(by, timeout);
                     stopwatch.Stop();
                 }
-                catch (NoSuchElementException)
-                {
-                    timeout = timeout - stopwatch.Elapsed.Ticks;
-                    MyFindElement(by, timeout);
-                }
             }
             stopwatch.Stop();
             return Ele;
@@ -142,11 +137,6 @@ namespace SeleniumAdvance.PageObjects
                     timeout = timeout - stopwatch.Elapsed.Ticks;
                     MyFindElements(by, timeout);
                     stopwatch.Stop();
-                }
-                catch(NoSuchElementException)
-                {
-                    timeout = timeout - stopwatch.Elapsed.Ticks;
-                    MyFindElements(by, timeout);
                 }
             }
             stopwatch.Stop();

@@ -271,7 +271,7 @@ namespace SeleniumAdvance.PageObjects
         /// <Author>Long</Author>
         /// <Startdate>26/05/2016</Startdate>
         /// <returns></returns>
-        public bool IsItemPresentInCombobox(string comboboxName, string comboboxItem)
+        public bool IsItemPresentInCombobox(string comboboxName, string comboboxItem,string attribute = "text")
         {
             //WebDriverWait wait = new WebDriverWait(_driverGeneralPage, TimeSpan.FromSeconds(10));
             //wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(string.Format(_cbbName, comboboxName).Replace(" ", ""))));

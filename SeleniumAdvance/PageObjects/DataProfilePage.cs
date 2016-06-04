@@ -361,6 +361,11 @@ namespace SeleniumAdvance.PageObjects
             wait.Until(ExpectedConditions.StalenessOf(TheLeftOfProfileName));
             return this;
         }
+        public int GetItemPositionInCombobox(string a, string b)
+        {
+            return 0;
+        }
+
         #endregion
     }
 }
