@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SeleniumAdvance.PageObjects;
 using SeleniumAdvance.Common;
 using SeleniumAdvance.DataObjects;
+using SeleniumAdvance.Ultilities;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 
@@ -487,6 +488,99 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(true, position1 < position2 && position2 < position3 && position3 < position4 && position4 < position5 &&
                 position5 < position6 && position6 < position7 && position7 < position8 && position8 < position9 &&
                 position9 < position10, "Item Type items are not listed in priority order");
-        }      
+        }
+
+        /// <summary>Verify that appropriate "Related Data" items are listed correctly corresponding to the "Item Type" items.			
+        /// </summary>
+        /// <author>Long</author>
+        /// <startdate>04/06/2016</startdate>
+        [TestMethod]
+        public void TC074()
+        {
+            Console.WriteLine("DA_LOGIN_TC074 - Verify that appropriate \"Related Data\" items are listed correctly corresponding to the \"Item Type\" items.");
+
+            //1. Navigate to Dashboard login page
+            //2. Select a specific repository 
+            //3. Enter valid Username and Password
+            //4. Click Login
+            //5. Click Administer->Data Profiles
+            //6. Click Add new link
+
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password);
+
+            DataProfilePage dataProfilePage = new DataProfilePage(driver);
+            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
+            dataProfilePage.LnkAddNew.Click();
+
+            //7. Select 'Test Modules' in 'Item Type' drop down list
+
+            dataProfilePage.CmbItemType.SelectItem("test modules");
+
+            //8. VP: Check 'Related Data' items listed correctly - Related Test Results and Related Test Cases
+
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Related Test Results", attribute: "text"), "Related Test Results isn't listed under dropped down menu");
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Related Test Cases", attribute: "text"), "Related Test Cases isn't listed under dropped down menu");
+
+            //9. Select 'Test Cases' in 'Item Type' drop down list 
+
+            dataProfilePage.CmbItemType.SelectItem("test cases");
+
+            //10. VP: Check 'Related Data' items listed correctly - Related Run Results and Related Objectives
+
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Related Run Results", attribute: "text"), "Related Run Results isn't listed under dropped down menu");
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Related Objectives", attribute: "text"), "Related Objectives isn't listed under dropped down menu");
+
+            //11. Select 'Test Objectives' in 'Item Type' drop down list
+
+            dataProfilePage.CmbItemType.SelectItem("test objectives");
+
+            //12. Check 'Related Data' items listed correctly - Related Run Results and Related Test Cases
+  
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Related Run Results", attribute: "text"), "Related Run Results isn't listed under dropped down menu");
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Related Test Cases", attribute: "text"), "Related Test Cases isn't listed under dropped down menu");
+
+            //13. Select 'Data Sets' in 'Item Type' drop down list
+
+            dataProfilePage.CmbItemType.SelectItem("data sets");
+
+            //14. VP: Check 'Related Data' items listed correctly - No related data appears
+
+            Assert.AreEqual(1, dataProfilePage.GetNumberOfItemsInCombobox("Related Data"), "There is(are) item(s) listed");
+
+            //15. Select 'Actions' in 'Item Type' drop down list
+
+            dataProfilePage.CmbItemType.SelectItem("actions");
+
+            //16. VP: Check 'Related Data' items listed correctly - Action Arguments
+
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Action Arguments", attribute: "text"), "Action Arguments isn't listed under dropped down menu");
+
+            //17. Select 'Interface Entities' in 'Item Type' drop down list
+
+            dataProfilePage.CmbItemType.SelectItem("interface entities");
+
+            //18. VP: Check 'Related Data' items listed correctly - Interface Elements
+
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Interface Elements", attribute: "text"), "Interface Elements isn't listed under dropped down menu");
+
+            //19. Select 'Test Results' in 'Item Type' drop down list
+
+            dataProfilePage.CmbItemType.SelectItem("test results");
+
+            //20. VP: Check 'Related Data' items listed correctly - Related Test Modules and Related Test Cases
+
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Related Test Modules", attribute: "text"), "Related Test Modules isn't listed under dropped down menu");
+            Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Related Data", "Related Test Cases", attribute: "text"), "Related Test Cases isn't listed under dropped down menu");
+
+            //21. Select 'Test Case Results' in 'Item Type' drop down list
+
+            dataProfilePage.CmbItemType.SelectItem("test case results");
+
+            //22. VP: Check 'Related Data' items listed correctly - No related data appears
+
+            Assert.AreEqual(1, dataProfilePage.GetNumberOfItemsInCombobox("Related Data"), "There is(are) item(s) listed");
+        }
+
     }
 }

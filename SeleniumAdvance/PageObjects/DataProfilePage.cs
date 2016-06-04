@@ -100,7 +100,6 @@ namespace SeleniumAdvance.PageObjects
             wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//a[@href='#Administer']")));
         }
 
-
         /// <summary>
         /// Click Edit Profile link
         /// </summary>
