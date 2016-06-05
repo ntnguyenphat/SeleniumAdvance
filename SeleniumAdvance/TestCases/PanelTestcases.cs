@@ -2127,7 +2127,6 @@ namespace SeleniumAdvance.TestCases
         /// <Author>Phat</Author>
         /// <Startdate>04/06/2016</Startdate>
         [TestMethod]
-
         public void TC050()
         {
             Console.WriteLine("DA_PANEL_TC050 - Verify that user is able to successfully edit \"Display Name\" of any Panel providing that the name is not duplicated with existing Panels' name");
@@ -2162,6 +2161,176 @@ namespace SeleniumAdvance.TestCases
             //Postconditions:
 
             panelPage.DeletePanel(panelName);
+        }
+
+        /// <summary>
+        /// Verify that user is unable to change "Display Name" of any Panel if there is special character except '@' inputted
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Startdate>05/06/2016</Startdate>
+        [TestMethod]
+        public void TC051()
+        {
+            Console.WriteLine("DA_PANEL_TC051 - Verify that user is unable to change \"Display Name\" of any Panel if there is special character except '@' inputted");
+
+            string panelName = string.Concat("Panel ", CommonMethods.GetUniqueString());
+            string panelName2 = "@" + panelName;
+
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Click Administer link
+            //4. Click Panel link
+            //5. Click Add New link
+            //6. Enter a valid name into Display Name field
+            //7. Click on OK button
+
+            LoginPage loginPage = new LoginPage(driver);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+
+            mainPage.SelectMenuItem("Administer", "Panel");
+            PanelPage panelPage = new PanelPage(driver);
+            panelPage.LnkAddNew.Click();
+            panelPage.TxtDisplayName.SendKeys(panelName);
+            panelPage.CmbSeries.SelectItem("name", "Value");
+            panelPage.BtnOK.Click();
+            panelPage.WaitForAddingPanel(panelName);
+
+            //8. Click Edit link
+            //9. Edit panel name with special characters
+            //10. Click Ok button
+
+            panelPage.ClickEditPanel(panelName);
+            panelPage.TxtDisplayName.InputText("test!@#%");
+            panelPage.BtnOK.Click();
+
+            string observedMessage = panelPage.GetAlertMessage(true);
+            string expectedMessage = "Invalid display name. The name can't contain high ASCII characters or any of following characters: /:*?<>|\"#{[]{};";
+
+            //VP: Message "Invalid display name. The name can't contain high ASCII characters or any of following characters: /:*?<>|"#{[]{};" is displayed
+
+            Assert.AreEqual(expectedMessage, observedMessage, "\nActual: " + observedMessage + "\nExpected: " + expectedMessage);
+
+            //11. Click Edit link
+            //12. Edit panel name with special characters
+            //13. Click Ok button
+
+            panelPage.TxtDisplayName.InputText(panelName2);
+            panelPage.BtnOK.Click();
+
+            bool actual = panelPage.IsPanelCreatedInPanelPage(panelName2);
+
+            //VP: User is able to edit panel name with special characters is @
+
+            Assert.AreEqual(true, actual, "Panel is not edited successfully!");
+
+            //Post conditions:
+
+            panelPage.DeletePanel(panelName2);
+        }
+
+        /// <summary>
+        /// Verify that user is unable to edit  "Height *" field to anything apart from integer number with in 300-800 range
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Startdate>05/06/2016</Startdate>
+        [TestMethod]
+        public void TC052()
+        {
+            Console.WriteLine("DA_PANEL_TC052 - Verify that user is unable to edit  \"Height *\" field to anything apart from integer number with in 300-800 range");
+
+            string panelName = string.Concat("Panel ", CommonMethods.GetUniqueString());
+            string pageName = string.Concat("Page ", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Create a new page
+            //4. Click Choose Panel button
+            //5. Click Create New Panel button
+            //6. Enter all required fields on Add New Panel page
+            //7. Click on OK button
+            //8. Enter invalid height into Height field
+            //9. Click Ok button
+
+            LoginPage loginPage = new LoginPage(driver);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+            mainPage.AddPage(pageName).BtnChoosePanels.Click();
+
+            PanelPage panelPage = new PanelPage(driver);
+            panelPage.BtnCreateNewPanel.Click();
+            panelPage.TxtDisplayName.SendKeys(panelName);
+            panelPage.CmbSeries.SelectItem("name", "Value");
+            panelPage.BtnOK.Click();
+
+            PanelConfigurationDialog configDialog = new PanelConfigurationDialog(driver);
+            configDialog.TxtHeight.InputText("200");
+            configDialog.BtnOk.Click();
+
+            string observedMessage = configDialog.GetAlertMessage(true);
+            string expectedMessage = "Panel Height must be greater than or equal to 300 and lower than or equal to 800";
+
+            //VP: There is message "Panel Height must be greater than or equal to 300 and lower than or equal to 800"
+
+            Assert.AreEqual(expectedMessage, observedMessage, "\nActual: " + observedMessage + "\nExpected: " + expectedMessage);
+
+            //10. Close Warning Message box
+            //11. Enter valid height into Height field
+            //12. Click Ok button
+
+            configDialog.TxtHeight.InputText("400");
+            configDialog.BtnOk.Click();
+
+            bool actual = mainPage.IsPanelCreatedInMainPage(panelName);
+
+            //VP: User is able to edit Height field to anything apart from integer number with in 300-800 range
+
+            Assert.AreEqual(true, actual, "\nUser is unable to edit Heigt field to anything apart from integer number with in 300-800 range");
+
+            //Postconditions:
+
+            mainPage.DeletePage(pageName);
+        }
+
+        /// <summary>
+        /// Verify that newly created panel are populated and sorted correctly in Panel lists under "Choose panels" form
+        /// </summary>
+        /// <Author>Phat</Author>
+        /// <Startdate>05/06/2016</Startdate>
+        //[TestMethod]
+
+        public void TC053()
+        {
+            //TODO - Testcase dai qua. Viet sau :)
+        }
+
+        /// <summary>
+        /// Verify that user is able to successfully edit "Folder" field with valid path
+        /// </summary>
+        [TestMethod]
+        public void TC054()
+        {
+            Console.WriteLine("DA_PANEL_TC054 - Verify that user is able to successfully edit \"Folder\" field with valid path");
+
+            string panelName = string.Concat("Panel ", CommonMethods.GetUniqueString());
+            string pageName = string.Concat("Page ", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Dashboard login page
+            //2. Login with valid account
+            //3. Create a new page
+            //4. Create a new panel
+            //5. Click Choose Panel button
+            //6. Click on the newly created panel link
+            //7. Edit valid folder path
+            //8. Click Ok button
+
+            LoginPage loginPage = new LoginPage(driver);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+            mainPage.AddPage(pageName).BtnChoosePanels.Click();
+
+            PanelPage panelPage = new PanelPage(driver);
+            panelPage.BtnCreateNewPanel.Click();
+            panelPage.TxtDisplayName.SendKeys(panelName);
+            panelPage.CmbSeries.SelectItem("name", "Value");
+            panelPage.BtnOK.Click();
         }
     }
 }

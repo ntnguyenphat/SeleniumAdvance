@@ -29,8 +29,8 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _rbHeatMap = By.XPath("//label[contains(.,'Heat Map')]/input[contains(@id,'radPanelType')]");
         static readonly By _cmbDataProfile = By.XPath("//select[@id='cbbProfile']");
         static readonly By _txtDisplayName = By.XPath("//input[@id='txtDisplayName']");
-        static readonly By _btnOK = By.XPath("//div[@class='ui-dialog editpanelDlg' and contains(@style,'display: block')]//input[@id='OK']");
-        static readonly By _btnCancel = By.XPath("//div[@class='ui-dialog editpanelDlg' and contains(@style,'display: block')]//input[@id='Cancel']");
+        static readonly By _btnOK = By.XPath("//div[contains(@class,'editpanelDlg') and contains(@style,'display: block')]//input[@id='OK']");
+        static readonly By _btnCancel = By.XPath("//div[contains(@class,'editpanelDlg') and contains(@style,'display: block')]//input[@id='Cancel']");
         static readonly By _lnkAddNew = By.XPath("//a[contains(@href,'openAddPanel')]");
         static readonly By _lblSettingHeader = By.XPath("//fieldset[@id='fdSettings']/legend");
         static readonly By _txtChartTitle = By.XPath("//input[@id='txtChartTitle']");
