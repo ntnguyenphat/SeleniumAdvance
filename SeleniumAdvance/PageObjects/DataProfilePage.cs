@@ -280,7 +280,7 @@ namespace SeleniumAdvance.PageObjects
             GetIndexOfTableCellValue(dataProfile, out row_number, out column_number);
             try
             {
-                IWebElement TheLeftOfProfileName = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]/input", row_number, column_number - 1)));
+                IWebElement TheLeftOfProfileName = _driverDataProfile.FindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]/input", row_number, column_number - 1)));
                 if (TheLeftOfProfileName.GetAttribute("type") == "checkbox")
                     return true;
                 else
@@ -361,11 +361,7 @@ namespace SeleniumAdvance.PageObjects
             wait.Until(ExpectedConditions.StalenessOf(TheLeftOfProfileName));
             return this;
         }
-        public int GetItemPositionInCombobox(string a, string b)
-        {
-            return 0;
-        }
-
+       
         #endregion
     }
 }

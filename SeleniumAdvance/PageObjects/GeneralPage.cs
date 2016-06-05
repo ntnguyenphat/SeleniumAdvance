@@ -28,8 +28,8 @@ namespace SeleniumAdvance.PageObjects
         static string _lnkMainMenu = "//li[@class='sep']/parent::*/../a[contains(.,'{0}')]";
         static string _lnkSubMenu = "//li[@class='sep']/parent::*/../a[contains(.,'{0}')]/following::a[contains(.,'{1}')]";
         static string _lnkSettingItem = "//li[@class='mn-setting']//a[ .='{0}']";
-        static string _cbbName = "//select[contains(@id,'cbb{0}')]";
-
+        //static string _cbbName = "//select[contains(@id,'cbb{0}')]";
+        static string _cbbName = "//td[contains(text(), '{0}')]/following-sibling::*/descendant::select";
 
         #endregion
 
@@ -271,17 +271,24 @@ namespace SeleniumAdvance.PageObjects
         /// <Author>Long</Author>
         /// <Startdate>26/05/2016</Startdate>
         /// <returns></returns>
-        public bool IsItemPresentInCombobox(string comboboxName, string comboboxItem,string attribute = "text")
+        public bool IsItemPresentInCombobox(string comboboxName, string comboboxItem,string attribute = "value")
         {
-            //WebDriverWait wait = new WebDriverWait(_driverGeneralPage, TimeSpan.FromSeconds(10));
-            //wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(string.Format(_cbbName, comboboxName).Replace(" ", ""))));
             bool isItemPresentInCombobox = false;
-            var combo = MyFindElement(By.XPath(string.Format(_cbbName,comboboxName).Replace(" ","")));
-            foreach (var item in combo.FindElements(By.TagName("option")))
+            foreach (IWebElement item in MyFindElements(By.XPath(string.Format(_cbbName + "/descendant::*",comboboxName))))
             {
-                if (item.GetAttribute("value") == comboboxItem)
+                if (attribute == "value")
                 {
-                    isItemPresentInCombobox = true;
+                    if (item.GetAttribute("value") == comboboxItem)
+                    {
+                        isItemPresentInCombobox = true;
+                    }
+                }
+                else if(attribute == "text")
+                {
+                    if (item.Text.Trim() == comboboxItem)
+                    {
+                        isItemPresentInCombobox = true;
+                    }
                 }
             }
             return isItemPresentInCombobox;
@@ -295,7 +302,7 @@ namespace SeleniumAdvance.PageObjects
         /// <returns></returns>
         public int GetNumberOfItemsInCombobox(string comboboxName)
         {
-            IWebElement Combo = MyFindElement(By.XPath(string.Format(_cbbName, comboboxName).Replace(" ", "")));
+            IWebElement Combo = MyFindElement(By.XPath(string.Format(_cbbName, comboboxName)));
             SelectElement ListBox = new SelectElement(Combo);
             int numberOfItems = ListBox.Options.Count();
             return numberOfItems;
@@ -310,7 +317,7 @@ namespace SeleniumAdvance.PageObjects
         /// <returns></returns>
         public string GetSelectedItemOfCombobox(string comboboxName)
         {
-            IWebElement Combo = MyFindElement(By.XPath(string.Format(_cbbName, comboboxName).Replace(" ", "")));
+            IWebElement Combo = MyFindElement(By.XPath(string.Format(_cbbName, comboboxName)));
             SelectElement ListBox = new SelectElement(Combo);
             string selectedItem = ListBox.SelectedOption.Text.Trim();
             return selectedItem;
@@ -332,6 +339,22 @@ namespace SeleniumAdvance.PageObjects
                 xpath = By.XPath("//a[contains(.,'" + linkText + "')]");
 
            MyFindElement(xpath).Click();
+        }
+
+         public int GetItemPositionInCombobox(string comboboxName, string comboboxItem)
+        {
+             int itemPosition = -1;
+             if (IsItemPresentInCombobox(comboboxName, comboboxItem, "value") == false && IsItemPresentInCombobox(comboboxName, comboboxItem, "text") == false)
+                 return -1;
+             else
+             {
+                 foreach (IWebElement item in MyFindElements(By.XPath(string.Format(_cbbName + "/descendant::*", comboboxName))))
+                 {
+                     if (item.GetAttribute("value") == comboboxItem || item.Text.Trim() == comboboxItem)
+                         itemPosition = Int32.Parse(item.GetAttribute("index"));
+                 }
+             }
+             return itemPosition;
         }
 
         #endregion 

@@ -42,6 +42,7 @@ namespace SeleniumAdvance.PageObjects
                 try
                 {
                     WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
+                    wait.Until(ExpectedConditions.ElementExists(by));
                     wait.Until(driver => _driver.FindElement(by).Displayed);
                     //if (by.ToString().Contains("input"))
                     //{
