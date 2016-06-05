@@ -30,6 +30,14 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _btnFinish = By.XPath("//input[@value='Finish']");
         static readonly By _btnCancel = By.XPath("//input[@value='Cancel']");
         static readonly By _lnkDelete = By.XPath("//a[.='Delete']");
+        static readonly By _tabGenenalSettings = By.XPath("//li[.='General Settings']");
+        static readonly By _tabDisplayFields = By.XPath("//li[.='Display Fields']");
+        static readonly By _tabSortFields = By.XPath("//li[.='Sort Fields']");
+        static readonly By _tabFilterFields = By.XPath("//li[.='Filter Fields']");
+        static readonly By _tabStatisticFields = By.XPath("//li[.='Statistic Fields']");
+        static readonly By _tblProfileSettings = By.XPath("//table[@id='profilesettings']/tbody/tr");
+        static readonly By _lbFilterList = By.XPath("//select[@id = 'listCondition']");
+        static string _chb = "//input[@class = 'box']";
 
         #endregion
 
@@ -75,6 +83,38 @@ namespace SeleniumAdvance.PageObjects
             get { return MyFindElement(_lnkDelete); }
         }
 
+        public IWebElement TabGenenalSettings
+        {
+            get { return MyFindElement(_tabGenenalSettings); }
+        }
+        public IWebElement TabDisplayFields
+        {
+            get { return MyFindElement(_tabDisplayFields); }
+        }
+        public IWebElement TabSortFields
+        {
+            get { return MyFindElement(_tabSortFields); }
+        }
+        public IWebElement TabFilterFields
+        {
+            get { return MyFindElement(_tabFilterFields); }
+        }
+
+        public IWebElement TabStatisticFields
+        {
+            get { return MyFindElement(_tabStatisticFields); }
+        }
+
+        public ReadOnlyCollection<IWebElement> TblProfileSettings
+        {
+            get { return MyFindElements(_tblProfileSettings); }
+        }
+
+        public IWebElement LbFilterList
+        {
+            get { return MyFindElement(_lbFilterList); }
+        }
+
         #endregion
 
         #region Methods
@@ -93,7 +133,7 @@ namespace SeleniumAdvance.PageObjects
         /// <Startdate>23/05/2016</Startdate>
         public void WaitForAddingProfile(string profileName)
         {
-            By panel = By.XPath("//a[.='" + profileName + "']");
+            By panel = By.XPath("//a[.='" + profileName.Replace(" ", "\u00A0") + "']");
             WebDriverWait wait = new WebDriverWait(_driverDataProfile, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(panel));
             wait.Until(ExpectedConditions.ElementToBeClickable(_lnkAddNew));
@@ -109,7 +149,7 @@ namespace SeleniumAdvance.PageObjects
         /// <returns></returns>
         public DataProfilePage ClickEditProfile(string profileName)
         {
-            By xpath = By.XPath("//a[.='" + profileName + "']/ancestor::tr//a[.='Edit']");
+            By xpath = By.XPath("//a[.='" + profileName.Replace(" ", "\u00A0") + "']/ancestor::tr//a[.='Edit']");
             MyFindElement(xpath).Click();
             WebDriverWait wait = new WebDriverWait(_driverDataProfile, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementExists(_txtName));
@@ -126,7 +166,7 @@ namespace SeleniumAdvance.PageObjects
         /// <returns></returns>
         public void ClickDeleteProfile(string profileName)
         {
-            By xpath = By.XPath("//a[.='" + profileName + "']/ancestor::tr//a[.='Delete']");
+            By xpath = By.XPath("//a[.='" + profileName.Replace(" ", "\u00A0") + "']/ancestor::tr//a[.='Delete']");
             MyFindElement(xpath).Click();
             WebDriverWait wait = new WebDriverWait(_driverDataProfile, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.AlertIsPresent());
@@ -142,7 +182,7 @@ namespace SeleniumAdvance.PageObjects
         /// <returns></returns>
         public DataProfilePage DeleteProfile(string profileName)
         {
-            By xpath = By.XPath("//a[.='" + profileName + "']/ancestor::tr//a[.='Delete']");
+            By xpath = By.XPath("//a[.='" + profileName.Replace(" ", "\u00A0") + "']/ancestor::tr//a[.='Delete']");
             if (this.IsElementExist(xpath))
             {
                 this.SelectMenuItem("Administer", "Data Profiles");
@@ -361,7 +401,41 @@ namespace SeleniumAdvance.PageObjects
             wait.Until(ExpectedConditions.StalenessOf(TheLeftOfProfileName));
             return this;
         }
-       
+
+        /// <summary>
+        /// Deteminie if all check boxes are unchecked.
+        /// </summary>
+        /// <returns></returns>
+        /// <author>Long</author>
+        /// <startdate>05/06/2016</startdate>
+        public bool AreAllCheckBoxesUnChecked()
+        {
+            bool areAllCheckBoxesUnChecked = true;
+            ReadOnlyCollection<IWebElement> Checkboxes = MyFindElements(By.XPath(_chb));
+            foreach (IWebElement checkbox in Checkboxes)
+            {
+                if (checkbox.Selected == true)
+                {
+                    areAllCheckBoxesUnChecked = false;     
+                }
+            }
+            return areAllCheckBoxesUnChecked;
+        }
+
+        public int GetNumberOfRowInProfileSettingsTable()
+        {
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(By.XPath("//table[@id='profilesettings']/tbody/tr")));
+            ReadOnlyCollection<IWebElement> RowCollection = MyFindElements(By.XPath("//table[@id='profilesettings']/tbody/tr"));
+            return RowCollection.Count;
+        }
+
+        public int GetNumberOfItemInListbox()
+        {
+            SelectElement ListBox = new SelectElement(LbFilterList);
+            int numberOfItems = ListBox.Options.Count();
+            return numberOfItems;
+        }
         #endregion
     }
 }

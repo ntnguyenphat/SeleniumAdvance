@@ -582,5 +582,81 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(1, dataProfilePage.GetNumberOfItemsInCombobox("Related Data"), "There is(are) item(s) listed");
         }
 
+        /// <summary>Verify that default settings are applied correctly for newly created data profiles if user only set up "General Settings" page and finishes.
+        /// </summary>
+        /// <author>Long</author>
+        /// <startdate>05/06/2016</startdate>
+        [TestMethod]
+        public void TC075()
+        {
+            Console.WriteLine("DA_LOGIN_TC075 - Verify that default settings are applied correctly for newly created data profiles if user only set up \"General Settings\" page and finishes.");
+
+            string profileName = string.Concat("Profile ", CommonMethods.GetUniqueString());
+
+            //1. Navigate to Data Profiles page
+            //2. Login with valid account
+            //3. Click on "Add New"
+
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.Open().Login(Constant.Username, Constant.Password);
+
+            DataProfilePage dataProfilePage = new DataProfilePage(driver);
+            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
+            dataProfilePage.LnkAddNew.Click();
+
+            //4. Input to "Name *" field
+            //5. Click "Item Type" and choose an item
+            //6. Click "Finish" button
+
+            dataProfilePage.CreateDataProfile(profileName, "test cases", "None");
+
+            //7. Click on the newly created data profile
+
+            dataProfilePage.ClickEditProfile(profileName);
+
+            //8. VP: Check the setting of General Settings Page
+
+            Assert.AreEqual(profileName, dataProfilePage.TxtName.GetAttribute("value"), "Profile name is not correct");
+            Assert.AreEqual("Test Cases", dataProfilePage.GetSelectedItemOfCombobox("Item Type"), "Item type is not correct");
+            Assert.AreEqual("None", dataProfilePage.GetSelectedItemOfCombobox("Related Data"), "Related data is not correct");
+
+            //9. Click Next Button
+
+            dataProfilePage.BtnNext.Click();
+
+            //10. VP: Check the setting of Display Fields Page - All check boxes are un-checked
+
+            Assert.AreEqual(true, dataProfilePage.AreAllCheckBoxesUnChecked(), "There is/are checkbox(es) checked");
+
+            //11. Click Next Button
+
+            dataProfilePage.BtnNext.Click();
+
+            //12. VP: Check the setting of Sort Fields Page - Empty Sort Criteria list
+
+            Assert.AreEqual(4, dataProfilePage.GetNumberOfRowInProfileSettingsTable(), "Sort Criteria list is not empty");
+
+            //13. Click Next Button
+
+            dataProfilePage.BtnNext.Click();
+
+            //14. VP: Check the setting of Filter Fields Page - Empty Filter list
+
+            Assert.AreEqual(0, dataProfilePage.GetNumberOfItemInListbox(), "Filter list is not empty");
+
+            //15. Click Next Button
+
+            dataProfilePage.BtnNext.Click();
+
+            //16. VP: Check the setting of Statistic Page - All check boxes are un-checked
+
+            Assert.AreEqual(true, dataProfilePage.AreAllCheckBoxesUnChecked(), "There is/are checkbox(es) checked");
+
+            //Post-condition: Delete created profile
+
+            dataProfilePage.BtnCancel.Click();
+            dataProfilePage.DeleteDataProfile(profileName);
+        }
+
     }
 }

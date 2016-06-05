@@ -341,6 +341,14 @@ namespace SeleniumAdvance.PageObjects
            MyFindElement(xpath).Click();
         }
 
+        /// <summary>
+        /// Get the item position in combobox.
+        /// </summary>
+        /// <param name="comboboxName">Name of the combobox.</param>
+        /// <param name="comboboxItem">The combobox item.</param>
+        /// <returns></returns>
+        /// <author>Long</author>
+        /// <startdate>05/06/2016</startdate>
          public int GetItemPositionInCombobox(string comboboxName, string comboboxItem)
         {
              int itemPosition = -1;

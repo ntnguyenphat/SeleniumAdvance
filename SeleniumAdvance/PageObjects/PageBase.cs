@@ -104,8 +104,8 @@ namespace SeleniumAdvance.PageObjects
             {
                 try
                 {
-                    WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-                    wait.Until(ExpectedConditions.ElementExists(by));
+                    WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
+                    wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(by));
                     Eles = _driver.FindElements(by);
                     break;
                 }
