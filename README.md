@@ -1,12 +1,14 @@
 **AUTOMATION TEST WITH SELENIUM WEBDRIVER**
 -------------------------------------------
-- **INTRODUCTION**
+
+- **INTRODUCTION*** 
 -  **REQUIREMENTS** 
 - **HOW TO GET AND RUN THE EXAMPLE PROJECT** 
 - **REFERENCES**
 
 
 **INTRODUCTION**
+----------------
 
 Selenium Web Driver is a tool for writing automated tests of websites. It aims to mimic the behavior of a real user, and as such interacts with the HTML of the application.
 
@@ -23,15 +25,16 @@ Selenium Web Driver enables you to use a programming language in creating your t
  - Perl
  - Ruby
 
-You do not have to know all of them. You just need to be knowledgeable in one. However, for the example project, we will be using C# with Visual Studio as our IDE and Mozilla Firefox as our browser.
+You do not have to know all of them. You just need to be knowledgeable in one. However, for the example project, we will be using C# with Visual Studio as our IDE and Mozilla Firefox as out browser.
 
 **REQUIREMENTS**
-
+----------------
  - Windows 7 or newer operating system
  - Visual Studio 2013 or newer
  - Mozilla Firefox
 
 **HOW TO GET AND RUN THE EXAMPLE PROJECT**
+------------------------------------------
 
 All you have to do is download, extract and run the automation test cases in the example project.
 
@@ -59,6 +62,7 @@ Detailed instructions:
    the result.
 
 **REFERENCES**
+--------------
 
 For more information about Selenium Webdriver, please see at http://www.seleniumhq.org/docs/
 
