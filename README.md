@@ -4,7 +4,7 @@
 - [**INTRODUCTION**](https://github.com/ntnguyenphat/SeleniumAdvance/blob/master/README.md#introduction)
 -  **[REQUIREMENTS](https://github.com/ntnguyenphat/SeleniumAdvance/blob/master/README.md#requirements)** 
 - **[HOW TO GET AND RUN THE EXAMPLE PROJECT](https://github.com/ntnguyenphat/SeleniumAdvance/blob/master/README.md#how-to-get-and-run-the-example-project)** 
-- **[REFERENCES](https://github.com/ntnguyenphat/SeleniumAdvance/blob/master/README.md#references)***
+- **[REFERENCES](https://github.com/ntnguyenphat/SeleniumAdvance/blob/master/README.md#references)**
 
 
 **INTRODUCTION**
