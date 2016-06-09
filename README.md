@@ -62,4 +62,4 @@ Detailed instructions:
 
 For more information about Selenium Webdriver, please see at http://www.seleniumhq.org/docs/
 
-Any problems or questions, please email us at gravity@239@gmail.com or phat.nguyen@logigear.com
+Any problems or questions, please email us at [gravity@239@gmail.com](gravity239@gmail.com) or [phat.nguyen@logigear.com](phat.nguyen@logigear.com)
