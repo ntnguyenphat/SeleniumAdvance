@@ -25,7 +25,7 @@ Selenium Web Driver enables you to use a programming language in creating your t
  - Perl
  - Ruby
 
-You do not have to know all of them. You just need to be knowledgeable in one. However, for the example project, we will be using C# with Visual Studio as our IDE and Mozilla Firefox as out browser.
+You do not have to know all of them. You just need to be knowledgeable in one. However, for the example project, we will be using C# with Visual Studio as our IDE and Mozilla Firefox as our browser.
 
 **REQUIREMENTS**
 ----------------
