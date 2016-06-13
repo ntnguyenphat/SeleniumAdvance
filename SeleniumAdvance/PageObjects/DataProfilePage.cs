@@ -119,7 +119,8 @@ namespace SeleniumAdvance.PageObjects
 
         #region Methods
 
-        public DataProfilePage(IWebDriver driver):base(driver)
+        public DataProfilePage(IWebDriver driver)
+            : base(driver)
         {
             this._driverDataProfile = driver;
         }
@@ -134,7 +135,7 @@ namespace SeleniumAdvance.PageObjects
         public void WaitForAddingProfile(string profileName)
         {
             By panel = By.XPath("//a[.='" + profileName.Replace(" ", "\u00A0") + "']");
-            WebDriverWait wait = new WebDriverWait(_driverDataProfile, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverDataProfile, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.ElementExists(panel));
             wait.Until(ExpectedConditions.ElementToBeClickable(_lnkAddNew));
             wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//a[@href='#Administer']")));
@@ -151,7 +152,7 @@ namespace SeleniumAdvance.PageObjects
         {
             By xpath = By.XPath("//a[.='" + profileName.Replace(" ", "\u00A0") + "']/ancestor::tr//a[.='Edit']");
             MyFindElement(xpath).Click();
-            WebDriverWait wait = new WebDriverWait(_driverDataProfile, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverDataProfile, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.ElementExists(_txtName));
             return this;
         }
@@ -168,7 +169,7 @@ namespace SeleniumAdvance.PageObjects
         {
             By xpath = By.XPath("//a[.='" + profileName.Replace(" ", "\u00A0") + "']/ancestor::tr//a[.='Delete']");
             MyFindElement(xpath).Click();
-            WebDriverWait wait = new WebDriverWait(_driverDataProfile, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverDataProfile, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.AlertIsPresent());
         }
 
@@ -183,10 +184,7 @@ namespace SeleniumAdvance.PageObjects
         public DataProfilePage DeleteProfile(string profileName)
         {
             By xpath = By.XPath("//a[.='" + profileName.Replace(" ", "\u00A0") + "']/ancestor::tr//a[.='Delete']");
-            if (this.IsElementExist(xpath))
-            {
-                this.SelectMenuItem("Administer", "Data Profiles");
-            }
+            this.SelectMenuItem("Administer", "Data Profiles");
             ClickDeleteProfile(profileName);
             IAlert alert = _driverDataProfile.SwitchTo().Alert();
             alert.Accept();
@@ -207,16 +205,16 @@ namespace SeleniumAdvance.PageObjects
             for (int i_RowNum = 2; i_RowNum <= RowCollection.Count; i_RowNum++)
             {
                 ReadOnlyCollection<IWebElement> ColCollection = MyFindElements(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td", i_RowNum)));
-                for (int i_ColNum = 1; i_ColNum <= ColCollection.Count; i_ColNum++ )
+                for (int i_ColNum = 1; i_ColNum <= ColCollection.Count; i_ColNum++)
                 {
-                    IWebElement ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", i_RowNum, i_ColNum))); 
+                    IWebElement ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", i_RowNum, i_ColNum)));
                     if (dataProfiles.DataProfileName == ColElement.Text)
                     {
                         doesPresetDataProfileExist = true;
                         if (dataProfiles.ItemType == null)
                             break;
                         else
-                        { 
+                        {
                             ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", i_RowNum, i_ColNum + 1)));
                             if (dataProfiles.ItemType == ColElement.Text)
                             {
@@ -257,7 +255,7 @@ namespace SeleniumAdvance.PageObjects
             ReadOnlyCollection<IWebElement> ColCollection = MyFindElements(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td", row_number)));
             IWebElement ColElement = MyFindElement(By.XPath(string.Format("//table[@class = 'GridView']/tbody/tr[{0}]/td[{1}]", row_number, column_number)));
             cellValue = ColElement.Text;
-            return cellValue;                                      
+            return cellValue;
         }
 
         /// <summary>
@@ -397,7 +395,7 @@ namespace SeleniumAdvance.PageObjects
             LnkDelete.Click();
             IAlert alert = _driverDataProfile.SwitchTo().Alert();
             alert.Accept();
-            WebDriverWait wait = new WebDriverWait(_driverGeneralPage, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverGeneralPage, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.StalenessOf(TheLeftOfProfileName));
             return this;
         }
@@ -416,15 +414,21 @@ namespace SeleniumAdvance.PageObjects
             {
                 if (checkbox.Selected == true)
                 {
-                    areAllCheckBoxesUnChecked = false;     
+                    areAllCheckBoxesUnChecked = false;
                 }
             }
             return areAllCheckBoxesUnChecked;
         }
 
+        /// <summary>
+        /// Gets the number of row in profile settings table.
+        /// </summary>
+        /// <returns></returns>
+        /// <author>Long</author>
+        /// <startdate>05/06/2016</startdate>
         public int GetNumberOfRowInProfileSettingsTable()
         {
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(By.XPath("//table[@id='profilesettings']/tbody/tr")));
             ReadOnlyCollection<IWebElement> RowCollection = MyFindElements(By.XPath("//table[@id='profilesettings']/tbody/tr"));
             return RowCollection.Count;

@@ -51,9 +51,9 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _cmbSelectPage = By.XPath("//select[@id='cbbPages']");
         static readonly By _txtHeight = By.XPath("//input[@id='txtHeight']");
         static readonly By _txtFolder = By.XPath("//input[@id='txtFolder']");
-        static readonly By _chbDataLabelsSeries = By.XPath("//input[@id='chkSeriesName']"); 
-        static readonly By _chbDataLabelsCategories = By.XPath("//input[@id='chkCategoriesName']"); 
-        static readonly By _chbDataLabelsValue = By.XPath("//input[@id='chkValue']"); 
+        static readonly By _chbDataLabelsSeries = By.XPath("//input[@id='chkSeriesName']");
+        static readonly By _chbDataLabelsCategories = By.XPath("//input[@id='chkCategoriesName']");
+        static readonly By _chbDataLabelsValue = By.XPath("//input[@id='chkValue']");
         static readonly By _chbDataLabelsPercentage = By.XPath("//input[@id='chkPercentage']");
         static readonly By _lblPanelDialog = By.XPath("//span[@id='ui-dialog-title-div_panelPopup']");
         static readonly By _txtFrom = By.XPath("input[@id='criteria'");
@@ -63,14 +63,9 @@ namespace SeleniumAdvance.PageObjects
         static readonly By _cmbStatisticField = By.XPath("//select[@id='cbbStatField'");
         static readonly By _cmbStatisticFieldValue = By.XPath("//select[@id='cbbStatFieldValue'");
         static readonly By _rbSetAsHeatValue = By.XPath("//input[@id='radHeatValue_default']");
-        static string panelTypeInAddNewDialog ="//table[@id='infoSettings']//td[.='Type']/following-sibling::td/descendant::input";
+        static string panelTypeInAddNewDialog = "//table[@id='infoSettings']//td[.='Type']/following-sibling::td/descendant::input";
         static string panelTypeInEditDialog = "//table[@id='infoSettings']//td[.='Type']/following-sibling::td/label[@class='panel_setting_paneltype']";
         static string panelTypeToSelect = "//label[contains(.,'{0}')]/input[contains(@id,'radPanelType')]";
-       
-        //static string _lnkEdit = "a[.='{0}']/following::a[.='Edit']";
-        //static string _lnkDelete = "a[.='{0}']/following::a[.='Delete']";
-
-        //static readonly By _chbStatistic = By.XPath("//select[@id='cbbStatField']");
 
         #endregion
 
@@ -289,7 +284,8 @@ namespace SeleniumAdvance.PageObjects
 
         #region Methods
 
-        public PanelPage(IWebDriver driver) : base(driver)
+        public PanelPage(IWebDriver driver)
+            : base(driver)
         {
             this._driverPanelPage = driver;
         }
@@ -336,17 +332,13 @@ namespace SeleniumAdvance.PageObjects
         /// <param name="panelName">Name of the panel.</param>
         /// <Author>Phat</Author>
         /// <<Startdate>>23/05/2016</<Startdate>>
-        public void WaitForAddingPanel(string panelName)
+        public PanelPage WaitForAddingPanel(string panelName)
         {
             By panel = By.XPath("//a[.='" + panelName + "']");
-            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.ElementExists(panel));
             wait.Until(ExpectedConditions.ElementToBeClickable(_lnkAddNew));
-        }
-
-        public void WaitForDialog()
-        {
-
+            return this;
         }
 
         /// <summary>
@@ -360,7 +352,7 @@ namespace SeleniumAdvance.PageObjects
         {
             By xpath = By.XPath("//a[.='" + panelName + "']/ancestor::tr//a[.='Edit']");
             MyFindElement(xpath).Click();
-            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.ElementExists(_txtDisplayName));
             return this;
         }
@@ -376,7 +368,7 @@ namespace SeleniumAdvance.PageObjects
         {
             By xpath = By.XPath("//a[.='" + panelName + "']/ancestor::tr//a[.='Delete']");
             MyFindElement(xpath).Click();
-            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.AlertIsPresent());
         }
 
@@ -391,14 +383,11 @@ namespace SeleniumAdvance.PageObjects
         public PanelPage DeletePanel(string panelName)
         {
             By xpath = By.XPath("//a[.='" + panelName + "']/ancestor::tr//a[.='Delete']");
-            if(this.IsElementExist(xpath))
-            {
-                this.SelectMenuItem("Administer", "Panels");
-            }
+            this.SelectMenuItem("Administer", "Panels");
             ClickDeletePanel(panelName);
             IAlert alert = _driverPanelPage.SwitchTo().Alert();
             alert.Accept();
-            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.StalenessOf(MyFindElement(xpath)));
             return this;
         }
@@ -436,7 +425,7 @@ namespace SeleniumAdvance.PageObjects
                 IWebElement LabelPanelType = MyFindElement(By.XPath(panelTypeInEditDialog));
                 typeOfPanel = LabelPanelType.Text;
             }
-            return typeOfPanel;      
+            return typeOfPanel;
         }
 
         /// <summary>
@@ -491,8 +480,8 @@ namespace SeleniumAdvance.PageObjects
              OptionalOut<string> statisticFieldName = null, OptionalOut<string> statisticFieldValue = null, OptionalOut<bool> isPercentageChecked = null, OptionalOut<string> from = null, OptionalOut<string> color = null, OptionalOut<string> chartType = null,
              OptionalOut<bool> isCaptionNextToCategoryEnabled = null, OptionalOut<bool> isCaptionNextToSeriesEnabled = null, OptionalOut<bool> isCategoryInChartSettingsEnable = null, OptionalOut<bool> isDataLabelsSeriesEnables = null, OptionalOut<bool> isDataLabelsSeriesChecked = null,
              OptionalOut<bool> isDataLabelsCategoriesEnabled = null, OptionalOut<bool> isDataLabelsCategoriesChecked = null, OptionalOut<bool> isDataLabelsValueEnabled = null, OptionalOut<bool> isDataLabelsValueChecked = null, OptionalOut<bool> isDataLabelsPercentageEnabled = null,
-             OptionalOut<bool> isDataLabelsPercentageChecked = null, OptionalOut<string> seriesName = null, OptionalOut<bool> isLegendsNoneChecked = null, OptionalOut<bool> isLegendsTopChecked = null, OptionalOut<bool> isLegendsRightChecked = null, OptionalOut<bool> isLegendsBottomChecked = null, 
-             OptionalOut<bool> isLegendsLeftChecked = null, OptionalOut<bool> isStyle2DChecked = null, OptionalOut<bool> isStyle3DChecked = null, OptionalOut<string> captionNexToCategory = null, OptionalOut<string> captionNextToSeries = null, OptionalOut<string> categoryName = null, 
+             OptionalOut<bool> isDataLabelsPercentageChecked = null, OptionalOut<string> seriesName = null, OptionalOut<bool> isLegendsNoneChecked = null, OptionalOut<bool> isLegendsTopChecked = null, OptionalOut<bool> isLegendsRightChecked = null, OptionalOut<bool> isLegendsBottomChecked = null,
+             OptionalOut<bool> isLegendsLeftChecked = null, OptionalOut<bool> isStyle2DChecked = null, OptionalOut<bool> isStyle3DChecked = null, OptionalOut<string> captionNexToCategory = null, OptionalOut<string> captionNextToSeries = null, OptionalOut<string> categoryName = null,
              OptionalOut<bool> isStasticOnEnabled = null, OptionalOut<string> seriesValue = null, OptionalOut<bool> isSetAsHeatValueChecked = null)
         {
             typeOfPanel = GetTypeOfPanel();
@@ -609,7 +598,7 @@ namespace SeleniumAdvance.PageObjects
                     if (isLegendsLeftChecked != null)
                         isLegendsLeftChecked.Result = RbLegendsLeft.Selected;
                 }
-            }           
+            }
         }
 
         /// <summary>
@@ -656,7 +645,7 @@ namespace SeleniumAdvance.PageObjects
             bool setAsHeatValue = false, string statisticFieldOn = null, string statisticOn = null)
         {
             string currentPanelTypeSelect = GetTypeOfPanel();
-            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(Constant.TimeOut));
             if (action == "Create")
             {
                 IWebElement RbSelectPanelType = MyFindElement(By.XPath(string.Format(panelTypeToSelect, panelType)));
@@ -703,9 +692,9 @@ namespace SeleniumAdvance.PageObjects
                 else
                 {
                     if (category != null)
-                        CmbCategory.SelectItem(category,"Value");
+                        CmbCategory.SelectItem(category, "Value");
                     if (series != null)
-                        CmbSeries.SelectItem(series,"Value");
+                        CmbSeries.SelectItem(series, "Value");
                     if (legendsBottom == true)
                         RbLegendsBottom.Check();
                     if (legendsLeft == true)
@@ -768,14 +757,21 @@ namespace SeleniumAdvance.PageObjects
             }
             return this;
         }
+        /// <summary>
+        /// Chooses the panel.
+        /// </summary>
+        /// <param name="panelName">Name of the panel.</param>
+        /// <returns></returns>
+        /// <author>Phat</author>
+        /// <Startdate>28/05/2016</Startdae>
         public PanelConfigurationDialog ChoosePanel(string panelName)
         {
             this.ClickTextLink(panelName.Replace(" ", "\u00A0"));
 
-            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverPanelPage, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.ElementExists(_txtHeight));
 
-            //Thread.Sleep(2000);
+            
             return new PanelConfigurationDialog(_driverPanelPage);
         }
 

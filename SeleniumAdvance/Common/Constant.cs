@@ -18,5 +18,6 @@ namespace SeleniumAdvance.Common
         public const string OtherPassword = "admin";
         public const string DefaultRepo = "SampleRepository";
         public const string AdditionalRepo = "TestRepository";
+        public const long TimeOut = 5;
     }
 }

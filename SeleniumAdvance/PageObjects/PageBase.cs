@@ -32,7 +32,7 @@ namespace SeleniumAdvance.PageObjects
         /// <author>Long</author>
         /// <startdate>31/05/2016</startdate>
         /// <Modified>Phat - 04/06/2016: Add NoSuchElementException. Wait for element clickable if element is a button</Modified>
-        public IWebElement MyFindElement(By by, long timeout = 30)
+        public IWebElement MyFindElement(By by, long timeout = Constant.TimeOut)
         {
             IWebElement Ele = null;
             Stopwatch stopwatch = new Stopwatch();
@@ -44,10 +44,6 @@ namespace SeleniumAdvance.PageObjects
                     WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
                     wait.Until(ExpectedConditions.ElementExists(by));
                     wait.Until(driver => _driver.FindElement(by).Displayed);
-                    //if (by.ToString().Contains("input"))
-                    //{
-                    //    wait.Until(ExpectedConditions.ElementToBeClickable(by));
-                    //}
                     Ele = _driver.FindElement(by);
                     break;
                 }
@@ -95,7 +91,7 @@ namespace SeleniumAdvance.PageObjects
         /// <author>Long</author>
         /// <startdate>31/05/2016</startdate>
         /// <Modified>Phat - 04/06/2016: Add NoSuchElementException</Modified>
-        public ReadOnlyCollection<IWebElement> MyFindElements(By by, long timeout = 30)
+        public ReadOnlyCollection<IWebElement> MyFindElements(By by, long timeout = Constant.TimeOut)
         {
             ReadOnlyCollection<IWebElement> Eles = null;
             Stopwatch stopwatch = new Stopwatch();

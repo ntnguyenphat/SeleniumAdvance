@@ -15,10 +15,12 @@ namespace SeleniumAdvance.TestCases
     public class PanelTestcases : TestBase
     {
 
-        /// <summary>Verify that when \"Choose panels\" form is expanded all pre-set panels are populated and sorted correctly
+        /// <summary>
+        /// Verify that when "Choose panels" form is expanded all pre-set panels are populated and sorted correctly
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>23/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC027()
         {
@@ -34,12 +36,9 @@ namespace SeleniumAdvance.TestCases
             //6. Go to Global Setting -> Create Panel
 
             LoginPage loginPage = new LoginPage(driver);
-            loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
+            MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
 
-            MainPage mainPage = new MainPage(driver);
-            mainPage.AddPage(pageName: pageName);
-
-            mainPage.SelectGeneralSetting("Create Panel");
+            mainPage.AddPage(pageName: pageName).SelectGeneralSetting("Create Panel");
 
             PanelPage panelPage = new PanelPage(driver);
 
@@ -64,14 +63,17 @@ namespace SeleniumAdvance.TestCases
             }
 
             //Post-Condition: Delete the created page
+
             panelPage.BtnCancel.Click();
             mainPage.DeletePage(pageName);
         }
 
-        /// <summary>Verify that when \"Add New Panel\" form is on focused all other control/form is disabled or locked
+        /// <summary>
+        /// Verify that when "Add New Panel" form is on focused all other control/form is disabled or locked
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>23/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC028()
         {
@@ -100,10 +102,12 @@ namespace SeleniumAdvance.TestCases
         }
 
 
-        /// <summary>Verify that user is unable to create new panel when (*) required field is not filled
+        /// <summary>
+        /// Verify that user is unable to create new panel when (*) required field is not filled
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>23/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC029()
         {
@@ -135,10 +139,12 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(expected, actual, "\nExpected: " + expected + "\nActual: " + actual);
         }
 
-        /// <summary>Verify that no special character except '@' character is allowed to be inputted into \"Display Name\" field
+        /// <summary>
+        /// Verify that no special character except '@' character is allowed to be inputted into \"Display Name\" field
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>23/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC030()
         {
@@ -193,10 +199,12 @@ namespace SeleniumAdvance.TestCases
             panelPage.DeletePanel(panelTrue);
         }
 
-        /// <summary>Verify that correct panel setting form is displayed with corresponding panel type selected
+        /// <summary>
+        /// Verify that correct panel setting form is displayed with corresponding panel type selected
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>23/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC031()
         {
@@ -224,27 +232,40 @@ namespace SeleniumAdvance.TestCases
 
             //5. Select Indicator type
 
-            panelPage.RbIndicator.ChooseAndWait(TimeSpan.FromSeconds(3));
+            panelPage.RbIndicator.Click();
 
             actual = panelPage.GetSettingHeader();
-            expected = "Indicator setting";
+            expected = "Indicator Settings";
 
             //VP: Chart panel setting form is displayed "Indicator setting" under Display Name field
 
             Assert.AreEqual(expected, actual, "\nExpected: " + expected + "\nActual: " + actual);
 
-            //6: Select Report type
+            //6. Select Report type
 
             panelPage.RbReport.Click();
 
             //VP:TODO - Report panel setting form is displayed "View mode" under Display Name.
+            //Phat - 25/5/2016: Report panel setting form is no longer available -> Remove this check
+
+            //7. Select HeatMap type
+
+            panelPage.RbHeatMap.Click();
+            actual = panelPage.GetSettingHeader();
+            expected = "Heat Map Settings";
+
+            //VP: Chart panel setting form is displayed "Heat Map Settings" under Display Name field
+
+            Assert.AreEqual(expected, actual, "\nExpected: " + expected + "\nActual: " + actual);
 
         }
 
-        /// <summary>Verify that user is not allowed to create panel with duplicated \"Display Name\
+        /// <summary>
+        /// Verify that user is not allowed to create panel with duplicated "Display Name
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>23/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC032()
         {
@@ -291,10 +312,12 @@ namespace SeleniumAdvance.TestCases
             panelPage.DeletePanel(panelName);
         }
 
-        /// <summary>Verify that \"Data Profile\" listing of \"Add New Panel\" and \"Edit Panel\" control/form are in alphabetical order
+        /// <summary>
+        /// Verify that \"Data Profile\" listing of \"Add New Panel\" and \"Edit Panel\" control/form are in alphabetical order
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>23/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC033()
         {
@@ -343,10 +366,12 @@ namespace SeleniumAdvance.TestCases
             panelPage.DeletePanel(panelName);
         }
 
-        /// <summary>Verify that newly created data profiles are populated correctly under the ""Data Profile"" dropped down menu in  ""Add New Panel"" and ""Edit Panel"" control/form
+        /// <summary>
+        /// Verify that newly created data profiles are populated correctly under the ""Data Profile"" dropped down menu in  ""Add New Panel"" and ""Edit Panel"" control/form
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>23/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC034()
         {
@@ -409,10 +434,12 @@ namespace SeleniumAdvance.TestCases
             dataProfile.DeleteProfile(dataName);
         }
 
-        /// <summary>Verify that no special character except '@' character is allowed to be inputted into \"Chart Title\" field
+        /// <summary>
+        /// Verify that no special character except '@' character is allowed to be inputted into \"Chart Title\" field
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>23/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC035()
         {
@@ -465,12 +492,21 @@ namespace SeleniumAdvance.TestCases
             //VP: The new panel is created
 
             Assert.AreEqual(true, actualCreated, "\nPanel: " + panelName + " is not created!");
+
+            //Postcondidition:
+
+            panelPage.DeletePanel(panelName);
         }
 
-        /// <summary>Verify that all chart types ( Pie, Single Bar, Stacked Bar, Group Bar, Line ) are listed correctly under "Chart Type" dropped down menu.
+        /// <summary>
+        /// Verify that all chart types ( Pie, Single Bar, Stacked Bar, Group Bar, Line ) are listed correctly under "Chart Type" dropped down menu.
         /// </summary>
         /// <Author>Long</Author>
         /// <Startdate>26/05/2016</Startdate>
+        /// <Modified>
+        /// Phat - 30/5/2016: Update test cases that using WebElementExtension
+        /// Phat - 12/6/2016: Recheck and clean the code
+        /// </Modified>
         [TestMethod]
         public void TC036()
         {
@@ -500,34 +536,29 @@ namespace SeleniumAdvance.TestCases
 
             //11. VP: Check that 'Chart Type' are listed 5 options: 'Pie', 'Single Bar', 'Stacked Bar', 'Group Bar' and 'Line'
 
-            int numberOfListedOptions = panelPage.GetNumberOfItemsInCombobox("Chart Type");
-            Assert.AreEqual("5", numberOfListedOptions.ToString(), "There are more/less than 5 options in 'Chart Type' drop-down menu");
+            int numberOfListedOptions = panelPage.CmbChartType.CountItems();
+            Assert.AreEqual(5, numberOfListedOptions, "There are more/less than 5 options in 'Chart Type' drop-down menu");
 
-            bool IsPieOptionPresent = panelPage.IsItemPresentInCombobox("Chart Type", "Pie");
-            Assert.AreEqual(true, IsPieOptionPresent, "Pie option isn't present in 'Chart Type' drop-down menu");
+            string[] chartType = { "Pie", "Single Bar", "Stacked Bar", "Group Bar", "Line" };
 
-            bool IsSingleBarOptionPresent = panelPage.IsItemPresentInCombobox("Chart Type", "Single Bar");
-            Assert.AreEqual(true, IsSingleBarOptionPresent, "Single Bar option isn't present in 'Chart Type' drop-down menu");
-
-            bool IsStackedBarOptionPresent = panelPage.IsItemPresentInCombobox("Chart Type", "Stacked Bar");
-            Assert.AreEqual(true, IsStackedBarOptionPresent, "Stacked Bar option isn't present in 'Chart Type' drop-down menu");
-
-            bool IsGroupBarOptionPresent = panelPage.IsItemPresentInCombobox("Chart Type", "Group Bar");
-            Assert.AreEqual(true, IsGroupBarOptionPresent, "Group Bar option isn't present in 'Chart Type' drop-down menu");
-
-            bool IsLineOptionPresent = panelPage.IsItemPresentInCombobox("Chart Type", "Line");
-            Assert.AreEqual(true, IsLineOptionPresent, "Line option isn't present in 'Chart Type' drop-down menu");
-
+            for(int i=0;i<chartType.Length;i++)
+            {
+                bool IsOptionPresent = panelPage.CmbChartType.IsItemExist(chartType[i]);
+                Assert.AreEqual(true, IsOptionPresent, chartType[i] + " option isn't present in 'Chart Type' drop-down menu");
+            }
+            
             //Post-condition: Delete created page
 
             panelPage.BtnCancel.Click();
             mainPage.DeletePage(pageName);
         }
 
-        /// <summary>Verify that "Category", "Series" and "Caption" field are enabled and disabled correctly corresponding to each type of the "Chart Type"
+        /// <summary>
+        /// Verify that "Category", "Series" and "Caption" field are enabled and disabled correctly corresponding to each type of the "Chart Type"
         /// </summary>
         /// <Author>Long</Author>
         /// <Startdate>27/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC037()
         {
@@ -618,10 +649,12 @@ namespace SeleniumAdvance.TestCases
             mainPage.DeletePage(pageName);
         }
 
-        /// <summary>Verify that all settings within "Add New Panel" and "Edit Panel" form stay unchanged when user switches between "2D" and "3D" radio buttons
+        /// <summary>
+        /// Verify that all settings within "Add New Panel" and "Edit Panel" form stay unchanged when user switches between "2D" and "3D" radio buttons
         /// </summary>
         /// <Author>Long</Author>
         /// <Startdate>27/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC038()
         {
@@ -746,10 +779,12 @@ namespace SeleniumAdvance.TestCases
             mainPage.DeletePage(pageName);
         }
 
-        /// <summary>Verify that all settings within "Add New Panel" and "Edit Panel" form stay unchanged when user switches between "Legends" radio buttons
+        /// <summary>
+        /// Verify that all settings within "Add New Panel" and "Edit Panel" form stay unchanged when user switches between "Legends" radio buttons
         /// </summary>
         /// <Author>Long</Author>
         /// <Startdate>28/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC039()
         {
@@ -1206,10 +1241,12 @@ namespace SeleniumAdvance.TestCases
             panelPage.DeletePanel(panelDisplayName);
         }
 
-        /// <summary>Verify that all "Data Labels" check boxes are enabled and disabled correctly corresponding to each type of "Chart Type"			
+        /// <summary>
+        /// Verify that all "Data Labels" check boxes are enabled and disabled correctly corresponding to each type of "Chart Type"			
         /// </summary>
         /// <Author>Long</Author>
         /// <Startdate>29/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC040()
         {
@@ -1309,6 +1346,7 @@ namespace SeleniumAdvance.TestCases
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>31/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC041()
         {
@@ -1660,6 +1698,7 @@ namespace SeleniumAdvance.TestCases
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>31/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC042()
         {
@@ -1685,7 +1724,9 @@ namespace SeleniumAdvance.TestCases
 
             LoginPage loginPage = new LoginPage(driver);
             MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
-            mainPage.AddPage(pageName: pageName1).AddPage(pageName: pageName2).AddPage(pageName: pageName3);
+            mainPage.AddPage(pageName: pageName1)
+                    .AddPage(pageName: pageName2)
+                    .AddPage(pageName: pageName3);
 
             //14. Click 'Choose panels' button
             //15. Click on any Chart panel instance
@@ -1716,6 +1757,7 @@ namespace SeleniumAdvance.TestCases
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>31/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC043()
         {
@@ -1738,19 +1780,19 @@ namespace SeleniumAdvance.TestCases
 
             LoginPage loginPage = new LoginPage(driver);
             MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
-            mainPage.AddPage(pageName: pageName);
-            mainPage.BtnChoosePanels.Click();
+            mainPage.AddPage(pageName: pageName).BtnChoosePanels.Click();
+
             PanelPage panelPage = new PanelPage(driver);
             PanelConfigurationDialog panelConfig = panelPage.ChoosePanel("Action Implementation By Status");
             panelConfig.TxtHeight.InputText("299");
             panelConfig.BtnOk.Click();
 
-            string observedMessage = panelConfig.GetAlertMessage(closeAlert: true);
+            string actualMessage = panelConfig.GetAlertMessage(closeAlert: true);
             string expectedMessage = "Panel height must be greater than or equal to 300 and less than or equal to 800.";
 
             //VP: Error message 'Panel height must be greater than or equal to 300 and lower than or equal to 800' display
 
-            Assert.AreEqual(expectedMessage, observedMessage, "\nActual: " + observedMessage + "\nExpected: " + expectedMessage);
+            Assert.AreEqual(expectedMessage, actualMessage, "\nActual: " + actualMessage + "\nExpected: " + expectedMessage);
 
             //13. Enter integer number to 'Height *' field
             //14. Click OK button 
@@ -1758,11 +1800,11 @@ namespace SeleniumAdvance.TestCases
             panelConfig.TxtHeight.InputText("801");
             panelConfig.BtnOk.Click();
 
-            observedMessage = panelConfig.GetAlertMessage(closeAlert: true);
+            actualMessage = panelConfig.GetAlertMessage(closeAlert: true);
 
             //VP: Error message 'Panel height must be greater than or equal to 300 and lower than or equal to 800' display
 
-            Assert.AreEqual(expectedMessage, observedMessage, "\nActual: " + observedMessage + "\nExpected: " + expectedMessage);
+            Assert.AreEqual(expectedMessage, actualMessage, "\nActual: " + actualMessage + "\nExpected: " + expectedMessage);
 
             //15. Enter integer number to 'Height *' field
             //16. Click OK button 
@@ -1770,11 +1812,11 @@ namespace SeleniumAdvance.TestCases
             panelConfig.TxtHeight.InputText("-2");
             panelConfig.BtnOk.Click();
 
-            observedMessage = panelConfig.GetAlertMessage(closeAlert: true);
+            actualMessage = panelConfig.GetAlertMessage(closeAlert: true);
 
             //VP: Error message 'Panel height must be greater than or equal to 300 and lower than or equal to 800' display
 
-            Assert.AreEqual(expectedMessage, observedMessage, "\nActual: " + observedMessage + "\nExpected: " + expectedMessage);
+            Assert.AreEqual(expectedMessage, actualMessage, "\nActual: " + actualMessage + "\nExpected: " + expectedMessage);
 
             //17. Enter decimal number to 'Height *' field
             //18. Click OK button 
@@ -1782,12 +1824,12 @@ namespace SeleniumAdvance.TestCases
             panelConfig.TxtHeight.InputText("3.1");
             panelConfig.BtnOk.Click();
 
-            observedMessage = panelConfig.GetAlertMessage(closeAlert: true);
+            actualMessage = panelConfig.GetAlertMessage(closeAlert: true);
             expectedMessage = "Panel height must be an integer number";
 
             //VP: Error message 'Panel height must be an integer number' display
 
-            Assert.AreEqual(expectedMessage, observedMessage, "\nActual: " + observedMessage + "\nExpected: " + expectedMessage);
+            Assert.AreEqual(expectedMessage, actualMessage, "\nActual: " + actualMessage + "\nExpected: " + expectedMessage);
 
             //17. Enter string to 'Height *' field
             //18. Click OK button 
@@ -1795,12 +1837,12 @@ namespace SeleniumAdvance.TestCases
             panelConfig.TxtHeight.InputText("abc");
             panelConfig.BtnOk.Click();
 
-            observedMessage = panelConfig.GetAlertMessage(closeAlert: true);
+            actualMessage = panelConfig.GetAlertMessage(closeAlert: true);
             expectedMessage = "Panel height must be an integer number";
 
             //VP: Error message 'Panel height must be an integer number' display
 
-            Assert.AreEqual(expectedMessage, observedMessage, "\nActual: " + observedMessage + "\nExpected: " + expectedMessage);
+            Assert.AreEqual(expectedMessage, actualMessage, "\nActual: " + actualMessage + "\nExpected: " + expectedMessage);
 
             //Post condition:
 
@@ -1813,6 +1855,7 @@ namespace SeleniumAdvance.TestCases
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>31/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC044()
         {
@@ -1835,19 +1878,19 @@ namespace SeleniumAdvance.TestCases
 
             LoginPage loginPage = new LoginPage(driver);
             MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
-            mainPage.AddPage(pageName: pageName);
-            mainPage.BtnChoosePanels.Click();
+            mainPage.AddPage(pageName: pageName).BtnChoosePanels.Click();
+
             PanelPage panelPage = new PanelPage(driver);
             PanelConfigurationDialog panelConfig = panelPage.ChoosePanel("Action Implementation By Status");
             panelConfig.TxtHeight.Clear();
             panelConfig.BtnOk.Click();
 
-            string observedMessage = panelConfig.GetAlertMessage(closeAlert: true);
+            string actualMessage = panelConfig.GetAlertMessage(closeAlert: true);
             string expectedMessage = "Panel height is a required field.";
 
             //VP: ''Panel height is required field' message display
 
-            Assert.AreEqual(expectedMessage, observedMessage, "\nActual: " + observedMessage + "\nExpected: " + expectedMessage);
+            Assert.AreEqual(expectedMessage, actualMessage, "\nActual: " + actualMessage + "\nExpected: " + expectedMessage);
 
             //Post condition:
 
@@ -1860,6 +1903,7 @@ namespace SeleniumAdvance.TestCases
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>31/05/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC045()
         {
@@ -1882,19 +1926,19 @@ namespace SeleniumAdvance.TestCases
 
             LoginPage loginPage = new LoginPage(driver);
             MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
-            mainPage.AddPage(pageName: pageName);
-            mainPage.BtnChoosePanels.Click();
+            mainPage.AddPage(pageName: pageName).BtnChoosePanels.Click();
+
             PanelPage panelPage = new PanelPage(driver);
             PanelConfigurationDialog panelConfig = panelPage.ChoosePanel("Action Implementation By Status");
             panelConfig.TxtFolder.Clear();
             panelConfig.BtnOk.Click();
 
-            string observedMessage = panelConfig.GetAlertMessage(closeAlert: true);
+            string actualMessage = panelConfig.GetAlertMessage(closeAlert: true);
             string expectedMessage = "Panel folder is incorrect";
 
             //VP: There is message "Panel folder is incorrect"
 
-            Assert.AreEqual(expectedMessage, observedMessage, "\nActual: " + observedMessage + "\nExpected: " + expectedMessage);
+            Assert.AreEqual(expectedMessage, actualMessage, "\nActual: " + actualMessage + "\nExpected: " + expectedMessage);
 
             //Post condition:
 
@@ -1907,6 +1951,7 @@ namespace SeleniumAdvance.TestCases
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>04/06/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC046()
         {
@@ -1928,8 +1973,8 @@ namespace SeleniumAdvance.TestCases
             LoginPage loginPage = new LoginPage(driver);
             MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
 
-            mainPage.AddPage(pageName: pageName);
-            mainPage.BtnChoosePanels.Click();
+            mainPage.AddPage(pageName: pageName)
+                    .BtnChoosePanels.Click();
 
             PanelPage panelPage = new PanelPage(driver);
             panelPage.BtnCreateNewPanel.Click();
@@ -1941,12 +1986,12 @@ namespace SeleniumAdvance.TestCases
             PanelConfigurationDialog configDialog = new PanelConfigurationDialog(driver);
             configDialog.TxtFolder.InputText("abc");
             configDialog.BtnOk.Click();
-            string observedMessage = configDialog.GetAlertMessage(closeAlert: true);
+            string actualMessage = configDialog.GetAlertMessage(closeAlert: true);
             string expectedMessage = "Panel folder is incorrect";
 
             //VP: There is message "Panel folder is incorrect"
 
-            Assert.AreEqual(expectedMessage, observedMessage, "\nActual: " + observedMessage + "\nExpected: " + expectedMessage);
+            Assert.AreEqual(expectedMessage, actualMessage, "\nActual: " + actualMessage + "\nExpected: " + expectedMessage);
 
             //10. Enter valid folder path
             //11. Click Ok button on Panel Configuration dialog
@@ -1954,11 +1999,11 @@ namespace SeleniumAdvance.TestCases
             configDialog.TxtFolder.InputText("/Car Rental/Actions");
             configDialog.BtnOk.Click();
 
-            bool observed = mainPage.IsPanelCreatedInMainPage(panelName);
+            bool actual = mainPage.IsPanelCreatedInMainPage(panelName);
 
             //VP: The new panel is created
 
-            Assert.AreEqual(true, observed, "Panel is not created!");
+            Assert.AreEqual(true, actual, "Panel is not created!");
 
             //Postconditions:
 
@@ -1970,6 +2015,7 @@ namespace SeleniumAdvance.TestCases
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>04/06/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC047()
         {
@@ -1993,8 +2039,8 @@ namespace SeleniumAdvance.TestCases
             LoginPage loginPage = new LoginPage(driver);
             MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
 
-            mainPage.AddPage(pageName: pageName);
-            mainPage.BtnChoosePanels.Click();
+            mainPage.AddPage(pageName: pageName)
+                    .BtnChoosePanels.Click();
 
             PanelPage panelPage = new PanelPage(driver);
             panelPage.BtnCreateNewPanel.Click();
@@ -2023,8 +2069,8 @@ namespace SeleniumAdvance.TestCases
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>04/06/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
-
         public void TC048()
         {
             Console.WriteLine("DA_PANEL_TC048 - Verify that population of corresponding item type ( e.g. Actions, Test Modules) folders is correct in Select Folder form");
@@ -2044,8 +2090,8 @@ namespace SeleniumAdvance.TestCases
             LoginPage loginPage = new LoginPage(driver);
             MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
 
-            mainPage.AddPage(pageName: pageName);
-            mainPage.BtnChoosePanels.Click();
+            mainPage.AddPage(pageName: pageName)
+                    .BtnChoosePanels.Click();
 
             PanelPage panelPage = new PanelPage(driver);
             panelPage.BtnCreateNewPanel.Click();
@@ -2059,7 +2105,8 @@ namespace SeleniumAdvance.TestCases
 
             //VP: TODO - Population of corresponding item type ( e.g. Actions, Test Modules) folders is correct in "Select Folder form
 
-            //Cannot understand this VP
+            // VP is hard to understand.
+            //Phat - 12/6/2016: Discussed with A.Long, This VP is incomprehension. So I skipped this check.
 
             //Postconditions:
 
@@ -2073,6 +2120,7 @@ namespace SeleniumAdvance.TestCases
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>04/06/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC049()
         {
@@ -2096,8 +2144,8 @@ namespace SeleniumAdvance.TestCases
             LoginPage loginPage = new LoginPage(driver);
             MainPage mainPage = loginPage.Open().Login(Constant.Username, Constant.Password, Constant.DefaultRepo);
 
-            mainPage.AddPage(pageName: pageName);
-            mainPage.BtnChoosePanels.Click();
+            mainPage.AddPage(pageName: pageName)
+                    .BtnChoosePanels.Click();
 
             PanelPage panelPage = new PanelPage(driver);
             panelPage.BtnCreateNewPanel.Click();
@@ -2126,6 +2174,7 @@ namespace SeleniumAdvance.TestCases
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>04/06/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC050()
         {
@@ -2168,6 +2217,7 @@ namespace SeleniumAdvance.TestCases
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>05/06/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC051()
         {
@@ -2203,12 +2253,12 @@ namespace SeleniumAdvance.TestCases
             panelPage.TxtDisplayName.InputText("test!@#%");
             panelPage.BtnOK.Click();
 
-            string observedMessage = panelPage.GetAlertMessage(true);
-            string expectedMessage = "Invalid display name. The name can't contain high ASCII characters or any of following characters: /:*?<>|\"#{[]{};";
+            string actualMessage = panelPage.GetAlertMessage(true);
+            string expectedMessage = "Invalid display name. The name cannot contain high ASCII characters or any of the following characters: /:*?<>|\"#[]{}=%;";
 
             //VP: Message "Invalid display name. The name can't contain high ASCII characters or any of following characters: /:*?<>|"#{[]{};" is displayed
 
-            Assert.AreEqual(expectedMessage, observedMessage, "\nActual: " + observedMessage + "\nExpected: " + expectedMessage);
+            Assert.AreEqual(expectedMessage, actualMessage, "\nActual: " + actualMessage + "\nExpected: " + expectedMessage);
 
             //11. Click Edit link
             //12. Edit panel name with special characters
@@ -2233,6 +2283,7 @@ namespace SeleniumAdvance.TestCases
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>05/06/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC052()
         {
@@ -2265,12 +2316,12 @@ namespace SeleniumAdvance.TestCases
             configDialog.TxtHeight.InputText("200");
             configDialog.BtnOk.Click();
 
-            string observedMessage = configDialog.GetAlertMessage(true);
-            string expectedMessage = "Panel Height must be greater than or equal to 300 and lower than or equal to 800";
+            string actualMessage = configDialog.GetAlertMessage(true);
+            string expectedMessage = "Panel height must be greater than or equal to 300 and less than or equal to 800.";
 
             //VP: There is message "Panel Height must be greater than or equal to 300 and lower than or equal to 800"
 
-            Assert.AreEqual(expectedMessage, observedMessage, "\nActual: " + observedMessage + "\nExpected: " + expectedMessage);
+            Assert.AreEqual(expectedMessage, actualMessage, "\nActual: " + actualMessage + "\nExpected: " + expectedMessage);
 
             //10. Close Warning Message box
             //11. Enter valid height into Height field
@@ -2295,8 +2346,8 @@ namespace SeleniumAdvance.TestCases
         /// </summary>
         /// <Author>Phat</Author>
         /// <Startdate>05/06/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         //[TestMethod]
-
         public void TC053()
         {
             //TODO - Testcase dai qua. Viet sau :)
@@ -2305,6 +2356,9 @@ namespace SeleniumAdvance.TestCases
         /// <summary>
         /// Verify that user is able to successfully edit "Folder" field with valid path
         /// </summary>
+        /// <Author>Phat</Author>
+        /// <Startdate>05/06/2016</Startdate>
+        /// <Modified>Phat - 12/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC054()
         {
@@ -2331,6 +2385,26 @@ namespace SeleniumAdvance.TestCases
             panelPage.TxtDisplayName.SendKeys(panelName);
             panelPage.CmbSeries.SelectItem("name", "Value");
             panelPage.BtnOK.Click();
+
+            PanelConfigurationDialog configDialog = new PanelConfigurationDialog(driver);
+            configDialog.BtnOk.Click();
+
+            panelPage.UnhideChoosePanelsPage();
+            panelPage.ChoosePanel(panelName);
+
+            configDialog.TxtFolder.InputText("/Car Rental/Tests/Action-based Testing Basics/Data Driven Tests");
+            configDialog.BtnOk.Click();
+
+            bool actual = mainPage.IsPanelCreatedInMainPage(panelName);
+
+            //VP: User is able to successfully edit "Folder" field with valid path
+
+            Assert.AreEqual(true, actual, "\nUser is unable to successfully edit \"Folder\" field with valid path");
+
+            //Postconditions:
+
+            panelPage.DeletePanel(panelName);
+            mainPage.DeletePage(pageName);
         }
     }
 }

@@ -61,7 +61,6 @@
   <ItemGroup>
     <Compile Include="Common\CommonMethods.cs" />
     <Compile Include="Common\Constant.cs" />
-    <Compile Include="Common\Enum.cs" />
     <Compile Include="DataObjects\DataProfiles.cs" />
     <Compile Include="PageObjects\DataProfilePage.cs" />
     <Compile Include="PageObjects\GeneralPage.cs" />
@@ -78,14 +77,13 @@
     <Compile Include="TestCases\PanelTestcases.cs" />
     <Compile Include="Ultilities\IWebElementExtensions.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Document\Dashboard Testcases - Updated.xls" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="DLLs\WebDriver.dll" />
     <Content Include="DLLs\WebDriver.Support.dll" />
     <Content Include="Document\CodingConvention.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Document\Dashboard_Testcases.xls" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

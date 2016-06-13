@@ -108,7 +108,7 @@ namespace SeleniumAdvance.PageObjects
 
             if (numberOfColumn != 0)
             {
-                CmbNewPageDisplayAfter.SelectItem(numberOfColumn.ToString());
+                CmbNewPageDisplayAfter.SelectItem(numberOfColumn.ToString(),"Index");
             }
 
             if (displayAfer != null)
@@ -123,7 +123,7 @@ namespace SeleniumAdvance.PageObjects
 
             BtnPageOK.Click();
 
-            WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, pageName).Replace(" ", "\u00A0"))));
             return this;
         }
@@ -179,7 +179,7 @@ namespace SeleniumAdvance.PageObjects
             IAlert alert = _driverMainPage.SwitchTo().Alert();
             alert.Accept();
             string[] pages = Regex.Split(pageLink, "->");
-            WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//a[.='" + pages[(pages.Length - 1)].Replace(" ", "\u00A0") + "']")));
             return this;
         }
@@ -193,7 +193,7 @@ namespace SeleniumAdvance.PageObjects
         public bool IsPageNavigated(string pageName)
         {
             bool isPageNavigated = false;
-            WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
             string actualTitle = _driverMainPage.Title.Substring(_driverMainPage.Title.IndexOf("-") + 1,
                     _driverMainPage.Title.Length - _driverMainPage.Title.IndexOf("-") - 1).Trim();
@@ -230,7 +230,7 @@ namespace SeleniumAdvance.PageObjects
 
             if (numberOfColumn != 0)
             {
-                CmbNewPageDisplayAfter.SelectItem(numberOfColumn.ToString());
+                CmbNumberOfColumns.SelectItem(numberOfColumn.ToString(),"Index");
             }
 
             if (displayAfer != null)
@@ -249,7 +249,7 @@ namespace SeleniumAdvance.PageObjects
 
             BtnPageOK.Click();
 
-            WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
 
             return this;
@@ -266,7 +266,7 @@ namespace SeleniumAdvance.PageObjects
         public bool IsPageNextToPage(string currentPage, string nextPage)
         {
             bool isPageNextToPage = false;
-            By current = By.XPath("//a[.='" + nextPage + "']/parent::*/preceding-sibling::*/a[.='" + currentPage + "']");
+            By current = By.XPath("//a[.='" + nextPage.Replace(" ", "\u00A0") + "']/parent::*/preceding-sibling::*/a[.='" + currentPage.Replace(" ", "\u00A0") + "']");
             if (MyFindElement(current).Text == currentPage)
             {
                 isPageNextToPage = true;
@@ -279,11 +279,11 @@ namespace SeleniumAdvance.PageObjects
         /// Determine if a page exists
         /// </summary>
         /// <param name="pageLink">The page link.</param>
-        /// <Author>Long</Author>
+        /// <Author>Phat</Author>
         /// <returns></returns>
         public bool DoesPageExist(string pageLink)
         {
-            WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverMainPage, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkPage, "Overview"))));
             bool doesPageExist = false;
             string[] pages = Regex.Split(pageLink, "->");

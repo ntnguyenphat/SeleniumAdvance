@@ -28,7 +28,6 @@ namespace SeleniumAdvance.PageObjects
         static string _lnkMainMenu = "//li[@class='sep']/parent::*/../a[contains(.,'{0}')]";
         static string _lnkSubMenu = "//li[@class='sep']/parent::*/../a[contains(.,'{0}')]/following::a[contains(.,'{1}')]";
         static string _lnkSettingItem = "//li[@class='mn-setting']//a[ .='{0}']";
-        //static string _cbbName = "//select[contains(@id,'cbb{0}')]";
         static string _cbbName = "//td[contains(text(), '{0}')]/following-sibling::*/descendant::select";
 
         #endregion
@@ -87,7 +86,7 @@ namespace SeleniumAdvance.PageObjects
         public bool IsAlertDisplayed()
         {
             bool foundAlert = false;
-            WebDriverWait wait = new WebDriverWait(_driverGeneralPage, TimeSpan.FromSeconds(5));
+            WebDriverWait wait = new WebDriverWait(_driverGeneralPage, TimeSpan.FromSeconds(Constant.TimeOut));
             try
             {
                 wait.Until(ExpectedConditions.AlertIsPresent());
@@ -118,12 +117,13 @@ namespace SeleniumAdvance.PageObjects
         /// <param name="mainMenu">The main menu.</param>
         /// <param name="subMenu">The sub menu.</param>
         /// <Author>Long and Phat</Author>
-        public void SelectMenuItem(string mainMenu, string subMenu)
+        public GeneralPage SelectMenuItem(string mainMenu, string subMenu)
         {
             IWebElement LnkMainMenu = MyFindElement(By.XPath(string.Format(_lnkMainMenu, mainMenu)));
             LnkMainMenu.MouseTo(_driverGeneralPage);
             IWebElement LnkSubMenu = MyFindElement(By.XPath(string.Format(_lnkSubMenu, mainMenu, subMenu)));
             LnkSubMenu.Click();
+            return this;
         }
 
         /// <summary>
@@ -135,9 +135,9 @@ namespace SeleniumAdvance.PageObjects
         public GeneralPage ChooseRepository(string repositoryName)
         {
             SelectMenuItem("Repository", repositoryName);
-            WebDriverWait wait = new WebDriverWait(_driverGeneralPage, TimeSpan.FromSeconds(5));
+            WebDriverWait wait = new WebDriverWait(_driverGeneralPage, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format(_lnkMainMenu, repositoryName))));
-            return new GeneralPage(_driverGeneralPage);
+            return this;
         }
 
         /// <summary>
@@ -155,11 +155,12 @@ namespace SeleniumAdvance.PageObjects
         /// </summary>
         /// <param name="item">settings</param>
         /// <Author>Long and Phat</Author>
-        public void SelectGeneralSetting(string item)
+        public GeneralPage SelectGeneralSetting(string item)
         {
             TabSetting.MouseTo(_driverGeneralPage);
             IWebElement settingItem = MyFindElement(By.XPath(string.Format(_lnkSettingItem, item)));
             settingItem.Click();
+            return this;
         }
 
         /// <summary>
@@ -180,7 +181,7 @@ namespace SeleniumAdvance.PageObjects
         /// <returns></returns>
         public bool IsElementExist(By locatorKey)
         {
-            WebDriverWait wait = new WebDriverWait(_driverGeneralPage, TimeSpan.FromSeconds(5));
+            WebDriverWait wait = new WebDriverWait(_driverGeneralPage, TimeSpan.FromSeconds(Constant.TimeOut));
             try
             {
                 wait.Until(ExpectedConditions.ElementExists(locatorKey));
@@ -210,7 +211,7 @@ namespace SeleniumAdvance.PageObjects
                 if (closeAlert == true)
                 {
                     alert.Accept();
-                    WebDriverWait wait = new WebDriverWait(_driverGeneralPage, TimeSpan.FromSeconds(5));
+                    WebDriverWait wait = new WebDriverWait(_driverGeneralPage, TimeSpan.FromSeconds(Constant.TimeOut));
                     wait.Until(ExpectedConditions.ElementExists(_lnkAccount));
                 }
                 return alertMessage;
@@ -229,7 +230,7 @@ namespace SeleniumAdvance.PageObjects
         /// <Author>Phat</Author>
         public void WaitElementExist(By locator)
         {
-            WebDriverWait wait = new WebDriverWait(_driverGeneralPage,TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverGeneralPage, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.ElementExists(locator));
         }
 
@@ -245,7 +246,7 @@ namespace SeleniumAdvance.PageObjects
             {
                 BtnChoosePanels.Click();
             }
-            WebDriverWait wait = new WebDriverWait(_driverGeneralPage, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(_driverGeneralPage, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//div[@class='cpbutton']/span[.='Create new panel']")));
         }
 

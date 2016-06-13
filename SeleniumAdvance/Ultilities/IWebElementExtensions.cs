@@ -38,7 +38,8 @@ namespace SeleniumAdvance.Ultilities
             SelectElement selector = new SelectElement(element);
             if (selectby == "Value")
                 selector.SelectByValue(item);
-
+            else if (selectby == "Index")
+                selector.SelectByIndex(int.Parse(item) - 1);
             else
                 selector.SelectByText(item);
         }
@@ -89,6 +90,12 @@ namespace SeleniumAdvance.Ultilities
             return flag;
         }
 
+        public static int CountItems(this IWebElement element)
+        {
+            SelectElement selector = new SelectElement(element);
+            return selector.Options.Count;
+        }
+
         /// <summary>
         /// Check or uncheck a checkbox
         /// </summary>
@@ -123,11 +130,13 @@ namespace SeleniumAdvance.Ultilities
         /// <param name="element">The element.</param>
         /// <param name="time">The time.</param>
         /// <Author>Phat</Author>
+        /// <Startdate>30/5/2016</Startdate>
         public static void ChooseAndWait(this IWebElement element,TimeSpan time)
         {
             element.Click();
 
             //TODO: Need to handle wait by Driverwait
+            //Phat - 02/06/2016: This action is no longer used due to change of MyFindElement method
 
             Thread.Sleep(time);
         }

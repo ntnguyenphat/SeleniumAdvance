@@ -92,7 +92,7 @@ namespace SeleniumAdvance.PageObjects
         /// <returns></returns>
         public string GetAlertMessage()
         {
-            WebDriverWait wait = new WebDriverWait(_driverLoginPage, TimeSpan.FromSeconds(5));
+            WebDriverWait wait = new WebDriverWait(_driverLoginPage, TimeSpan.FromSeconds(Constant.TimeOut));
             wait.Until(ExpectedConditions.AlertIsPresent());
             IAlert alert = _driverLoginPage.SwitchTo().Alert();
             return alert.Text;

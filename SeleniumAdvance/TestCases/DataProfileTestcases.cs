@@ -12,10 +12,12 @@ namespace SeleniumAdvance.TestCases
     [TestClass]
     public class DataProfileTestcases : TestBase
     {
-        /// <summary>Verify that all Pre-set Data Profiles are populated correctly
+        /// <summary>
+        /// Verify that all Pre-set Data Profiles are populated correctly
         /// </summary>
         /// <Author>Long</Author>
         /// <Startdate>30/05/2016</Startdate>
+        /// <Modified>Phat - 13/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC065()
         {
@@ -27,12 +29,11 @@ namespace SeleniumAdvance.TestCases
             //4. Click Login
 
             LoginPage loginPage = new LoginPage(driver);
-            loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password).SelectMenuItem("Administer", "Data Profiles");
 
             //5. Click Administer->Data Profiles
 
             DataProfilePage dataProfilePage = new DataProfilePage(driver);
-            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
 
             //6. VP: Check Pre-set Data Profile are populated correctly in profiles page
 
@@ -106,10 +107,12 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(true, doesProfileExist, "Test Objective Execution doesn't exist");
         }
 
-        /// <summary>Verify that all Pre-set Data Profiles are populated correctly
+        /// <summary>
+        /// Verify that all Pre-set Data Profiles are populated correctly
         /// </summary>
         /// <Author>Long</Author>
         /// <Startdate>02/06/2016</Startdate>
+        /// <Modified>Phat - 13/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC066()
         {
@@ -123,12 +126,12 @@ namespace SeleniumAdvance.TestCases
             //4. Click Login
 
             LoginPage loginPage = new LoginPage(driver);
-            loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password)
+                            .SelectMenuItem("Administer", "Data Profiles");
 
             //5. Click Administer->Data Profiles
 
             DataProfilePage dataProfilePage = new DataProfilePage(driver);
-            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
 
             //7. Check there is no 'Delele' or 'Edit' link appears in Action section of Pre-set Data Profiles
 
@@ -252,10 +255,12 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(false, dataProfilePage.DoesCheckboxAppearInTheLeftOfDataProfile("Test Objective Execution"), "Checkbox appears in the left of Test Objective Execution profile");
         }
 
-        /// <summary>Verify that Data Profiles are listed alphabetically
+        /// <summary>
+        /// Verify that Data Profiles are listed alphabetically
         /// </summary>
         /// <author>Long</author>
         /// <startdate>04/06/2016</startdate>
+        /// <Modified>Phat - 13/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC067()
         {
@@ -268,10 +273,9 @@ namespace SeleniumAdvance.TestCases
             //5. Click Administer->Data Profiles
 
             LoginPage loginPage = new LoginPage(driver);
-            loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password).SelectMenuItem("Administer", "Data Profiles");
 
             DataProfilePage dataProfilePage = new DataProfilePage(driver);
-            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
 
             //6. VP: Check Data Profiles are listed alphabetically
 
@@ -279,10 +283,12 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(true, areDataProfileListedAlphabetically, "Data profiles are not listed alphabetically");
         }
 
-        /// <summary>Verify that Check Boxes are only present for non-preset Data Profiles
+        /// <summary>
+        /// Verify that Check Boxes are only present for non-preset Data Profiles
         /// </summary>
         /// <author>Long</author>
         /// <startdate>04/06/2016</startdate>
+        /// <Modified>Phat - 13/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC068()
         {
@@ -297,10 +303,9 @@ namespace SeleniumAdvance.TestCases
             //5. Click Administer->Data Profiles
 
             LoginPage loginPage = new LoginPage(driver);
-            loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password).SelectMenuItem("Administer", "Data Profiles");
 
             DataProfilePage dataProfilePage = new DataProfilePage(driver);
-            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
 
             //6. Create a new Data Profile
 
@@ -317,10 +322,12 @@ namespace SeleniumAdvance.TestCases
             dataProfilePage.DeleteDataProfile(profileName);
         }
 
-        /// <summary>Verify that user is unable to proceed to next step or finish creating data profile if  "Name *" field is left empty
+        /// <summary>
+        /// Verify that user is unable to proceed to next step or finish creating data profile if  "Name *" field is left empty
         /// </summary>
         /// <author>Long</author>
         /// <startdate>04/06/2016</startdate>
+        /// <Modified>Phat - 13/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC069()
         {
@@ -332,10 +339,10 @@ namespace SeleniumAdvance.TestCases
             //4. Click on "Next Button"
 
             LoginPage loginPage = new LoginPage(driver);
-            loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password)
+                            .SelectMenuItem("Administer", "Data Profiles");
 
             DataProfilePage dataProfilePage = new DataProfilePage(driver);
-            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
             dataProfilePage.LnkAddNew.Click();
             dataProfilePage.CreateDataProfile("", "test cases", "None", displayFields: true);
 
@@ -356,10 +363,12 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(expectedDialogMessage, actualDialogMessage, "Please input profile name message doesn't appear");
         }
 
-        /// <summary>Verify that special characters ' /:*?<>|"#[ ]{}=%; 'is not allowed for input to "Name *" field
+        /// <summary>
+        /// Verify that special characters ' /:*?<>|"#[ ]{}=%; 'is not allowed for input to "Name *" field
         /// </summary>
         /// <author>Long</author>
         /// <startdate>04/06/2016</startdate>
+        /// <Modified>Phat - 13/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC070()
         {
@@ -371,10 +380,10 @@ namespace SeleniumAdvance.TestCases
             //4. Input special character
 
             LoginPage loginPage = new LoginPage(driver);
-            loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password)
+                            .SelectMenuItem("Administer", "Data Profiles");
 
             DataProfilePage dataProfilePage = new DataProfilePage(driver);
-            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
             dataProfilePage.LnkAddNew.Click();
             dataProfilePage.CreateDataProfile("/:*?<>", "test cases", "None");
 
@@ -389,6 +398,7 @@ namespace SeleniumAdvance.TestCases
         /// </summary>
         /// <author>Long</author>
         /// <startdate>04/06/2016</startdate>
+        /// <Modified>Phat - 13/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC071()
         {
@@ -401,10 +411,9 @@ namespace SeleniumAdvance.TestCases
             //5. Click "Next" button 
 
             LoginPage loginPage = new LoginPage(driver);
-            loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password).SelectMenuItem("Administer", "Data Profiles");
 
             DataProfilePage dataProfilePage = new DataProfilePage(driver);
-            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
             dataProfilePage.LnkAddNew.Click();
             dataProfilePage.CreateDataProfile("action implementation by status", "test cases", "None", displayFields: true);
 
@@ -419,6 +428,7 @@ namespace SeleniumAdvance.TestCases
         /// </summary>
         /// <author>Long</author>
         /// <startdate>04/06/2016</startdate>
+        /// <Modified>Phat - 13/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC072()
         {
@@ -432,10 +442,9 @@ namespace SeleniumAdvance.TestCases
             //6. Click 'Add New' link
 
             LoginPage loginPage = new LoginPage(driver);
-            loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password).SelectMenuItem("Administer", "Data Profiles");
 
             DataProfilePage dataProfilePage = new DataProfilePage(driver);
-            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
             dataProfilePage.LnkAddNew.Click();
 
             //7. "Check all data profile types are listed under ""Item Type"" dropped down menu in create profile page"
@@ -452,10 +461,12 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(true, dataProfilePage.IsItemPresentInCombobox("Item Type", "Bugs", attribute: "text"), "Bugs type isn't listed under dropped down menu");
         }
 
-        /// <summary>Verify that all data profile types are listed in priority order under "Item Type" dropped down menu
+        /// <summary>
+        /// Verify that all data profile types are listed in priority order under "Item Type" dropped down menu
         /// </summary>
         /// <author>Long</author>
         /// <startdate>04/06/2016</startdate>
+        /// <Modified>Phat - 13/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC073()
         {
@@ -466,10 +477,10 @@ namespace SeleniumAdvance.TestCases
             //3. Click on "Add New"
 
             LoginPage loginPage = new LoginPage(driver);
-            loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password)
+                            .SelectMenuItem("Administer", "Data Profiles");
 
             DataProfilePage dataProfilePage = new DataProfilePage(driver);
-            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
             dataProfilePage.LnkAddNew.Click();
 
             //4. Click on "Item Type" dropped down menu
@@ -490,10 +501,12 @@ namespace SeleniumAdvance.TestCases
                 position9 < position10, "Item Type items are not listed in priority order");
         }
 
-        /// <summary>Verify that appropriate "Related Data" items are listed correctly corresponding to the "Item Type" items.			
+        /// <summary>
+        /// Verify that appropriate "Related Data" items are listed correctly corresponding to the "Item Type" items.			
         /// </summary>
         /// <author>Long</author>
         /// <startdate>04/06/2016</startdate>
+        /// <Modified>Phat - 13/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC074()
         {
@@ -507,10 +520,10 @@ namespace SeleniumAdvance.TestCases
             //6. Click Add new link
 
             LoginPage loginPage = new LoginPage(driver);
-            loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password)
+                            .SelectMenuItem("Administer", "Data Profiles");
 
             DataProfilePage dataProfilePage = new DataProfilePage(driver);
-            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
             dataProfilePage.LnkAddNew.Click();
 
             //7. Select 'Test Modules' in 'Item Type' drop down list
@@ -582,10 +595,12 @@ namespace SeleniumAdvance.TestCases
             Assert.AreEqual(1, dataProfilePage.GetNumberOfItemsInCombobox("Related Data"), "There is(are) item(s) listed");
         }
 
-        /// <summary>Verify that default settings are applied correctly for newly created data profiles if user only set up "General Settings" page and finishes.
+        /// <summary>
+        /// Verify that default settings are applied correctly for newly created data profiles if user only set up "General Settings" page and finishes.
         /// </summary>
         /// <author>Long</author>
         /// <startdate>05/06/2016</startdate>
+        /// <Modified>Phat - 13/6/2016: Recheck and clean the code</Modified>
         [TestMethod]
         public void TC075()
         {
@@ -598,10 +613,10 @@ namespace SeleniumAdvance.TestCases
             //3. Click on "Add New"
 
             LoginPage loginPage = new LoginPage(driver);
-            loginPage.Open().Login(Constant.Username, Constant.Password);
+            loginPage.Open().Login(Constant.Username, Constant.Password)
+                            .SelectMenuItem("Administer", "Data Profiles");
 
             DataProfilePage dataProfilePage = new DataProfilePage(driver);
-            dataProfilePage.SelectMenuItem("Administer", "Data Profiles");
             dataProfilePage.LnkAddNew.Click();
 
             //4. Input to "Name *" field
@@ -642,7 +657,7 @@ namespace SeleniumAdvance.TestCases
 
             //14. VP: Check the setting of Filter Fields Page - Empty Filter list
 
-            Assert.AreEqual(0, dataProfilePage.GetNumberOfItemInListbox(), "Filter list is not empty");
+            Assert.AreEqual(0, dataProfilePage.LbFilterList.CountItems(), "Filter list is not empty");
 
             //15. Click Next Button
 
